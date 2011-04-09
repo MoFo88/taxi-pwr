@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11.25, 9.875" name="TaxiDataClasses">
+  <DataContextMoniker Name="/TaxiDataClassesDataContext" />
+  <nestedChildShapes>
+    <classShape Id="ea2454a2-8a11-48bd-a4cb-8fe136e1a157" absoluteBounds="0.75, 2.125, 2, 1.7708968098958327">
+      <DataClassMoniker Name="/TaxiDataClassesDataContext/Car_model" />
+      <nestedChildShapes>
+        <elementListCompartment Id="30ca9045-1e10-4d7b-8c85-acfad1f2c629" absoluteBounds="0.765, 2.585, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="22ccb724-82f2-4628-b6d6-2972ff0e16cb" absoluteBounds="3.5, 2.125, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/TaxiDataClassesDataContext/Taxi" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7194f2c2-518c-4e0a-bd5e-86652f1ea3ba" absoluteBounds="3.515, 2.585, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b7ebba92-4635-45f1-ad26-97f26f9b4d0a" absoluteBounds="9, 1.25, 2, 3.3093082682291666">
+      <DataClassMoniker Name="/TaxiDataClassesDataContext/Course" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f393f0b8-9b26-43e1-a655-718ace20cfc0" absoluteBounds="9.015, 1.71, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a3886501-665c-4124-8041-cad21bcae22c" absoluteBounds="6.25, 6.375, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/TaxiDataClassesDataContext/Course_status" />
+      <nestedChildShapes>
+        <elementListCompartment Id="44cfb2fd-1f30-4535-945c-55d1218014b8" absoluteBounds="6.265, 6.835, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="0975a9e8-acae-45a8-9e45-6c40605a1b59" absoluteBounds="3.5, 5.375, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/TaxiDataClassesDataContext/Driver_status" />
+      <nestedChildShapes>
+        <elementListCompartment Id="eee50f81-6763-4d0a-801d-960fec7de9f1" absoluteBounds="3.515, 5.835, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="94fa6475-7fd6-4ef7-a8d5-4a7dcdc631d1" absoluteBounds="6.25, 1, 2, 3.8862125651041666">
+      <DataClassMoniker Name="/TaxiDataClassesDataContext/Employee" />
+      <nestedChildShapes>
+        <elementListCompartment Id="3a08a6cc-01f5-40d8-ae2d-c061d50a9350" absoluteBounds="6.265, 1.46, 1.9700000000000002, 3.3262125651041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1701fd5c-023d-46b5-931e-f3e8331cb4bd" absoluteBounds="3.5, 8.375, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/TaxiDataClassesDataContext/Employee_type" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b9e0e35a-7a5e-4a9b-b939-377ed4a9dd13" absoluteBounds="3.515, 8.835, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.75 : 2.91429768880208); (3.5 : 2.91429768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TaxiDataClassesDataContext/Car_model/Car_model_Taxi" />
+      <nodes>
+        <classShapeMoniker Id="ea2454a2-8a11-48bd-a4cb-8fe136e1a157" />
+        <classShapeMoniker Id="22ccb724-82f2-4628-b6d6-2972ff0e16cb" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.25 : 6.97199625651042); (10 : 6.97199625651042); (10 : 4.55930826822917)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TaxiDataClassesDataContext/Course_status/Course_status_Course" />
+      <nodes>
+        <classShapeMoniker Id="a3886501-665c-4124-8041-cad21bcae22c" />
+        <classShapeMoniker Id="b7ebba92-4635-45f1-ad26-97f26f9b4d0a" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.25 : 2.90465413411458); (9 : 2.90465413411458)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TaxiDataClassesDataContext/Employee/Employee_Course" />
+      <nodes>
+        <classShapeMoniker Id="94fa6475-7fd6-4ef7-a8d5-4a7dcdc631d1" />
+        <classShapeMoniker Id="b7ebba92-4635-45f1-ad26-97f26f9b4d0a" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.25 : 2.01482706705729); (9 : 2.01482706705729)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TaxiDataClassesDataContext/Employee/Employee_Course1" />
+      <nodes>
+        <classShapeMoniker Id="94fa6475-7fd6-4ef7-a8d5-4a7dcdc631d1" />
+        <classShapeMoniker Id="b7ebba92-4635-45f1-ad26-97f26f9b4d0a" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 5.375); (5.875 : 5); (5.875 : 5.26121256510417); (5.97232443490112 : 5.16388813020304 : JumpStart); (6.09017556509888 : 5.04603700000529 : JumpEnd); (6.25 : 4.88621256510417)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/TaxiDataClassesDataContext/Driver_status/Driver_status_Employee" />
+      <nodes>
+        <classShapeMoniker Id="0975a9e8-acae-45a8-9e45-6c40605a1b59" />
+        <classShapeMoniker Id="94fa6475-7fd6-4ef7-a8d5-4a7dcdc631d1" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 2.91429768880208); (5.94791666666667 : 2.91429768880208 : JumpStart); (6.11458333333333 : 2.91429768880208 : JumpEnd); (6.25 : 2.91429768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TaxiDataClassesDataContext/Taxi/Taxi_Employee" />
+      <nodes>
+        <classShapeMoniker Id="22ccb724-82f2-4628-b6d6-2972ff0e16cb" />
+        <classShapeMoniker Id="94fa6475-7fd6-4ef7-a8d5-4a7dcdc631d1" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 8.40622649649439); (6.03125 : 7.87497649649439); (6.03125 : 1.92589684440104); (6.25 : 1.92589684440104)]" fixedFrom="NotFixed" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TaxiDataClassesDataContext/Employee_type/Employee_type_Employee" />
+      <nodes>
+        <classShapeMoniker Id="1701fd5c-023d-46b5-931e-f3e8331cb4bd" />
+        <classShapeMoniker Id="94fa6475-7fd6-4ef7-a8d5-4a7dcdc631d1" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

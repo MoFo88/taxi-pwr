@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="yasio1_taxiDb" Class="TaxiDataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=mssql3.webio.pl,2401;Initial Catalog=yasio1_taxiDb;Persist Security Info=True;User ID=yasio1_superuser" SettingsObjectName="DAL.Properties.Settings" SettingsPropertyName="yasio1_taxiDbConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Car_model" Member="Car_models">
+    <Type Name="Car_model">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="producer" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="model" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="production_year" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="seats" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Car_model_Taxi" Member="Taxis" ThisKey="id" OtherKey="car_model_id" Type="Taxi" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Taxi" Member="Taxis">
+    <Type Name="Taxi">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="car_model_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="registration_number" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="taxi_number" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="Taxi_Employee" Member="Employees" ThisKey="id" OtherKey="taxi_id" Type="Employee" />
+      <Association Name="Car_model_Taxi" Member="Car_model" ThisKey="car_model_id" OtherKey="id" Type="Car_model" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Course" Member="Courses">
+    <Type Name="Course">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="client_phone" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="rep_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="taxi_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="startpoint_name" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="startpoint_lat" Type="System.Decimal" DbType="Decimal(11,7) NOT NULL" CanBeNull="false" />
+      <Column Name="startpoint_lon" Type="System.Decimal" DbType="Decimal(11,7) NOT NULL" CanBeNull="false" />
+      <Column Name="endpoint_lat" Type="System.Decimal" DbType="Decimal(11,7) NOT NULL" CanBeNull="false" />
+      <Column Name="endpoint_lon" Type="System.Decimal" DbType="Decimal(11,7) NOT NULL" CanBeNull="false" />
+      <Column Name="course_status_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="course_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="client_name" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Association Name="Course_status_Course" Member="Course_status" ThisKey="course_status_id" OtherKey="id" Type="Course_status" IsForeignKey="true" />
+      <Association Name="Employee_Course" Member="Employee" ThisKey="rep_id" OtherKey="id" Type="Employee" IsForeignKey="true" />
+      <Association Name="Employee_Course1" Member="Employee1" ThisKey="taxi_id" OtherKey="id" Type="Employee" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Course_status" Member="Course_status">
+    <Type Name="Course_status">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Association Name="Course_status_Course" Member="Courses" ThisKey="id" OtherKey="course_status_id" Type="Course" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Driver_status" Member="Driver_status">
+    <Type Name="Driver_status">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Association Name="Driver_status_Employee" Member="Employees" ThisKey="id" OtherKey="driver_status_id" Type="Employee" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Employee" Member="Employees">
+    <Type Name="Employee">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="surname" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="pesel" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="adres" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="e_mail" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="employee_type_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="taxi_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="login" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="password" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="salt" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="position_name" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="licence_number" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="position_lat" Type="System.Decimal" DbType="Decimal(11,7)" CanBeNull="true" />
+      <Column Name="position_lon" Type="System.Decimal" DbType="Decimal(11,7)" CanBeNull="true" />
+      <Column Name="driver_status_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Employee_Course" Member="Courses" ThisKey="id" OtherKey="rep_id" Type="Course" />
+      <Association Name="Employee_Course1" Member="Courses1" ThisKey="id" OtherKey="taxi_id" Type="Course" />
+      <Association Name="Driver_status_Employee" Member="Driver_status" ThisKey="driver_status_id" OtherKey="id" Type="Driver_status" IsForeignKey="true" />
+      <Association Name="Taxi_Employee" Member="Taxi" ThisKey="taxi_id" OtherKey="id" Type="Taxi" IsForeignKey="true" />
+      <Association Name="Employee_type_Employee" Member="Employee_type" ThisKey="employee_type_id" OtherKey="id" Type="Employee_type" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Employee_type" Member="Employee_types">
+    <Type Name="Employee_type">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Employee_type_Employee" Member="Employees" ThisKey="id" OtherKey="employee_type_id" Type="Employee" />
+    </Type>
+  </Table>
+</Database>
