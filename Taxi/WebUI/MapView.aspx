@@ -40,9 +40,11 @@
                    true);
 
                 map.addPopup(popup);
+                popup.setOpacity(0.8);
                 //popup.hide();
 
                 var marker = new OpenLayers.Marker(lonLat);
+                marker.setOpacity(0.5);
 
                 var markers = new OpenLayers.Layer.Markers("Markers");
                 map.addLayer(markers);
