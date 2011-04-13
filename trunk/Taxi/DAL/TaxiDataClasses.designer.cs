@@ -575,8 +575,8 @@ namespace DAL
     partial void OnidChanged();
     partial void Onclient_phoneChanging(string value);
     partial void Onclient_phoneChanged();
-    partial void Onrepositor_idChanging(int value);
-    partial void Onrepositor_idChanged();
+    partial void Ondepositor_idChanging(int value);
+    partial void Ondepositor_idChanged();
     partial void Ontaxidriver_idChanging(int value);
     partial void Ontaxidriver_idChanged();
     partial void OndateChanging(System.DateTime value);
@@ -648,7 +648,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="rep_id", Storage="_rep_id", DbType="Int NOT NULL")]
-		public int repositor_id
+		public int depositor_id
 		{
 			get
 			{
@@ -658,11 +658,11 @@ namespace DAL
 			{
 				if ((this._rep_id != value))
 				{
-					this.Onrepositor_idChanging(value);
+					this.Ondepositor_idChanging(value);
 					this.SendPropertyChanging();
 					this._rep_id = value;
-					this.SendPropertyChanged("repositor_id");
-					this.Onrepositor_idChanged();
+					this.SendPropertyChanged("depositor_id");
+					this.Ondepositor_idChanged();
 				}
 			}
 		}
@@ -905,7 +905,7 @@ namespace DAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Course", Storage="_Employee", ThisKey="repositor_id", OtherKey="id", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Course", Storage="_Employee", ThisKey="depositor_id", OtherKey="id", IsForeignKey=true)]
 		public Employee Employee
 		{
 			get
@@ -1337,6 +1337,9 @@ namespace DAL
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Employee")]
+	[global::System.Data.Linq.Mapping.InheritanceMappingAttribute(Code="0", Type=typeof(Employee), IsDefault=true)]
+	[global::System.Data.Linq.Mapping.InheritanceMappingAttribute(Code="2", Type=typeof(Depositor))]
+	[global::System.Data.Linq.Mapping.InheritanceMappingAttribute(Code="1", Type=typeof(TaxiDriver))]
 	public partial class Employee : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -1574,7 +1577,7 @@ namespace DAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_employee_type_id", DbType="Int NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_employee_type_id", DbType="Int NOT NULL", IsDiscriminator=true)]
 		public int employee_type_id
 		{
 			get
@@ -1678,7 +1681,7 @@ namespace DAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Course", Storage="_Courses", ThisKey="id", OtherKey="repositor_id")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Course", Storage="_Courses", ThisKey="id", OtherKey="depositor_id")]
 		public EntitySet<Course> Courses
 		{
 			get
@@ -1783,7 +1786,7 @@ namespace DAL
 		}
 	}
 	
-	public partial class Repositor : Employee
+	public partial class Depositor : Employee
 	{
 		
     #region Extensibility Method Definitions
@@ -1792,7 +1795,7 @@ namespace DAL
     partial void OnCreated();
     #endregion
 		
-		public Repositor()
+		public Depositor()
 		{
 			OnCreated();
 		}

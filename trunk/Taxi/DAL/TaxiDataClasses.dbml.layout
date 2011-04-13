@@ -59,7 +59,7 @@
       </nestedChildShapes>
     </classShape>
     <classShape Id="d6d2fd41-dffc-482e-8042-a92a01010350" absoluteBounds="1.125, 7.5, 2, 0.80938964843749961">
-      <DataClassMoniker Name="/TaxiDataClassesDataContext/Repositor" />
+      <DataClassMoniker Name="/TaxiDataClassesDataContext/Depositor" />
       <nestedChildShapes>
         <elementListCompartment Id="2b062cd6-9e96-453a-89d0-ebdbbbf49683" absoluteBounds="1.125, 7.5, 0.125, 0.2493896484375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
