@@ -45,12 +45,12 @@ namespace DAL
     partial void InsertDriver_status(Driver_status instance);
     partial void UpdateDriver_status(Driver_status instance);
     partial void DeleteDriver_status(Driver_status instance);
-    partial void InsertEmployee(Employee instance);
-    partial void UpdateEmployee(Employee instance);
-    partial void DeleteEmployee(Employee instance);
     partial void InsertEmployee_type(Employee_type instance);
     partial void UpdateEmployee_type(Employee_type instance);
     partial void DeleteEmployee_type(Employee_type instance);
+    partial void InsertEmployee(Employee instance);
+    partial void UpdateEmployee(Employee instance);
+    partial void DeleteEmployee(Employee instance);
     #endregion
 		
 		public TaxiDataClassesDataContext() : 
@@ -123,19 +123,19 @@ namespace DAL
 			}
 		}
 		
-		public System.Data.Linq.Table<Employee> Employees
-		{
-			get
-			{
-				return this.GetTable<Employee>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Employee_type> Employee_types
 		{
 			get
 			{
 				return this.GetTable<Employee_type>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Employee> Employees
+		{
+			get
+			{
+				return this.GetTable<Employee>();
 			}
 		}
 	}
@@ -340,7 +340,7 @@ namespace DAL
 		
 		private string _taxi_number;
 		
-		private EntitySet<Employee> _Employees;
+		private EntitySet<TaxiDriver> _TaxiDrivers;
 		
 		private EntityRef<Car_model> _Car_model;
 		
@@ -360,7 +360,7 @@ namespace DAL
 		
 		public Taxi()
 		{
-			this._Employees = new EntitySet<Employee>(new Action<Employee>(this.attach_Employees), new Action<Employee>(this.detach_Employees));
+			this._TaxiDrivers = new EntitySet<TaxiDriver>(new Action<TaxiDriver>(this.attach_TaxiDrivers), new Action<TaxiDriver>(this.detach_TaxiDrivers));
 			this._Car_model = default(EntityRef<Car_model>);
 			OnCreated();
 		}
@@ -449,16 +449,16 @@ namespace DAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Taxi_Employee", Storage="_Employees", ThisKey="id", OtherKey="taxi_id")]
-		public EntitySet<Employee> Employees
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Taxi_TaxiDriver", Storage="_TaxiDrivers", ThisKey="id", OtherKey="taxi_id")]
+		public EntitySet<TaxiDriver> TaxiDrivers
 		{
 			get
 			{
-				return this._Employees;
+				return this._TaxiDrivers;
 			}
 			set
 			{
-				this._Employees.Assign(value);
+				this._TaxiDrivers.Assign(value);
 			}
 		}
 		
@@ -516,13 +516,13 @@ namespace DAL
 			}
 		}
 		
-		private void attach_Employees(Employee entity)
+		private void attach_TaxiDrivers(TaxiDriver entity)
 		{
 			this.SendPropertyChanging();
 			entity.Taxi = this;
 		}
 		
-		private void detach_Employees(Employee entity)
+		private void detach_TaxiDrivers(TaxiDriver entity)
 		{
 			this.SendPropertyChanging();
 			entity.Taxi = null;
@@ -575,10 +575,10 @@ namespace DAL
     partial void OnidChanged();
     partial void Onclient_phoneChanging(string value);
     partial void Onclient_phoneChanged();
-    partial void Onrep_idChanging(int value);
-    partial void Onrep_idChanged();
-    partial void Ontaxi_idChanging(int value);
-    partial void Ontaxi_idChanged();
+    partial void Onrepositor_idChanging(int value);
+    partial void Onrepositor_idChanged();
+    partial void Ontaxidriver_idChanging(int value);
+    partial void Ontaxidriver_idChanged();
     partial void OndateChanging(System.DateTime value);
     partial void OndateChanged();
     partial void Onstartpoint_nameChanging(string value);
@@ -647,8 +647,8 @@ namespace DAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_rep_id", DbType="Int NOT NULL")]
-		public int rep_id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="rep_id", Storage="_rep_id", DbType="Int NOT NULL")]
+		public int repositor_id
 		{
 			get
 			{
@@ -658,21 +658,17 @@ namespace DAL
 			{
 				if ((this._rep_id != value))
 				{
-					if (this._Employee.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onrep_idChanging(value);
+					this.Onrepositor_idChanging(value);
 					this.SendPropertyChanging();
 					this._rep_id = value;
-					this.SendPropertyChanged("rep_id");
-					this.Onrep_idChanged();
+					this.SendPropertyChanged("repositor_id");
+					this.Onrepositor_idChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_taxi_id", DbType="Int NOT NULL")]
-		public int taxi_id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="taxi_id", Storage="_taxi_id", DbType="Int NOT NULL")]
+		public int taxidriver_id
 		{
 			get
 			{
@@ -682,15 +678,11 @@ namespace DAL
 			{
 				if ((this._taxi_id != value))
 				{
-					if (this._Employee1.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Ontaxi_idChanging(value);
+					this.Ontaxidriver_idChanging(value);
 					this.SendPropertyChanging();
 					this._taxi_id = value;
-					this.SendPropertyChanged("taxi_id");
-					this.Ontaxi_idChanged();
+					this.SendPropertyChanged("taxidriver_id");
+					this.Ontaxidriver_idChanged();
 				}
 			}
 		}
@@ -913,7 +905,7 @@ namespace DAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Course", Storage="_Employee", ThisKey="rep_id", OtherKey="id", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Course", Storage="_Employee", ThisKey="repositor_id", OtherKey="id", IsForeignKey=true)]
 		public Employee Employee
 		{
 			get
@@ -947,7 +939,7 @@ namespace DAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Course1", Storage="_Employee1", ThisKey="taxi_id", OtherKey="id", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Course1", Storage="_Employee1", ThisKey="taxidriver_id", OtherKey="id", IsForeignKey=true)]
 		public Employee Employee1
 		{
 			get
@@ -1126,7 +1118,7 @@ namespace DAL
 		
 		private string _name;
 		
-		private EntitySet<Employee> _Employees;
+		private EntitySet<TaxiDriver> _TaxiDrivers;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1140,7 +1132,7 @@ namespace DAL
 		
 		public Driver_status()
 		{
-			this._Employees = new EntitySet<Employee>(new Action<Employee>(this.attach_Employees), new Action<Employee>(this.detach_Employees));
+			this._TaxiDrivers = new EntitySet<TaxiDriver>(new Action<TaxiDriver>(this.attach_TaxiDrivers), new Action<TaxiDriver>(this.detach_TaxiDrivers));
 			OnCreated();
 		}
 		
@@ -1184,16 +1176,16 @@ namespace DAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Driver_status_Employee", Storage="_Employees", ThisKey="id", OtherKey="driver_status_id")]
-		public EntitySet<Employee> Employees
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Driver_status_TaxiDriver", Storage="_TaxiDrivers", ThisKey="id", OtherKey="driver_status_id")]
+		public EntitySet<TaxiDriver> TaxiDrivers
 		{
 			get
 			{
-				return this._Employees;
+				return this._TaxiDrivers;
 			}
 			set
 			{
-				this._Employees.Assign(value);
+				this._TaxiDrivers.Assign(value);
 			}
 		}
 		
@@ -1217,617 +1209,16 @@ namespace DAL
 			}
 		}
 		
-		private void attach_Employees(Employee entity)
+		private void attach_TaxiDrivers(TaxiDriver entity)
 		{
 			this.SendPropertyChanging();
 			entity.Driver_status = this;
 		}
 		
-		private void detach_Employees(Employee entity)
+		private void detach_TaxiDrivers(TaxiDriver entity)
 		{
 			this.SendPropertyChanging();
 			entity.Driver_status = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Employee")]
-	public partial class Employee : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private string _name;
-		
-		private string _surname;
-		
-		private System.Nullable<int> _pesel;
-		
-		private string _adres;
-		
-		private string _e_mail;
-		
-		private int _employee_type_id;
-		
-		private System.Nullable<int> _taxi_id;
-		
-		private string _login;
-		
-		private string _password;
-		
-		private string _salt;
-		
-		private string _position_name;
-		
-		private string _licence_number;
-		
-		private System.Nullable<decimal> _position_lat;
-		
-		private System.Nullable<decimal> _position_lon;
-		
-		private System.Nullable<int> _driver_status_id;
-		
-		private EntitySet<Course> _Courses;
-		
-		private EntitySet<Course> _Courses1;
-		
-		private EntityRef<Driver_status> _Driver_status;
-		
-		private EntityRef<Taxi> _Taxi;
-		
-		private EntityRef<Employee_type> _Employee_type;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnnameChanging(string value);
-    partial void OnnameChanged();
-    partial void OnsurnameChanging(string value);
-    partial void OnsurnameChanged();
-    partial void OnpeselChanging(System.Nullable<int> value);
-    partial void OnpeselChanged();
-    partial void OnadresChanging(string value);
-    partial void OnadresChanged();
-    partial void One_mailChanging(string value);
-    partial void One_mailChanged();
-    partial void Onemployee_type_idChanging(int value);
-    partial void Onemployee_type_idChanged();
-    partial void Ontaxi_idChanging(System.Nullable<int> value);
-    partial void Ontaxi_idChanged();
-    partial void OnloginChanging(string value);
-    partial void OnloginChanged();
-    partial void OnpasswordChanging(string value);
-    partial void OnpasswordChanged();
-    partial void OnsaltChanging(string value);
-    partial void OnsaltChanged();
-    partial void Onposition_nameChanging(string value);
-    partial void Onposition_nameChanged();
-    partial void Onlicence_numberChanging(string value);
-    partial void Onlicence_numberChanged();
-    partial void Onposition_latChanging(System.Nullable<decimal> value);
-    partial void Onposition_latChanged();
-    partial void Onposition_lonChanging(System.Nullable<decimal> value);
-    partial void Onposition_lonChanged();
-    partial void Ondriver_status_idChanging(System.Nullable<int> value);
-    partial void Ondriver_status_idChanged();
-    #endregion
-		
-		public Employee()
-		{
-			this._Courses = new EntitySet<Course>(new Action<Course>(this.attach_Courses), new Action<Course>(this.detach_Courses));
-			this._Courses1 = new EntitySet<Course>(new Action<Course>(this.attach_Courses1), new Action<Course>(this.detach_Courses1));
-			this._Driver_status = default(EntityRef<Driver_status>);
-			this._Taxi = default(EntityRef<Taxi>);
-			this._Employee_type = default(EntityRef<Employee_type>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string name
-		{
-			get
-			{
-				return this._name;
-			}
-			set
-			{
-				if ((this._name != value))
-				{
-					this.OnnameChanging(value);
-					this.SendPropertyChanging();
-					this._name = value;
-					this.SendPropertyChanged("name");
-					this.OnnameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_surname", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
-		public string surname
-		{
-			get
-			{
-				return this._surname;
-			}
-			set
-			{
-				if ((this._surname != value))
-				{
-					this.OnsurnameChanging(value);
-					this.SendPropertyChanging();
-					this._surname = value;
-					this.SendPropertyChanged("surname");
-					this.OnsurnameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pesel", DbType="Int")]
-		public System.Nullable<int> pesel
-		{
-			get
-			{
-				return this._pesel;
-			}
-			set
-			{
-				if ((this._pesel != value))
-				{
-					this.OnpeselChanging(value);
-					this.SendPropertyChanging();
-					this._pesel = value;
-					this.SendPropertyChanged("pesel");
-					this.OnpeselChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_adres", DbType="VarChar(250)")]
-		public string adres
-		{
-			get
-			{
-				return this._adres;
-			}
-			set
-			{
-				if ((this._adres != value))
-				{
-					this.OnadresChanging(value);
-					this.SendPropertyChanging();
-					this._adres = value;
-					this.SendPropertyChanged("adres");
-					this.OnadresChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_e_mail", DbType="VarChar(150)")]
-		public string e_mail
-		{
-			get
-			{
-				return this._e_mail;
-			}
-			set
-			{
-				if ((this._e_mail != value))
-				{
-					this.One_mailChanging(value);
-					this.SendPropertyChanging();
-					this._e_mail = value;
-					this.SendPropertyChanged("e_mail");
-					this.One_mailChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_employee_type_id", DbType="Int NOT NULL")]
-		public int employee_type_id
-		{
-			get
-			{
-				return this._employee_type_id;
-			}
-			set
-			{
-				if ((this._employee_type_id != value))
-				{
-					if (this._Employee_type.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onemployee_type_idChanging(value);
-					this.SendPropertyChanging();
-					this._employee_type_id = value;
-					this.SendPropertyChanged("employee_type_id");
-					this.Onemployee_type_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_taxi_id", DbType="Int")]
-		public System.Nullable<int> taxi_id
-		{
-			get
-			{
-				return this._taxi_id;
-			}
-			set
-			{
-				if ((this._taxi_id != value))
-				{
-					if (this._Taxi.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Ontaxi_idChanging(value);
-					this.SendPropertyChanging();
-					this._taxi_id = value;
-					this.SendPropertyChanged("taxi_id");
-					this.Ontaxi_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_login", DbType="VarChar(50)")]
-		public string login
-		{
-			get
-			{
-				return this._login;
-			}
-			set
-			{
-				if ((this._login != value))
-				{
-					this.OnloginChanging(value);
-					this.SendPropertyChanging();
-					this._login = value;
-					this.SendPropertyChanged("login");
-					this.OnloginChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_password", DbType="VarChar(50)")]
-		public string password
-		{
-			get
-			{
-				return this._password;
-			}
-			set
-			{
-				if ((this._password != value))
-				{
-					this.OnpasswordChanging(value);
-					this.SendPropertyChanging();
-					this._password = value;
-					this.SendPropertyChanged("password");
-					this.OnpasswordChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_salt", DbType="VarChar(50)")]
-		public string salt
-		{
-			get
-			{
-				return this._salt;
-			}
-			set
-			{
-				if ((this._salt != value))
-				{
-					this.OnsaltChanging(value);
-					this.SendPropertyChanging();
-					this._salt = value;
-					this.SendPropertyChanged("salt");
-					this.OnsaltChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_position_name", DbType="VarChar(150)")]
-		public string position_name
-		{
-			get
-			{
-				return this._position_name;
-			}
-			set
-			{
-				if ((this._position_name != value))
-				{
-					this.Onposition_nameChanging(value);
-					this.SendPropertyChanging();
-					this._position_name = value;
-					this.SendPropertyChanged("position_name");
-					this.Onposition_nameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_licence_number", DbType="VarChar(50)")]
-		public string licence_number
-		{
-			get
-			{
-				return this._licence_number;
-			}
-			set
-			{
-				if ((this._licence_number != value))
-				{
-					this.Onlicence_numberChanging(value);
-					this.SendPropertyChanging();
-					this._licence_number = value;
-					this.SendPropertyChanged("licence_number");
-					this.Onlicence_numberChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_position_lat", DbType="Decimal(11,7)")]
-		public System.Nullable<decimal> position_lat
-		{
-			get
-			{
-				return this._position_lat;
-			}
-			set
-			{
-				if ((this._position_lat != value))
-				{
-					this.Onposition_latChanging(value);
-					this.SendPropertyChanging();
-					this._position_lat = value;
-					this.SendPropertyChanged("position_lat");
-					this.Onposition_latChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_position_lon", DbType="Decimal(11,7)")]
-		public System.Nullable<decimal> position_lon
-		{
-			get
-			{
-				return this._position_lon;
-			}
-			set
-			{
-				if ((this._position_lon != value))
-				{
-					this.Onposition_lonChanging(value);
-					this.SendPropertyChanging();
-					this._position_lon = value;
-					this.SendPropertyChanged("position_lon");
-					this.Onposition_lonChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_driver_status_id", DbType="Int")]
-		public System.Nullable<int> driver_status_id
-		{
-			get
-			{
-				return this._driver_status_id;
-			}
-			set
-			{
-				if ((this._driver_status_id != value))
-				{
-					if (this._Driver_status.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Ondriver_status_idChanging(value);
-					this.SendPropertyChanging();
-					this._driver_status_id = value;
-					this.SendPropertyChanged("driver_status_id");
-					this.Ondriver_status_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Course", Storage="_Courses", ThisKey="id", OtherKey="rep_id")]
-		public EntitySet<Course> Courses
-		{
-			get
-			{
-				return this._Courses;
-			}
-			set
-			{
-				this._Courses.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Course1", Storage="_Courses1", ThisKey="id", OtherKey="taxi_id")]
-		public EntitySet<Course> Courses1
-		{
-			get
-			{
-				return this._Courses1;
-			}
-			set
-			{
-				this._Courses1.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Driver_status_Employee", Storage="_Driver_status", ThisKey="driver_status_id", OtherKey="id", IsForeignKey=true)]
-		public Driver_status Driver_status
-		{
-			get
-			{
-				return this._Driver_status.Entity;
-			}
-			set
-			{
-				Driver_status previousValue = this._Driver_status.Entity;
-				if (((previousValue != value) 
-							|| (this._Driver_status.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Driver_status.Entity = null;
-						previousValue.Employees.Remove(this);
-					}
-					this._Driver_status.Entity = value;
-					if ((value != null))
-					{
-						value.Employees.Add(this);
-						this._driver_status_id = value.id;
-					}
-					else
-					{
-						this._driver_status_id = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Driver_status");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Taxi_Employee", Storage="_Taxi", ThisKey="taxi_id", OtherKey="id", IsForeignKey=true)]
-		public Taxi Taxi
-		{
-			get
-			{
-				return this._Taxi.Entity;
-			}
-			set
-			{
-				Taxi previousValue = this._Taxi.Entity;
-				if (((previousValue != value) 
-							|| (this._Taxi.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Taxi.Entity = null;
-						previousValue.Employees.Remove(this);
-					}
-					this._Taxi.Entity = value;
-					if ((value != null))
-					{
-						value.Employees.Add(this);
-						this._taxi_id = value.id;
-					}
-					else
-					{
-						this._taxi_id = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Taxi");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_type_Employee", Storage="_Employee_type", ThisKey="employee_type_id", OtherKey="id", IsForeignKey=true)]
-		public Employee_type Employee_type
-		{
-			get
-			{
-				return this._Employee_type.Entity;
-			}
-			set
-			{
-				Employee_type previousValue = this._Employee_type.Entity;
-				if (((previousValue != value) 
-							|| (this._Employee_type.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Employee_type.Entity = null;
-						previousValue.Employees.Remove(this);
-					}
-					this._Employee_type.Entity = value;
-					if ((value != null))
-					{
-						value.Employees.Add(this);
-						this._employee_type_id = value.id;
-					}
-					else
-					{
-						this._employee_type_id = default(int);
-					}
-					this.SendPropertyChanged("Employee_type");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Courses(Course entity)
-		{
-			this.SendPropertyChanging();
-			entity.Employee = this;
-		}
-		
-		private void detach_Courses(Course entity)
-		{
-			this.SendPropertyChanging();
-			entity.Employee = null;
-		}
-		
-		private void attach_Courses1(Course entity)
-		{
-			this.SendPropertyChanging();
-			entity.Employee1 = this;
-		}
-		
-		private void detach_Courses1(Course entity)
-		{
-			this.SendPropertyChanging();
-			entity.Employee1 = null;
 		}
 	}
 	
@@ -1942,6 +1333,709 @@ namespace DAL
 		{
 			this.SendPropertyChanging();
 			entity.Employee_type = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Employee")]
+	public partial class Employee : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _name;
+		
+		private string _surname;
+		
+		private System.Nullable<int> _pesel;
+		
+		private string _house_nr;
+		
+		private string _postal_code;
+		
+		private string _city;
+		
+		private string _e_mail;
+		
+		private int _employee_type_id;
+		
+		private string _login;
+		
+		private string _password;
+		
+		private string _salt;
+		
+		private string _telephone;
+		
+		private EntitySet<Course> _Courses;
+		
+		private EntitySet<Course> _Courses1;
+		
+		private EntityRef<Employee_type> _Employee_type;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
+    partial void OnsurnameChanging(string value);
+    partial void OnsurnameChanged();
+    partial void OnpeselChanging(System.Nullable<int> value);
+    partial void OnpeselChanged();
+    partial void Onhouse_nrChanging(string value);
+    partial void Onhouse_nrChanged();
+    partial void Onpostal_codeChanging(string value);
+    partial void Onpostal_codeChanged();
+    partial void OncityChanging(string value);
+    partial void OncityChanged();
+    partial void One_mailChanging(string value);
+    partial void One_mailChanged();
+    partial void Onemployee_type_idChanging(int value);
+    partial void Onemployee_type_idChanged();
+    partial void OnloginChanging(string value);
+    partial void OnloginChanged();
+    partial void OnpasswordChanging(string value);
+    partial void OnpasswordChanged();
+    partial void OnsaltChanging(string value);
+    partial void OnsaltChanged();
+    partial void OntelephoneChanging(string value);
+    partial void OntelephoneChanged();
+    #endregion
+		
+		public Employee()
+		{
+			this._Courses = new EntitySet<Course>(new Action<Course>(this.attach_Courses), new Action<Course>(this.detach_Courses));
+			this._Courses1 = new EntitySet<Course>(new Action<Course>(this.attach_Courses1), new Action<Course>(this.detach_Courses1));
+			this._Employee_type = default(EntityRef<Employee_type>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this.OnnameChanging(value);
+					this.SendPropertyChanging();
+					this._name = value;
+					this.SendPropertyChanged("name");
+					this.OnnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_surname", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+		public string surname
+		{
+			get
+			{
+				return this._surname;
+			}
+			set
+			{
+				if ((this._surname != value))
+				{
+					this.OnsurnameChanging(value);
+					this.SendPropertyChanging();
+					this._surname = value;
+					this.SendPropertyChanged("surname");
+					this.OnsurnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pesel", DbType="Int")]
+		public System.Nullable<int> pesel
+		{
+			get
+			{
+				return this._pesel;
+			}
+			set
+			{
+				if ((this._pesel != value))
+				{
+					this.OnpeselChanging(value);
+					this.SendPropertyChanging();
+					this._pesel = value;
+					this.SendPropertyChanged("pesel");
+					this.OnpeselChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_house_nr", DbType="VarChar(10)")]
+		public string house_nr
+		{
+			get
+			{
+				return this._house_nr;
+			}
+			set
+			{
+				if ((this._house_nr != value))
+				{
+					this.Onhouse_nrChanging(value);
+					this.SendPropertyChanging();
+					this._house_nr = value;
+					this.SendPropertyChanged("house_nr");
+					this.Onhouse_nrChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_postal_code", DbType="VarChar(10)")]
+		public string postal_code
+		{
+			get
+			{
+				return this._postal_code;
+			}
+			set
+			{
+				if ((this._postal_code != value))
+				{
+					this.Onpostal_codeChanging(value);
+					this.SendPropertyChanging();
+					this._postal_code = value;
+					this.SendPropertyChanged("postal_code");
+					this.Onpostal_codeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_city", DbType="VarChar(50)")]
+		public string city
+		{
+			get
+			{
+				return this._city;
+			}
+			set
+			{
+				if ((this._city != value))
+				{
+					this.OncityChanging(value);
+					this.SendPropertyChanging();
+					this._city = value;
+					this.SendPropertyChanged("city");
+					this.OncityChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_e_mail", DbType="VarChar(150)")]
+		public string e_mail
+		{
+			get
+			{
+				return this._e_mail;
+			}
+			set
+			{
+				if ((this._e_mail != value))
+				{
+					this.One_mailChanging(value);
+					this.SendPropertyChanging();
+					this._e_mail = value;
+					this.SendPropertyChanged("e_mail");
+					this.One_mailChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_employee_type_id", DbType="Int NOT NULL")]
+		public int employee_type_id
+		{
+			get
+			{
+				return this._employee_type_id;
+			}
+			set
+			{
+				if ((this._employee_type_id != value))
+				{
+					if (this._Employee_type.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onemployee_type_idChanging(value);
+					this.SendPropertyChanging();
+					this._employee_type_id = value;
+					this.SendPropertyChanged("employee_type_id");
+					this.Onemployee_type_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_login", DbType="VarChar(50)")]
+		public string login
+		{
+			get
+			{
+				return this._login;
+			}
+			set
+			{
+				if ((this._login != value))
+				{
+					this.OnloginChanging(value);
+					this.SendPropertyChanging();
+					this._login = value;
+					this.SendPropertyChanged("login");
+					this.OnloginChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_password", DbType="VarChar(50)")]
+		public string password
+		{
+			get
+			{
+				return this._password;
+			}
+			set
+			{
+				if ((this._password != value))
+				{
+					this.OnpasswordChanging(value);
+					this.SendPropertyChanging();
+					this._password = value;
+					this.SendPropertyChanged("password");
+					this.OnpasswordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_salt", DbType="Char(8)")]
+		public string salt
+		{
+			get
+			{
+				return this._salt;
+			}
+			set
+			{
+				if ((this._salt != value))
+				{
+					this.OnsaltChanging(value);
+					this.SendPropertyChanging();
+					this._salt = value;
+					this.SendPropertyChanged("salt");
+					this.OnsaltChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_telephone", DbType="VarChar(20)")]
+		public string telephone
+		{
+			get
+			{
+				return this._telephone;
+			}
+			set
+			{
+				if ((this._telephone != value))
+				{
+					this.OntelephoneChanging(value);
+					this.SendPropertyChanging();
+					this._telephone = value;
+					this.SendPropertyChanged("telephone");
+					this.OntelephoneChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Course", Storage="_Courses", ThisKey="id", OtherKey="repositor_id")]
+		public EntitySet<Course> Courses
+		{
+			get
+			{
+				return this._Courses;
+			}
+			set
+			{
+				this._Courses.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Course1", Storage="_Courses1", ThisKey="id", OtherKey="taxidriver_id")]
+		public EntitySet<Course> Courses1
+		{
+			get
+			{
+				return this._Courses1;
+			}
+			set
+			{
+				this._Courses1.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_type_Employee", Storage="_Employee_type", ThisKey="employee_type_id", OtherKey="id", IsForeignKey=true)]
+		public Employee_type Employee_type
+		{
+			get
+			{
+				return this._Employee_type.Entity;
+			}
+			set
+			{
+				Employee_type previousValue = this._Employee_type.Entity;
+				if (((previousValue != value) 
+							|| (this._Employee_type.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Employee_type.Entity = null;
+						previousValue.Employees.Remove(this);
+					}
+					this._Employee_type.Entity = value;
+					if ((value != null))
+					{
+						value.Employees.Add(this);
+						this._employee_type_id = value.id;
+					}
+					else
+					{
+						this._employee_type_id = default(int);
+					}
+					this.SendPropertyChanged("Employee_type");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Courses(Course entity)
+		{
+			this.SendPropertyChanging();
+			entity.Employee = this;
+		}
+		
+		private void detach_Courses(Course entity)
+		{
+			this.SendPropertyChanging();
+			entity.Employee = null;
+		}
+		
+		private void attach_Courses1(Course entity)
+		{
+			this.SendPropertyChanging();
+			entity.Employee1 = this;
+		}
+		
+		private void detach_Courses1(Course entity)
+		{
+			this.SendPropertyChanging();
+			entity.Employee1 = null;
+		}
+	}
+	
+	public partial class Repositor : Employee
+	{
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    #endregion
+		
+		public Repositor()
+		{
+			OnCreated();
+		}
+	}
+	
+	public partial class TaxiDriver : Employee
+	{
+		
+		private System.Nullable<int> _taxi_id;
+		
+		private string _position_name;
+		
+		private System.Nullable<decimal> _position_lon;
+		
+		private System.Nullable<int> _driver_status_id;
+		
+		private System.Nullable<decimal> _position_lat;
+		
+		private string _licence_number;
+		
+		private EntityRef<Taxi> _Taxi;
+		
+		private EntityRef<Driver_status> _Driver_status;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Ontaxi_idChanging(System.Nullable<int> value);
+    partial void Ontaxi_idChanged();
+    partial void Onposition_nameChanging(string value);
+    partial void Onposition_nameChanged();
+    partial void Onposition_lonChanging(System.Nullable<decimal> value);
+    partial void Onposition_lonChanged();
+    partial void Ondriver_status_idChanging(System.Nullable<int> value);
+    partial void Ondriver_status_idChanged();
+    partial void Onposition_latChanging(System.Nullable<decimal> value);
+    partial void Onposition_latChanged();
+    partial void Onlicence_numberChanging(string value);
+    partial void Onlicence_numberChanged();
+    #endregion
+		
+		public TaxiDriver()
+		{
+			this._Taxi = default(EntityRef<Taxi>);
+			this._Driver_status = default(EntityRef<Driver_status>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_taxi_id", DbType="Int")]
+		public System.Nullable<int> taxi_id
+		{
+			get
+			{
+				return this._taxi_id;
+			}
+			set
+			{
+				if ((this._taxi_id != value))
+				{
+					if (this._Taxi.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Ontaxi_idChanging(value);
+					this.SendPropertyChanging();
+					this._taxi_id = value;
+					this.SendPropertyChanged("taxi_id");
+					this.Ontaxi_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_position_name", DbType="VarChar(150)")]
+		public string position_name
+		{
+			get
+			{
+				return this._position_name;
+			}
+			set
+			{
+				if ((this._position_name != value))
+				{
+					this.Onposition_nameChanging(value);
+					this.SendPropertyChanging();
+					this._position_name = value;
+					this.SendPropertyChanged("position_name");
+					this.Onposition_nameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_position_lon", DbType="Decimal(11,7)")]
+		public System.Nullable<decimal> position_lon
+		{
+			get
+			{
+				return this._position_lon;
+			}
+			set
+			{
+				if ((this._position_lon != value))
+				{
+					this.Onposition_lonChanging(value);
+					this.SendPropertyChanging();
+					this._position_lon = value;
+					this.SendPropertyChanged("position_lon");
+					this.Onposition_lonChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_driver_status_id", DbType="Int")]
+		public System.Nullable<int> driver_status_id
+		{
+			get
+			{
+				return this._driver_status_id;
+			}
+			set
+			{
+				if ((this._driver_status_id != value))
+				{
+					if (this._Driver_status.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Ondriver_status_idChanging(value);
+					this.SendPropertyChanging();
+					this._driver_status_id = value;
+					this.SendPropertyChanged("driver_status_id");
+					this.Ondriver_status_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_position_lat", DbType="Decimal(11,7)")]
+		public System.Nullable<decimal> position_lat
+		{
+			get
+			{
+				return this._position_lat;
+			}
+			set
+			{
+				if ((this._position_lat != value))
+				{
+					this.Onposition_latChanging(value);
+					this.SendPropertyChanging();
+					this._position_lat = value;
+					this.SendPropertyChanged("position_lat");
+					this.Onposition_latChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_licence_number", DbType="VarChar(50)")]
+		public string licence_number
+		{
+			get
+			{
+				return this._licence_number;
+			}
+			set
+			{
+				if ((this._licence_number != value))
+				{
+					this.Onlicence_numberChanging(value);
+					this.SendPropertyChanging();
+					this._licence_number = value;
+					this.SendPropertyChanged("licence_number");
+					this.Onlicence_numberChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Taxi_TaxiDriver", Storage="_Taxi", ThisKey="taxi_id", OtherKey="id", IsForeignKey=true)]
+		public Taxi Taxi
+		{
+			get
+			{
+				return this._Taxi.Entity;
+			}
+			set
+			{
+				Taxi previousValue = this._Taxi.Entity;
+				if (((previousValue != value) 
+							|| (this._Taxi.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Taxi.Entity = null;
+						previousValue.TaxiDrivers.Remove(this);
+					}
+					this._Taxi.Entity = value;
+					if ((value != null))
+					{
+						value.TaxiDrivers.Add(this);
+						this._taxi_id = value.id;
+					}
+					else
+					{
+						this._taxi_id = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Taxi");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Driver_status_TaxiDriver", Storage="_Driver_status", ThisKey="driver_status_id", OtherKey="id", IsForeignKey=true)]
+		public Driver_status Driver_status
+		{
+			get
+			{
+				return this._Driver_status.Entity;
+			}
+			set
+			{
+				Driver_status previousValue = this._Driver_status.Entity;
+				if (((previousValue != value) 
+							|| (this._Driver_status.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Driver_status.Entity = null;
+						previousValue.TaxiDrivers.Remove(this);
+					}
+					this._Driver_status.Entity = value;
+					if ((value != null))
+					{
+						value.TaxiDrivers.Add(this);
+						this._driver_status_id = value.id;
+					}
+					else
+					{
+						this._driver_status_id = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Driver_status");
+				}
+			}
 		}
 	}
 }

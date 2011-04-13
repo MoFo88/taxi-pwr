@@ -8,6 +8,10 @@ namespace BLL
 {
     public class Repository
     {
+        /// <summary>
+        /// Funkcja zwraca Listę Typów użytkownika
+        /// </summary>
+        /// <returns>List of Employee_type</returns>
         public static List<Employee_type> GetAllEmployeeTypes()
         {
             //get data context
@@ -19,5 +23,7 @@ namespace BLL
 
             return x.ToList();
         }
+
+
     }
 }
