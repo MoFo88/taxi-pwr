@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{5
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{3513A677-14BE-4165-A18D-CF2C4812367C}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebUI", "WebUI\", "{4339E5B1-FCBF-44BA-B58F-B57DABFEF4E0}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebUI", "WebUI", "{4339E5B1-FCBF-44BA-B58F-B57DABFEF4E0}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
 		ProjectReferences = "{52142320-3951-45EC-9D09-EB16D074745E}|BLL.dll;{3513A677-14BE-4165-A18D-CF2C4812367C}|DAL.dll;"
@@ -27,7 +27,19 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebUI", "WebUI\", "{4339E5B
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{B7A6E9C4-320D-4C86-B55F-A297BD7460F3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EC796D8C-6861-4EE8-ADDD-99D260F55662}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		Taxi.vsmdi = Taxi.vsmdi
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Taxi.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -45,6 +57,10 @@ Global
 		{4339E5B1-FCBF-44BA-B58F-B57DABFEF4E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4339E5B1-FCBF-44BA-B58F-B57DABFEF4E0}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{4339E5B1-FCBF-44BA-B58F-B57DABFEF4E0}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{B7A6E9C4-320D-4C86-B55F-A297BD7460F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7A6E9C4-320D-4C86-B55F-A297BD7460F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7A6E9C4-320D-4C86-B55F-A297BD7460F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7A6E9C4-320D-4C86-B55F-A297BD7460F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
