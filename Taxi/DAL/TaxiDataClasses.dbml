@@ -24,7 +24,7 @@
     <Type Name="Course">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="client_phone" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
-      <Column Name="rep_id" Member="repositor_id" Storage="_rep_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="rep_id" Member="depositor_id" Storage="_rep_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="taxi_id" Member="taxidriver_id" Storage="_taxi_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="startpoint_name" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
@@ -36,7 +36,7 @@
       <Column Name="course_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="client_name" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
       <Association Name="Course_status_Course" Member="Course_status" ThisKey="course_status_id" OtherKey="id" Type="Course_status" IsForeignKey="true" />
-      <Association Name="Employee_Course" Member="Employee" ThisKey="repositor_id" OtherKey="id" Type="Employee" IsForeignKey="true" />
+      <Association Name="Employee_Course" Member="Employee" ThisKey="depositor_id" OtherKey="id" Type="Employee" IsForeignKey="true" />
       <Association Name="Employee_Course1" Member="Employee1" ThisKey="taxidriver_id" OtherKey="id" Type="Employee" IsForeignKey="true" />
     </Type>
   </Table>
@@ -62,7 +62,7 @@
     </Type>
   </Table>
   <Table Name="dbo.Employee" Member="Employees">
-    <Type Name="Employee">
+    <Type Name="Employee" InheritanceCode="0" IsInheritanceDefault="true">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="surname" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
@@ -71,16 +71,16 @@
       <Column Name="postal_code" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
       <Column Name="city" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="e_mail" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
-      <Column Name="employee_type_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="employee_type_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" IsDiscriminator="true" />
       <Column Name="login" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="password" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="salt" Type="System.String" DbType="Char(8)" CanBeNull="true" />
       <Column Name="telephone" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Association Name="Employee_Course" Member="Courses" ThisKey="id" OtherKey="repositor_id" Type="Course" />
+      <Association Name="Employee_Course" Member="Courses" ThisKey="id" OtherKey="depositor_id" Type="Course" />
       <Association Name="Employee_Course1" Member="Courses1" ThisKey="id" OtherKey="taxidriver_id" Type="Course" />
       <Association Name="Employee_type_Employee" Member="Employee_type" ThisKey="employee_type_id" OtherKey="id" Type="Employee_type" IsForeignKey="true" />
-      <Type Name="Repositor" />
-      <Type Name="TaxiDriver">
+      <Type Name="Depositor" InheritanceCode="2" />
+      <Type Name="TaxiDriver" InheritanceCode="1">
         <Column Name="taxi_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
         <Column Name="position_name" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
         <Column Name="position_lon" Type="System.Decimal" DbType="Decimal(11,7)" CanBeNull="true" />
