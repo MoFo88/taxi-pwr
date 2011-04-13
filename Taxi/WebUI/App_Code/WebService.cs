@@ -17,14 +17,13 @@ using DAL;
 public class WebService : System.Web.Services.WebService {
 
     public WebService () {
-
         //Uncomment the following line if using designed components 
         //InitializeComponent(); 
     }
 
 
     [WebMethod]
-    public List<Employee_type> GetEmployeeTypes() {
+    public List<Employee_type> GetEmployeeAllTypes() {
         return Repository.GetAllEmployeeTypes();
     }
     

@@ -13,5 +13,6 @@
     </h2>
     <asp:GridView ID="GridView1" runat="server">
     </asp:GridView>
-
+    <asp:LinqDataSource ID="LinqDataSource1" runat="server" EntityTypeName="">
+    </asp:LinqDataSource>
 </asp:Content>
