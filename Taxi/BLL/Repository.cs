@@ -186,6 +186,34 @@ namespace BLL
             
             return e;
         }
+
+        public static void addNewCourse(int taxidriver_id, int depositor_id, String client_phone, DateTime course_date, int course_status_id, String client_name,
+            String startpoint_name, Decimal startpoint_lon,Decimal startpoint_lat, Decimal endpoint_lon, Decimal endpoint_lat)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            Course course = new Course();
+            course.client_phone=client_phone;
+            course.date=System.DateTime.Now;
+            course.course_date = course_date;
+            course.client_name = client_name;
+            course.course_status_id = course_status_id;
+            course.depositor_id = depositor_id;
+            course.taxidriver_id = taxidriver_id;
+            course.startpoint_lat = startpoint_lat;
+            course.startpoint_lon = startpoint_lon;
+            course.endpoint_lat = endpoint_lat;
+            course.endpoint_lon = endpoint_lon;
+            try
+            {
+                ctx.Courses.InsertOnSubmit(course);
+                ctx.SubmitChanges();
+            }
+            catch (Exception e)
+            {
+                
+            }
+
+        }
     }
 
     
