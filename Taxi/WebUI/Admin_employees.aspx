@@ -68,10 +68,10 @@
     
 
         <br />
-        <asp:Label ID="Label8" runat="server" AssociatedControlID="Button_add" 
+        <asp:Label ID="Label8" runat="server" AssociatedControlID="Button_add_employee" 
             Text="Akcje"></asp:Label>
-        <asp:Button ID="Button_add" runat="server" Text="Dodaj" 
-            onclick="Button_add_Click" />
+        <asp:Button ID="Button_add_employee" runat="server" 
+            onclick="Button_add_employee_Click" Text="Button" />
 
         <h2>Lista pracowników</h2>
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" 
