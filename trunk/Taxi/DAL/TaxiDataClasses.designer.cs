@@ -1351,7 +1351,7 @@ namespace DAL
 		
 		private string _surname;
 		
-		private System.Nullable<int> _pesel;
+		private string _pesel;
 		
 		private string _house_nr;
 		
@@ -1387,7 +1387,7 @@ namespace DAL
     partial void OnnameChanged();
     partial void OnsurnameChanging(string value);
     partial void OnsurnameChanged();
-    partial void OnpeselChanging(System.Nullable<int> value);
+    partial void OnpeselChanging(string value);
     partial void OnpeselChanged();
     partial void Onhouse_nrChanging(string value);
     partial void Onhouse_nrChanged();
@@ -1477,8 +1477,8 @@ namespace DAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pesel", DbType="Int")]
-		public System.Nullable<int> pesel
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pesel", DbType="char(11)")]
+		public string pesel
 		{
 			get
 			{

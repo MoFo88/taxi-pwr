@@ -20,5 +20,26 @@ namespace TestProject
             Assert.IsTrue(l.First() is TaxiDriver);
             
         }
+
+        [TestMethod]
+        public void TestMethodAddTaviDriver()
+        {
+            int x1 = Repository.AddNewTaxiDriver("jan", "grzegrzolka", "yasio", "yasio1");     
+            Assert.AreEqual(x1, -1);
+        }
+
+        [TestMethod]
+        public void TestMethodAuthUser()
+        {
+            int x1 = Repository.UserAuth("yasio", "yasio1");
+            Assert.IsTrue(x1 > 0);
+
+            int x2 = Repository.UserAuth("yasio", "yasio11");
+            Assert.IsTrue(x2 == -2);
+
+            int x3 = Repository.UserAuth("yasioasd", "yasio11");
+            Assert.IsTrue(x3 == -1);
+        }
+
     }
 }
