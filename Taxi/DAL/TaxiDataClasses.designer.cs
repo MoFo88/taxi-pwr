@@ -1338,8 +1338,9 @@ namespace DAL
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Employee")]
 	[global::System.Data.Linq.Mapping.InheritanceMappingAttribute(Code="0", Type=typeof(Employee), IsDefault=true)]
-	[global::System.Data.Linq.Mapping.InheritanceMappingAttribute(Code="2", Type=typeof(Depositor))]
+	[global::System.Data.Linq.Mapping.InheritanceMappingAttribute(Code="2", Type=typeof(Dispatcher))]
 	[global::System.Data.Linq.Mapping.InheritanceMappingAttribute(Code="1", Type=typeof(TaxiDriver))]
+	[global::System.Data.Linq.Mapping.InheritanceMappingAttribute(Code="3", Type=typeof(Admin))]
 	public partial class Employee : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -1786,7 +1787,7 @@ namespace DAL
 		}
 	}
 	
-	public partial class Depositor : Employee
+	public partial class Dispatcher : Employee
 	{
 		
     #region Extensibility Method Definitions
@@ -1795,7 +1796,7 @@ namespace DAL
     partial void OnCreated();
     #endregion
 		
-		public Depositor()
+		public Dispatcher()
 		{
 			OnCreated();
 		}
@@ -2039,6 +2040,21 @@ namespace DAL
 					this.SendPropertyChanged("Driver_status");
 				}
 			}
+		}
+	}
+	
+	public partial class Admin : Employee
+	{
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    #endregion
+		
+		public Admin()
+		{
+			OnCreated();
 		}
 	}
 }
