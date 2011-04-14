@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.master" CodeFile="Admin_employees.aspx.cs" Inherits="admin_drivers" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.master" CodeFile="Orders.aspx.cs" Inherits="Orders" %>
 
 
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
@@ -30,10 +30,10 @@
             Text="Nr telefonu"></asp:Label>
         <asp:TextBox ID="Client_phone" runat="server"></asp:TextBox>
         <br />
-        <asp:Label ID="Label5" runat="server" AssociatedControlID="Button_dodaj" 
+        <asp:Label ID="Label5" runat="server" AssociatedControlID="Button_add_order" 
             Text="Akcje"></asp:Label>
-        <asp:Button ID="Button_dodaj" runat="server" Text="Button" 
-            onclick="Button_dodaj_Click" />
+        <asp:Button ID="Button_add_order" runat="server" onclick="Button_add_Click1" 
+            Text="Dodaj" />
         <br />
 
 
@@ -51,8 +51,6 @@
                         SortExpression="date" />
                     <asp:BoundField DataField="startpoint_name" HeaderText="startpoint_name" 
                         ReadOnly="True" SortExpression="startpoint_name" />
-                    <asp:BoundField DataField="course_status_id" HeaderText="course_status_id" 
-                        ReadOnly="True" SortExpression="course_status_id" />
                     <asp:BoundField DataField="course_date" HeaderText="course_date" 
                         ReadOnly="True" SortExpression="course_date" />
                 </Columns>
@@ -69,7 +67,7 @@
             </asp:GridView>
             <asp:LinqDataSource ID="LinqDataSource1" runat="server" 
                 ContextTypeName="DAL.TaxiDataClassesDataContext" EntityTypeName="" 
-                Select="new (taxidriver_id, date, startpoint_name, course_status_id, course_date, Course_status)" 
+                Select="new (taxidriver_id, date, startpoint_name, course_date, Course_status)" 
                 TableName="Courses">
             </asp:LinqDataSource>
         </p>
