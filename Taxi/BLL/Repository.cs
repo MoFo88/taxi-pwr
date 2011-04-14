@@ -9,8 +9,8 @@ namespace BLL
 {
     public class Repository
     {
-        /// <summary>
-        /// Funkcja zwraca Listę Typów użytkownika
+        /// <summary>Funkcja zwraca Listę Typów użytkownika
+        /// 
         /// </summary>
         /// <returns>List of Employee_type</returns>
         public static List<Employee_type> GetAllEmployeeTypes()
@@ -25,8 +25,8 @@ namespace BLL
             return x.ToList();
         }
 
-        /// <summary>
-        /// Funkcja autoryzujące użytkownika
+        /// <summary>Funkcja autoryzujące użytkownika
+        /// 
         /// funkcja zwraca userId
         /// 
         /// ret -1 => brak uzytkownika o podanym loginie
@@ -61,8 +61,7 @@ namespace BLL
             return user.id;
         }
 
-        /// <summary>
-        /// Funkcja zwraca listę wszystkich taksówkarz
+        /// <summary> Funkcja zwraca listę wszystkich taksówkarz
         /// </summary>
         /// <returns></returns>
         public static List<TaxiDriver> GetAllTaxiDrivers()
@@ -70,8 +69,7 @@ namespace BLL
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
             var query = from c in ctx.Employees.OfType<TaxiDriver>() select c;
             return query.ToList();
-        }   
-       
+        }         
 
         #region Losowy ciąg znaków o zadanej długości
         #endregion
@@ -97,8 +95,7 @@ namespace BLL
             return newPass;
         }
 
-
-        /// <summary>
+        /// <summary>Funkja dodająca taksówkarza
         /// ret -1 => uzytlownik o podanym loginie istnieje
         /// ret 0 => OK
         /// ret -2 => błąd przy dodawaniu do bazy
@@ -167,10 +164,16 @@ namespace BLL
 
             return 0;
         }
-
         public static int AddNewTaxiDriver(String name, String surname, String login, String password)
         {
             return AddNewTaxiDriver(name, surname, null, null, null, null, null, null, login, password);
+        }
+
+        public static List<Taxi> GetTaxiList()
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from c in ctx.Taxis select c;
+            return x.ToList();
         }
     }
 
