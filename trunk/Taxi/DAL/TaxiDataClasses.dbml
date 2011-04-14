@@ -79,7 +79,7 @@
       <Association Name="Employee_Course" Member="Courses" ThisKey="id" OtherKey="depositor_id" Type="Course" />
       <Association Name="Employee_Course1" Member="Courses1" ThisKey="id" OtherKey="taxidriver_id" Type="Course" />
       <Association Name="Employee_type_Employee" Member="Employee_type" ThisKey="employee_type_id" OtherKey="id" Type="Employee_type" IsForeignKey="true" />
-      <Type Name="Depositor" InheritanceCode="2" />
+      <Type Name="Dispatcher" InheritanceCode="2" />
       <Type Name="TaxiDriver" InheritanceCode="1">
         <Column Name="taxi_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
         <Column Name="position_name" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
@@ -90,6 +90,7 @@
         <Association Name="Taxi_TaxiDriver" Member="Taxi" ThisKey="taxi_id" OtherKey="id" Type="Taxi" IsForeignKey="true" />
         <Association Name="Driver_status_TaxiDriver" Member="Driver_status" ThisKey="driver_status_id" OtherKey="id" Type="Driver_status" IsForeignKey="true" />
       </Type>
+      <Type Name="Admin" InheritanceCode="3" />
     </Type>
   </Table>
 </Database>

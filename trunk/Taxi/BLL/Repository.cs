@@ -175,6 +175,17 @@ namespace BLL
             var x = from c in ctx.Taxis select c;
             return x.ToList();
         }
+
+        public static  Employee GetUserById(int id)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = ctx.Employees.SingleOrDefault(u => u.id == id);
+            
+            Employee e = new Employee();
+            e = (Employee)x;
+            
+            return e;
+        }
     }
 
     
