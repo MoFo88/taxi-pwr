@@ -66,7 +66,7 @@
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="surname" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="pesel" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="pesel" Type="System.String" DbType="char(11)" CanBeNull="true" />
       <Column Name="house_nr" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
       <Column Name="postal_code" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
       <Column Name="city" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
