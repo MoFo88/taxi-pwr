@@ -33,14 +33,12 @@ namespace TestProject
         {
 
 
-            int x1 = Repository.UserAuth("yasio", "yasio1");
+            int x1 = Repository.UserAuth("admin", "yasio1");
             Assert.IsTrue(x1 > 0);
 
-            int x2 = Repository.UserAuth("yasio", "yasio11");
+            int x2 = Repository.UserAuth("admin", "yasio11");
             Assert.IsTrue(x2 == -2);
 
-            int x3 = Repository.UserAuth("yasioasd", "yasio11");
-            Assert.IsTrue(x3 == -1);
 
             Employee e = Repository.GetUserById(x1);
             Assert.IsTrue(e.employee_type_id == 3);
