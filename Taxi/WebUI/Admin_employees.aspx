@@ -20,8 +20,16 @@
         <asp:Label ID="Label2" runat="server" Text="PESEL" AssociatedControlID="Pesel"></asp:Label>
         <asp:TextBox ID="Pesel" runat="server"></asp:TextBox>
         <br />
-        <asp:Label ID="Label3" runat="server" Text="Adres" AssociatedControlID="Adres"></asp:Label>
-        <asp:TextBox ID="Adres" runat="server"></asp:TextBox>
+        <asp:Label ID="Label3" runat="server" Text="Adres / nr domu" 
+            AssociatedControlID="House_nr"></asp:Label>
+        <asp:TextBox ID="House_nr" runat="server"></asp:TextBox>
+        <br />
+        <asp:Label ID="Label13" runat="server" AssociatedControlID="Postal_code" 
+            Text="Kod pocztowy"></asp:Label>
+        <asp:TextBox ID="Postal_code" runat="server"></asp:TextBox>
+        <br />
+        <asp:Label ID="Label14" runat="server" AssociatedControlID="City" Text="Miasto"></asp:Label>
+        <asp:TextBox ID="City" runat="server"></asp:TextBox>
         <br />
         <asp:Label ID="Label4" runat="server" Text="E-mail" 
             AssociatedControlID="E_mail"></asp:Label>
@@ -62,11 +70,44 @@
         <br />
         <asp:Label ID="Label8" runat="server" AssociatedControlID="Button_add" 
             Text="Akcje"></asp:Label>
-        <asp:Button ID="Button_add" runat="server" Text="Dodaj" />
+        <asp:Button ID="Button_add" runat="server" Text="Dodaj" 
+            onclick="Button_add_Click" />
 
         <h2>Lista pracowników</h2>
-        <asp:GridView ID="GridView1" runat="server">
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" 
+            CellPadding="4" DataSourceID="LinqDataSource1" ForeColor="#333333" 
+            GridLines="None">
+            <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
+            <Columns>
+                <asp:BoundField DataField="name" HeaderText="name" ReadOnly="True" 
+                    SortExpression="name" />
+                <asp:BoundField DataField="surname" HeaderText="surname" ReadOnly="True" 
+                    SortExpression="surname" />
+                <asp:BoundField DataField="pesel" HeaderText="pesel" ReadOnly="True" 
+                    SortExpression="pesel" />
+                <asp:BoundField DataField="login" HeaderText="login" ReadOnly="True" 
+                    SortExpression="login" />
+                <asp:BoundField DataField="password" HeaderText="password" ReadOnly="True" 
+                    SortExpression="password" />
+            </Columns>
+            <EditRowStyle BackColor="#999999" />
+            <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+            <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+            <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+            <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+            <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+            <SortedAscendingCellStyle BackColor="#E9E7E2" />
+            <SortedAscendingHeaderStyle BackColor="#506C8C" />
+            <SortedDescendingCellStyle BackColor="#FFFDF8" />
+            <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
         </asp:GridView>
+    
+
+        <asp:LinqDataSource ID="LinqDataSource1" runat="server" 
+            ContextTypeName="DAL.TaxiDataClassesDataContext" EntityTypeName="" 
+            Select="new (name, surname, pesel, login, password, Employee_type)" 
+            TableName="Employees">
+        </asp:LinqDataSource>
     
 
         </div>
