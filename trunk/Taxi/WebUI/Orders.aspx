@@ -32,12 +32,47 @@
         <br />
         <asp:Label ID="Label5" runat="server" AssociatedControlID="Button_dodaj" 
             Text="Akcje"></asp:Label>
-        <asp:Button ID="Button_dodaj" runat="server" Text="Button" />
+        <asp:Button ID="Button_dodaj" runat="server" Text="Button" 
+            onclick="Button_dodaj_Click" />
         <br />
 
 
 
     <h2>Lista zgłoszeń</h2>
+        <p>
+            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" 
+                CellPadding="4" DataSourceID="LinqDataSource1" ForeColor="#333333" 
+                GridLines="None">
+                <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
+                <Columns>
+                    <asp:BoundField DataField="taxidriver_id" HeaderText="taxidriver_id" 
+                        ReadOnly="True" SortExpression="taxidriver_id" />
+                    <asp:BoundField DataField="date" HeaderText="date" ReadOnly="True" 
+                        SortExpression="date" />
+                    <asp:BoundField DataField="startpoint_name" HeaderText="startpoint_name" 
+                        ReadOnly="True" SortExpression="startpoint_name" />
+                    <asp:BoundField DataField="course_status_id" HeaderText="course_status_id" 
+                        ReadOnly="True" SortExpression="course_status_id" />
+                    <asp:BoundField DataField="course_date" HeaderText="course_date" 
+                        ReadOnly="True" SortExpression="course_date" />
+                </Columns>
+                <EditRowStyle BackColor="#999999" />
+                <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+                <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+                <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+                <SortedAscendingCellStyle BackColor="#E9E7E2" />
+                <SortedAscendingHeaderStyle BackColor="#506C8C" />
+                <SortedDescendingCellStyle BackColor="#FFFDF8" />
+                <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
+            </asp:GridView>
+            <asp:LinqDataSource ID="LinqDataSource1" runat="server" 
+                ContextTypeName="DAL.TaxiDataClassesDataContext" EntityTypeName="" 
+                Select="new (taxidriver_id, date, startpoint_name, course_status_id, course_date, Course_status)" 
+                TableName="Courses">
+            </asp:LinqDataSource>
+        </p>
 
         </div>
 
