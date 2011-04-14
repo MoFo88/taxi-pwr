@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="9558ffed-e345-4ba5-bea2-3e669061c6e3" name="yasio@YASIO-PC 2011-04-14 02:07:05" runUser="yasio-PC\yasio" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Local" id="558906b2-559f-4748-b406-7690e083dfaf">
+    <Description>These are default test settings for a local test run.</Description>
+    <Deployment enabled="false" runDeploymentRoot="yasio_YASIO-PC 2011-04-14 02_07_05">
+      <DeploymentItem filename="C:\Users\yasio\Desktop\Taxi\trunk\Taxi\BLL\bin\Debug\BLL.dll" />
+      <DeploymentItem filename="C:\Users\yasio\Desktop\Taxi\trunk\Taxi\DAL\bin\Debug\DAL.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific>
+        <UnitTestRunConfig testTypeId="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b">
+          <AssemblyResolution>
+            <TestDirectory useLoadContext="true" />
+          </AssemblyResolution>
+        </UnitTestRunConfig>
+        <WebTestRunConfiguration testTypeId="4e7599fa-5ecb-43e9-a887-cd63cf72d207">
+          <Browser name="Chrome 2" MaxConnections="6">
+            <Headers>
+              <Header name="User-Agent" value="Mozilla/5.0 (Windows; U; Windows NT 5.1;) AppleWebKit/530.1 (KHTML, like Gecko) Chrome/2.0.169.1 Safari/530.1" />
+              <Header name="Accept" value="*/*" />
+              <Header name="Accept-Language" value="{{$IEAcceptLanguage}}" />
+              <Header name="Accept-Encoding" value="gzip,deflate" />
+              <Header name="Accept-Charset" value="ISO-8859-1,*,utf-8" />
+            </Headers>
+          </Browser>
+        </WebTestRunConfiguration>
+      </TestTypeSpecific>
+      <AgentRule name="LocalMachineDefaultRole">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2011-04-14T02:07:05.8979645+02:00" queuing="2011-04-14T02:07:07.8120740+02:00" start="2011-04-14T02:07:08.0410871+02:00" finish="2011-04-14T02:07:11.6892958+02:00" />
+  <ResultSummary outcome="Completed">
+    <Counters total="1" executed="1" passed="1" error="0" failed="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="TestMethodGetAllTaxiDrivers" storage="c:\users\yasio\desktop\taxi\trunk\taxi\testproject\bin\debug\testproject.dll" id="ccc4c036-a95a-718b-a11b-ea538f7d224c">
+      <Execution id="dcae7460-9d98-4111-a9d8-34d7749d5cfc" />
+      <TestMethod codeBase="C:/Users/yasio/Desktop/Taxi/trunk/Taxi/TestProject/bin/Debug/TestProject.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="TestProject.UnitTest, TestProject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="TestMethodGetAllTaxiDrivers" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="ccc4c036-a95a-718b-a11b-ea538f7d224c" executionId="dcae7460-9d98-4111-a9d8-34d7749d5cfc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="dcae7460-9d98-4111-a9d8-34d7749d5cfc" testId="ccc4c036-a95a-718b-a11b-ea538f7d224c" testName="TestMethodGetAllTaxiDrivers" computerName="YASIO-PC" duration="00:00:00.6524196" startTime="2011-04-14T02:07:08.1010905+02:00" endTime="2011-04-14T02:07:09.8871927+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="dcae7460-9d98-4111-a9d8-34d7749d5cfc">
+    </UnitTestResult>
+  </Results>
+</TestRun>
