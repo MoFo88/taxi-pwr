@@ -10,7 +10,7 @@ public partial class Orders : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        PageLoading.CheckAuthorization();
     }
     protected void b_Add_Click(object sender, EventArgs e)
     {

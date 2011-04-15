@@ -9,6 +9,10 @@
     onclick="Button1_Click" /><br />
     
     <h2>
+        Musisz się zalogować, aby uzyskać dostęp do tej strony.
+    </h2>
+
+    <h2>
         Employee Types:
     </h2>
     <asp:GridView ID="GridView1" runat="server">
