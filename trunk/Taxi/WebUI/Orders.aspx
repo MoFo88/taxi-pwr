@@ -9,40 +9,44 @@
     
     <h2>Dodaj nowe zgłoszenie</h2>
 
-            <asp:Label ID="Label1" runat="server" Text="Nazwisko klienta" 
-            AssociatedControlID="Client_name"></asp:Label>
-            <asp:TextBox ID="Client_name" runat="server"></asp:TextBox>
+        <asp:Panel ID="Panel1" runat="server">
+
+            <asp:Label ID="lb_Client_name" runat="server" Text="Nazwisko klienta" 
+            AssociatedControlID="tb_Client_name"></asp:Label>
+            <asp:TextBox ID="tb_Client_name" runat="server"></asp:TextBox>
 
             <br />
 
-            <asp:Label ID="Label2" runat="server" Text="Miejsce startowe" 
-            AssociatedControlID="Startpoint_name"></asp:Label>
+            <asp:Label ID="lb_Startpoint_name" runat="server" Text="Miejsce startowe" 
+            AssociatedControlID="tb_Startpoint_name"></asp:Label>
 
 
 
-        <asp:TextBox ID="Startpoint_name" runat="server"></asp:TextBox>
+            <asp:TextBox ID="tb_Startpoint_name" runat="server"></asp:TextBox>
+            <br />
+            <asp:Label ID="lb_Course_date" runat="server" AssociatedControlID="tb_Course_date" 
+                Text="Data"></asp:Label>
+            <asp:TextBox ID="tb_Course_date" runat="server"></asp:TextBox>
+            <br />
+            <asp:Label ID="lb_Client_phone" runat="server" AssociatedControlID="tb_Client_phone" 
+                Text="Nr telefonu"></asp:Label>
+            <asp:TextBox ID="tb_Client_phone" runat="server"></asp:TextBox>
+            <br />
+            <asp:Label ID="lb_Add" runat="server" AssociatedControlID="b_Add" 
+                Text="Akcje"></asp:Label>
+            <asp:Button ID="b_Add" runat="server" onclick="b_Add_Click" 
+                Text="Dodaj" />
+            <br />
+
+        </asp:Panel>
         <br />
-        <asp:Label ID="Label3" runat="server" AssociatedControlID="Course_date" 
-            Text="Data"></asp:Label>
-        <asp:TextBox ID="Course_date" runat="server"></asp:TextBox>
-        <br />
-        <asp:Label ID="Label4" runat="server" AssociatedControlID="Client_phone" 
-            Text="Nr telefonu"></asp:Label>
-        <asp:TextBox ID="Client_phone" runat="server"></asp:TextBox>
-        <br />
-        <asp:Label ID="Label5" runat="server" AssociatedControlID="Button_add_order" 
-            Text="Akcje"></asp:Label>
-        <asp:Button ID="Button_add_order" runat="server" onclick="Button_add_Click1" 
-            Text="Dodaj" />
-        <br />
 
 
 
-    <h2>Lista zgłoszeń</h2>
-        <p>
-            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" 
+    <h2>Lista zgłoszeń     <p>
+            <asp:GridView ID="gd_Orders" runat="server" AutoGenerateColumns="False" 
                 CellPadding="4" DataSourceID="LinqDataSource1" ForeColor="#333333" 
-                GridLines="None">
+                GridLines="None" AllowSorting="True">
                 <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                 <Columns>
                     <asp:BoundField DataField="taxidriver_id" HeaderText="taxidriver_id" 
@@ -53,6 +57,10 @@
                         ReadOnly="True" SortExpression="startpoint_name" />
                     <asp:BoundField DataField="course_date" HeaderText="course_date" 
                         ReadOnly="True" SortExpression="course_date" />
+                    <asp:BoundField DataField="client_phone" HeaderText="client_phone" 
+                        ReadOnly="True" SortExpression="client_phone" />
+                    <asp:BoundField DataField="client_name" HeaderText="client_name" 
+                        ReadOnly="True" SortExpression="client_name" />
                 </Columns>
                 <EditRowStyle BackColor="#999999" />
                 <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
@@ -67,7 +75,7 @@
             </asp:GridView>
             <asp:LinqDataSource ID="LinqDataSource1" runat="server" 
                 ContextTypeName="DAL.TaxiDataClassesDataContext" EntityTypeName="" 
-                Select="new (taxidriver_id, date, startpoint_name, course_date, Course_status)" 
+                Select="new (taxidriver_id, date, startpoint_name, course_date, Course_status, client_phone, client_name)" 
                 TableName="Courses">
             </asp:LinqDataSource>
         </p>
