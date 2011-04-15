@@ -102,15 +102,8 @@
             </div>
         </div>
         <div class="main">
-        <% if (Session["userName"] != null)
-           { %>
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
-        <% }
-           else
-           { %>
-           <h2>Musisz być zalogowany, aby uzyskać dostęp do tej strony.</h2>
-           <% } %>
         </div>
         <div class="clear">
         </div>
