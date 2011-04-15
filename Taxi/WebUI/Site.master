@@ -19,8 +19,7 @@
             </div>
  
             <div id="loginform">
-                <asp:LoginView ID="LoginView1" runat="server" 
-                    onviewchanged="LoginView1_ViewChanged">
+                <asp:LoginView ID="LoginView1" runat="server">
                     <AnonymousTemplate>
                         <asp:Login ID="Login1" runat="server" 
                             onauthenticate="LoginControl_Authenticate">
@@ -85,8 +84,8 @@
                         </asp:Login>
                     </AnonymousTemplate>
                     <LoggedInTemplate>
-                        <asp:Button ID="Button_logout" runat="server" onclick="Button_logout_Click" 
-                            Text="Wyloguj" />
+                <asp:LinkButton ID="LinkButton1" runat="server" onclick="LinkButton1_Click" 
+                            CssClass="linkb_logout">Zakończ pracę</asp:LinkButton>
                     </LoggedInTemplate>
                 </asp:LoginView>
             </div>

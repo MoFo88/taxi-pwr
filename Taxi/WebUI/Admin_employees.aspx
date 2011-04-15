@@ -9,86 +9,90 @@
     
     <h2>Dodaj nowego pracownika</h2>
 
-        <asp:Label ID="Label_name" runat="server" AssociatedControlID="Name" 
-            Text="Imię"></asp:Label>
-        <asp:TextBox ID="Name" runat="server" style="margin-left: 0px"></asp:TextBox>
-        <br />
-        <asp:Label ID="Label1" runat="server" Text="Nazwisko" 
-            AssociatedControlID="Surname"></asp:Label>
-        <asp:TextBox ID="Surname" runat="server"></asp:TextBox>
-        <br />
-        <asp:Label ID="Label2" runat="server" Text="PESEL" AssociatedControlID="Pesel"></asp:Label>
-        <asp:TextBox ID="Pesel" runat="server"></asp:TextBox>
-        <br />
-        <asp:Label ID="Label3" runat="server" Text="Adres / nr domu" 
-            AssociatedControlID="House_nr"></asp:Label>
-        <asp:TextBox ID="House_nr" runat="server"></asp:TextBox>
-        <br />
-        <asp:Label ID="Label13" runat="server" AssociatedControlID="Postal_code" 
-            Text="Kod pocztowy"></asp:Label>
-        <asp:TextBox ID="Postal_code" runat="server"></asp:TextBox>
-        <br />
-        <asp:Label ID="Label14" runat="server" AssociatedControlID="City" Text="Miasto"></asp:Label>
-        <asp:TextBox ID="City" runat="server"></asp:TextBox>
-        <br />
-        <asp:Label ID="Label4" runat="server" Text="E-mail" 
-            AssociatedControlID="E_mail"></asp:Label>
-        <asp:TextBox ID="E_mail" runat="server"></asp:TextBox>
-        <br />
-        <asp:Label ID="Label5" runat="server" Text="Login" AssociatedControlID="Login"></asp:Label>
-        <asp:TextBox ID="Login" runat="server"></asp:TextBox>
-        <br />
-        <asp:Label ID="Label6" runat="server" Text="Hasło" 
-            AssociatedControlID="Password"></asp:Label>
-        <asp:TextBox ID="Password" runat="server"></asp:TextBox>
-        <br />
-        <asp:Label ID="Label9" runat="server" AssociatedControlID="Employee_type" 
-            Text="Typ pracownika"></asp:Label>
-        <asp:DropDownList ID="Employee_type" runat="server">
-        </asp:DropDownList>
-        <br />
-        <asp:Label ID="Label7" runat="server" Text="Nr licencji" 
-            AssociatedControlID="Licence_number"></asp:Label>
-        <asp:TextBox ID="Licence_number" runat="server"></asp:TextBox>
+        <asp:Panel ID="Panel1" runat="server">
+
+            <asp:Label ID="lb_Name" runat="server" AssociatedControlID="tb_Name" 
+                Text="Imię"></asp:Label>
+            <asp:TextBox ID="tb_Name" runat="server" style="margin-left: 0px"></asp:TextBox>
+            <br />
+            <asp:Label ID="lb_Surname" runat="server" Text="Nazwisko" 
+                AssociatedControlID="tb_Surname"></asp:Label>
+            <asp:TextBox ID="tb_Surname" runat="server"></asp:TextBox>
+            <br />
+            <asp:Label ID="lb_Pesel" runat="server" Text="PESEL" 
+                AssociatedControlID="tb_Pesel"></asp:Label>
+            <asp:TextBox ID="tb_Pesel" runat="server"></asp:TextBox>
+            <br />
+            <asp:Label ID="lb_House_nr" runat="server" Text="Adres / nr domu" 
+                AssociatedControlID="tb_House_nr"></asp:Label>
+            <asp:TextBox ID="tb_House_nr" runat="server"></asp:TextBox>
+            <br />
+            <asp:Label ID="lb_Postal_code" runat="server" AssociatedControlID="tb_Postal_code" 
+                Text="Kod pocztowy"></asp:Label>
+            <asp:TextBox ID="tb_Postal_code" runat="server"></asp:TextBox>
+            <br />
+            <asp:Label ID="lb_City" runat="server" AssociatedControlID="tb_City" 
+                Text="Miasto"></asp:Label>
+            <asp:TextBox ID="tb_City" runat="server"></asp:TextBox>
+            <br />
+            <asp:Label ID="lb_E_mail" runat="server" Text="E-mail" 
+                AssociatedControlID="tb_E_mail"></asp:Label>
+            <asp:TextBox ID="tb_E_mail" runat="server"></asp:TextBox>
+            <br />
+            <asp:Label ID="lb_Login" runat="server" Text="Login" 
+                AssociatedControlID="tb_Login"></asp:Label>
+            <asp:TextBox ID="tb_Login" runat="server"></asp:TextBox>
+            <br />
+            <asp:Label ID="lb_Password" runat="server" Text="Hasło" 
+                AssociatedControlID="tb_Password"></asp:Label>
+            <asp:TextBox ID="tb_Password" runat="server"></asp:TextBox>
+            <br />
+            <asp:Label ID="lb_Employee_type" runat="server" AssociatedControlID="ddl_Employee_type" 
+                Text="Typ pracownika"></asp:Label>
+            <asp:DropDownList ID="ddl_Employee_type" runat="server">
+            </asp:DropDownList>
+            <br />
+            <asp:Label ID="lb_Licence_number" runat="server" Text="Nr licencji" 
+                AssociatedControlID="tb_Licence_number"></asp:Label>
+            <asp:TextBox ID="tb_Licence_number" runat="server"></asp:TextBox>
     
 
-        <br />
-        <asp:Label ID="Label10" runat="server" 
-            AssociatedControlID="Registration_number" Text="Nr rejestracyjny"></asp:Label>
-        <asp:TextBox ID="Registration_number" runat="server"></asp:TextBox>
-        <br />
-        <asp:Label ID="Label11" runat="server" AssociatedControlID="Taxi_number" 
-            Text="Numer taksówki"></asp:Label>
-        <asp:TextBox ID="Taxi_number" runat="server"></asp:TextBox>
-        <br />
-        <asp:Label ID="Label12" runat="server" AssociatedControlID="Car_model" 
-            Text="Model samochodu"></asp:Label>
-        <asp:DropDownList ID="Car_model" runat="server">
-        </asp:DropDownList>
+            <br />
+            <asp:Label ID="lb_Registration_number" runat="server" 
+                AssociatedControlID="tb_Registration_number" Text="Nr rejestracyjny"></asp:Label>
+            <asp:TextBox ID="tb_Registration_number" runat="server"></asp:TextBox>
+            <br />
+            <asp:Label ID="lb_Taxi_number" runat="server" AssociatedControlID="tb_Taxi_number" 
+                Text="Numer taksówki"></asp:Label>
+            <asp:TextBox ID="tb_Taxi_number" runat="server"></asp:TextBox>
+            <br />
+            <asp:Label ID="lb_Car_model" runat="server" AssociatedControlID="ddl_Car_model" 
+                Text="Model samochodu"></asp:Label>
+            <asp:DropDownList ID="ddl_Car_model" runat="server">
+            </asp:DropDownList>
     
 
+            <br />
+            <asp:Label ID="lb_Add" runat="server" AssociatedControlID="b_Add" 
+                Text="Akcje"></asp:Label>
+            <asp:Button ID="b_Add" runat="server" 
+                onclick="b_Add_Click" Text="Button" />
+
+        </asp:Panel>
         <br />
-        <asp:Label ID="Label8" runat="server" AssociatedControlID="Button_add_employee" 
-            Text="Akcje"></asp:Label>
-        <asp:Button ID="Button_add_employee" runat="server" 
-            onclick="Button_add_employee_Click" Text="Button" />
 
         <h2>Lista pracowników</h2>
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" 
+        <asp:GridView ID="gd_Employees" runat="server" AutoGenerateColumns="False" 
             CellPadding="4" DataSourceID="LinqDataSource1" ForeColor="#333333" 
-            GridLines="None">
+            GridLines="None" AllowSorting="True">
             <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
             <Columns>
-                <asp:BoundField DataField="name" HeaderText="name" ReadOnly="True" 
+                <asp:BoundField DataField="name" HeaderText="Imię" ReadOnly="True" 
                     SortExpression="name" />
-                <asp:BoundField DataField="surname" HeaderText="surname" ReadOnly="True" 
+                <asp:BoundField DataField="surname" HeaderText="Nazwisko" ReadOnly="True" 
                     SortExpression="surname" />
-                <asp:BoundField DataField="pesel" HeaderText="pesel" ReadOnly="True" 
-                    SortExpression="pesel" />
-                <asp:BoundField DataField="login" HeaderText="login" ReadOnly="True" 
+                <asp:BoundField DataField="login" HeaderText="Login" ReadOnly="True" 
                     SortExpression="login" />
-                <asp:BoundField DataField="password" HeaderText="password" ReadOnly="True" 
-                    SortExpression="password" />
             </Columns>
             <EditRowStyle BackColor="#999999" />
             <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
@@ -100,6 +104,14 @@
             <SortedAscendingHeaderStyle BackColor="#506C8C" />
             <SortedDescendingCellStyle BackColor="#FFFDF8" />
             <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
+
+<SortedAscendingCellStyle BackColor="#E9E7E2"></SortedAscendingCellStyle>
+
+<SortedAscendingHeaderStyle BackColor="#506C8C"></SortedAscendingHeaderStyle>
+
+<SortedDescendingCellStyle BackColor="#FFFDF8"></SortedDescendingCellStyle>
+
+<SortedDescendingHeaderStyle BackColor="#6F8DAE"></SortedDescendingHeaderStyle>
         </asp:GridView>
     
 

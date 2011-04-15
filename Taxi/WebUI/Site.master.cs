@@ -25,11 +25,7 @@ public partial class SiteMaster : System.Web.UI.MasterPage
         }
     }
 
-    protected void LoginView1_ViewChanged(object sender, EventArgs e)
-    {
-
-    }
-    protected void Button_logout_Click(object sender, EventArgs e)
+    protected void LinkButton1_Click(object sender, EventArgs e)
     {
         Session.Abandon();
         FormsAuthentication.SignOut();
