@@ -23,8 +23,14 @@ public class WebService : System.Web.Services.WebService {
 
 
     [WebMethod]
-    public List<Employee_type> GetEmployeeAllTypes() {
+    public List<Employee_type> GetAllEmployeeTypes() {
         return Repository.GetAllEmployeeTypes();
+    }
+
+    [WebMethod]
+    public List<TaxiDriver> GetAllTaxiDrivers()
+    {
+        return Repository.GetAllTaxiDrivers();
     }
     
 }
