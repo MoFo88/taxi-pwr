@@ -18,6 +18,7 @@ namespace DAL
 	using System.Reflection;
 	using System.Linq;
 	using System.Linq.Expressions;
+	using System.Runtime.Serialization;
 	using System.ComponentModel;
 	using System;
 	
@@ -141,6 +142,7 @@ namespace DAL
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Car_model")]
+	[global::System.Runtime.Serialization.DataContractAttribute()]
 	public partial class Car_model : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -157,6 +159,8 @@ namespace DAL
 		private int _seats;
 		
 		private EntitySet<Taxi> _Taxis;
+		
+		private bool serializing;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -176,11 +180,11 @@ namespace DAL
 		
 		public Car_model()
 		{
-			this._Taxis = new EntitySet<Taxi>(new Action<Taxi>(this.attach_Taxis), new Action<Taxi>(this.detach_Taxis));
-			OnCreated();
+			this.Initialize();
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
 		public int id
 		{
 			get
@@ -201,6 +205,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_producer", DbType="VarChar(150)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
 		public string producer
 		{
 			get
@@ -221,6 +226,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_model", DbType="VarChar(150)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
 		public string model
 		{
 			get
@@ -241,6 +247,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_production_year", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
 		public System.Nullable<int> production_year
 		{
 			get
@@ -261,6 +268,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_seats", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
 		public int seats
 		{
 			get
@@ -281,10 +289,16 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Car_model_Taxi", Storage="_Taxis", ThisKey="id", OtherKey="car_model_id")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6, EmitDefaultValue=false)]
 		public EntitySet<Taxi> Taxis
 		{
 			get
 			{
+				if ((this.serializing 
+							&& (this._Taxis.HasLoadedOrAssignedValues == false)))
+				{
+					return null;
+				}
 				return this._Taxis;
 			}
 			set
@@ -324,9 +338,37 @@ namespace DAL
 			this.SendPropertyChanging();
 			entity.Car_model = null;
 		}
+		
+		private void Initialize()
+		{
+			this._Taxis = new EntitySet<Taxi>(new Action<Taxi>(this.attach_Taxis), new Action<Taxi>(this.detach_Taxis));
+			OnCreated();
+		}
+		
+		[global::System.Runtime.Serialization.OnDeserializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnDeserializing(StreamingContext context)
+		{
+			this.Initialize();
+		}
+		
+		[global::System.Runtime.Serialization.OnSerializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnSerializing(StreamingContext context)
+		{
+			this.serializing = true;
+		}
+		
+		[global::System.Runtime.Serialization.OnSerializedAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnSerialized(StreamingContext context)
+		{
+			this.serializing = false;
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Taxi")]
+	[global::System.Runtime.Serialization.DataContractAttribute()]
 	public partial class Taxi : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -344,6 +386,8 @@ namespace DAL
 		
 		private EntityRef<Car_model> _Car_model;
 		
+		private bool serializing;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -360,12 +404,11 @@ namespace DAL
 		
 		public Taxi()
 		{
-			this._TaxiDrivers = new EntitySet<TaxiDriver>(new Action<TaxiDriver>(this.attach_TaxiDrivers), new Action<TaxiDriver>(this.detach_TaxiDrivers));
-			this._Car_model = default(EntityRef<Car_model>);
-			OnCreated();
+			this.Initialize();
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
 		public int id
 		{
 			get
@@ -386,6 +429,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_car_model_id", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
 		public int car_model_id
 		{
 			get
@@ -410,6 +454,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_registration_number", DbType="VarChar(15) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
 		public string registration_number
 		{
 			get
@@ -430,6 +475,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_taxi_number", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
 		public string taxi_number
 		{
 			get
@@ -450,10 +496,16 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Taxi_TaxiDriver", Storage="_TaxiDrivers", ThisKey="id", OtherKey="taxi_id")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5, EmitDefaultValue=false)]
 		public EntitySet<TaxiDriver> TaxiDrivers
 		{
 			get
 			{
+				if ((this.serializing 
+							&& (this._TaxiDrivers.HasLoadedOrAssignedValues == false)))
+				{
+					return null;
+				}
 				return this._TaxiDrivers;
 			}
 			set
@@ -527,9 +579,38 @@ namespace DAL
 			this.SendPropertyChanging();
 			entity.Taxi = null;
 		}
+		
+		private void Initialize()
+		{
+			this._TaxiDrivers = new EntitySet<TaxiDriver>(new Action<TaxiDriver>(this.attach_TaxiDrivers), new Action<TaxiDriver>(this.detach_TaxiDrivers));
+			this._Car_model = default(EntityRef<Car_model>);
+			OnCreated();
+		}
+		
+		[global::System.Runtime.Serialization.OnDeserializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnDeserializing(StreamingContext context)
+		{
+			this.Initialize();
+		}
+		
+		[global::System.Runtime.Serialization.OnSerializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnSerializing(StreamingContext context)
+		{
+			this.serializing = true;
+		}
+		
+		[global::System.Runtime.Serialization.OnSerializedAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnSerialized(StreamingContext context)
+		{
+			this.serializing = false;
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Course")]
+	[global::System.Runtime.Serialization.DataContractAttribute()]
 	public partial class Course : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -601,13 +682,11 @@ namespace DAL
 		
 		public Course()
 		{
-			this._Course_status = default(EntityRef<Course_status>);
-			this._Employee = default(EntityRef<Employee>);
-			this._Employee1 = default(EntityRef<Employee>);
-			OnCreated();
+			this.Initialize();
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
 		public int id
 		{
 			get
@@ -628,6 +707,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_client_phone", DbType="VarChar(15)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
 		public string client_phone
 		{
 			get
@@ -648,6 +728,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="rep_id", Storage="_rep_id", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
 		public int depositor_id
 		{
 			get
@@ -668,6 +749,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="taxi_id", Storage="_taxi_id", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
 		public int taxidriver_id
 		{
 			get
@@ -688,6 +770,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_date", DbType="DateTime NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
 		public System.DateTime date
 		{
 			get
@@ -708,6 +791,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_startpoint_name", DbType="VarChar(250) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
 		public string startpoint_name
 		{
 			get
@@ -728,6 +812,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_startpoint_lat", DbType="Decimal(11,7) NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7)]
 		public decimal startpoint_lat
 		{
 			get
@@ -748,6 +833,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_startpoint_lon", DbType="Decimal(11,7) NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8)]
 		public decimal startpoint_lon
 		{
 			get
@@ -768,6 +854,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_endpoint_lat", DbType="Decimal(11,7) NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=9)]
 		public decimal endpoint_lat
 		{
 			get
@@ -788,6 +875,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_endpoint_lon", DbType="Decimal(11,7) NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=10)]
 		public decimal endpoint_lon
 		{
 			get
@@ -808,6 +896,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_course_status_id", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=11)]
 		public int course_status_id
 		{
 			get
@@ -832,6 +921,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_course_date", DbType="DateTime")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=12)]
 		public System.Nullable<System.DateTime> course_date
 		{
 			get
@@ -852,6 +942,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_client_name", DbType="VarChar(150)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=13)]
 		public string client_name
 		{
 			get
@@ -992,9 +1083,25 @@ namespace DAL
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
+		
+		private void Initialize()
+		{
+			this._Course_status = default(EntityRef<Course_status>);
+			this._Employee = default(EntityRef<Employee>);
+			this._Employee1 = default(EntityRef<Employee>);
+			OnCreated();
+		}
+		
+		[global::System.Runtime.Serialization.OnDeserializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnDeserializing(StreamingContext context)
+		{
+			this.Initialize();
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Course_status")]
+	[global::System.Runtime.Serialization.DataContractAttribute()]
 	public partial class Course_status : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -1005,6 +1112,8 @@ namespace DAL
 		private string _name;
 		
 		private EntitySet<Course> _Courses;
+		
+		private bool serializing;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1018,11 +1127,11 @@ namespace DAL
 		
 		public Course_status()
 		{
-			this._Courses = new EntitySet<Course>(new Action<Course>(this.attach_Courses), new Action<Course>(this.detach_Courses));
-			OnCreated();
+			this.Initialize();
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
 		public int id
 		{
 			get
@@ -1043,6 +1152,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="VarChar(150) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
 		public string name
 		{
 			get
@@ -1063,10 +1173,16 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Course_status_Course", Storage="_Courses", ThisKey="id", OtherKey="course_status_id")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3, EmitDefaultValue=false)]
 		public EntitySet<Course> Courses
 		{
 			get
 			{
+				if ((this.serializing 
+							&& (this._Courses.HasLoadedOrAssignedValues == false)))
+				{
+					return null;
+				}
 				return this._Courses;
 			}
 			set
@@ -1106,9 +1222,37 @@ namespace DAL
 			this.SendPropertyChanging();
 			entity.Course_status = null;
 		}
+		
+		private void Initialize()
+		{
+			this._Courses = new EntitySet<Course>(new Action<Course>(this.attach_Courses), new Action<Course>(this.detach_Courses));
+			OnCreated();
+		}
+		
+		[global::System.Runtime.Serialization.OnDeserializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnDeserializing(StreamingContext context)
+		{
+			this.Initialize();
+		}
+		
+		[global::System.Runtime.Serialization.OnSerializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnSerializing(StreamingContext context)
+		{
+			this.serializing = true;
+		}
+		
+		[global::System.Runtime.Serialization.OnSerializedAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnSerialized(StreamingContext context)
+		{
+			this.serializing = false;
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Driver_status")]
+	[global::System.Runtime.Serialization.DataContractAttribute()]
 	public partial class Driver_status : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -1119,6 +1263,8 @@ namespace DAL
 		private string _name;
 		
 		private EntitySet<TaxiDriver> _TaxiDrivers;
+		
+		private bool serializing;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1132,11 +1278,11 @@ namespace DAL
 		
 		public Driver_status()
 		{
-			this._TaxiDrivers = new EntitySet<TaxiDriver>(new Action<TaxiDriver>(this.attach_TaxiDrivers), new Action<TaxiDriver>(this.detach_TaxiDrivers));
-			OnCreated();
+			this.Initialize();
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
 		public int id
 		{
 			get
@@ -1157,6 +1303,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="VarChar(150) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
 		public string name
 		{
 			get
@@ -1177,10 +1324,16 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Driver_status_TaxiDriver", Storage="_TaxiDrivers", ThisKey="id", OtherKey="driver_status_id")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3, EmitDefaultValue=false)]
 		public EntitySet<TaxiDriver> TaxiDrivers
 		{
 			get
 			{
+				if ((this.serializing 
+							&& (this._TaxiDrivers.HasLoadedOrAssignedValues == false)))
+				{
+					return null;
+				}
 				return this._TaxiDrivers;
 			}
 			set
@@ -1220,9 +1373,37 @@ namespace DAL
 			this.SendPropertyChanging();
 			entity.Driver_status = null;
 		}
+		
+		private void Initialize()
+		{
+			this._TaxiDrivers = new EntitySet<TaxiDriver>(new Action<TaxiDriver>(this.attach_TaxiDrivers), new Action<TaxiDriver>(this.detach_TaxiDrivers));
+			OnCreated();
+		}
+		
+		[global::System.Runtime.Serialization.OnDeserializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnDeserializing(StreamingContext context)
+		{
+			this.Initialize();
+		}
+		
+		[global::System.Runtime.Serialization.OnSerializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnSerializing(StreamingContext context)
+		{
+			this.serializing = true;
+		}
+		
+		[global::System.Runtime.Serialization.OnSerializedAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnSerialized(StreamingContext context)
+		{
+			this.serializing = false;
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Employee_type")]
+	[global::System.Runtime.Serialization.DataContractAttribute()]
 	public partial class Employee_type : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -1233,6 +1414,8 @@ namespace DAL
 		private string _name;
 		
 		private EntitySet<Employee> _Employees;
+		
+		private bool serializing;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1246,11 +1429,11 @@ namespace DAL
 		
 		public Employee_type()
 		{
-			this._Employees = new EntitySet<Employee>(new Action<Employee>(this.attach_Employees), new Action<Employee>(this.detach_Employees));
-			OnCreated();
+			this.Initialize();
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
 		public int id
 		{
 			get
@@ -1271,6 +1454,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
 		public string name
 		{
 			get
@@ -1291,10 +1475,16 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_type_Employee", Storage="_Employees", ThisKey="id", OtherKey="employee_type_id")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3, EmitDefaultValue=false)]
 		public EntitySet<Employee> Employees
 		{
 			get
 			{
+				if ((this.serializing 
+							&& (this._Employees.HasLoadedOrAssignedValues == false)))
+				{
+					return null;
+				}
 				return this._Employees;
 			}
 			set
@@ -1334,13 +1524,44 @@ namespace DAL
 			this.SendPropertyChanging();
 			entity.Employee_type = null;
 		}
+		
+		private void Initialize()
+		{
+			this._Employees = new EntitySet<Employee>(new Action<Employee>(this.attach_Employees), new Action<Employee>(this.detach_Employees));
+			OnCreated();
+		}
+		
+		[global::System.Runtime.Serialization.OnDeserializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnDeserializing(StreamingContext context)
+		{
+			this.Initialize();
+		}
+		
+		[global::System.Runtime.Serialization.OnSerializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnSerializing(StreamingContext context)
+		{
+			this.serializing = true;
+		}
+		
+		[global::System.Runtime.Serialization.OnSerializedAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnSerialized(StreamingContext context)
+		{
+			this.serializing = false;
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Employee")]
+	[global::System.Runtime.Serialization.DataContractAttribute()]
 	[global::System.Data.Linq.Mapping.InheritanceMappingAttribute(Code="0", Type=typeof(Employee), IsDefault=true)]
 	[global::System.Data.Linq.Mapping.InheritanceMappingAttribute(Code="2", Type=typeof(Dispatcher))]
 	[global::System.Data.Linq.Mapping.InheritanceMappingAttribute(Code="1", Type=typeof(TaxiDriver))]
 	[global::System.Data.Linq.Mapping.InheritanceMappingAttribute(Code="3", Type=typeof(Admin))]
+	[global::System.Runtime.Serialization.KnownTypeAttribute(typeof(Dispatcher))]
+	[global::System.Runtime.Serialization.KnownTypeAttribute(typeof(TaxiDriver))]
+	[global::System.Runtime.Serialization.KnownTypeAttribute(typeof(Admin))]
 	public partial class Employee : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -1378,6 +1599,8 @@ namespace DAL
 		
 		private EntityRef<Employee_type> _Employee_type;
 		
+		private bool serializing;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1412,13 +1635,11 @@ namespace DAL
 		
 		public Employee()
 		{
-			this._Courses = new EntitySet<Course>(new Action<Course>(this.attach_Courses), new Action<Course>(this.detach_Courses));
-			this._Courses1 = new EntitySet<Course>(new Action<Course>(this.attach_Courses1), new Action<Course>(this.detach_Courses1));
-			this._Employee_type = default(EntityRef<Employee_type>);
-			OnCreated();
+			this.Initialize();
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
 		public int id
 		{
 			get
@@ -1439,6 +1660,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
 		public string name
 		{
 			get
@@ -1459,6 +1681,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_surname", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
 		public string surname
 		{
 			get
@@ -1479,6 +1702,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pesel", DbType="char(11)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
 		public string pesel
 		{
 			get
@@ -1499,6 +1723,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_house_nr", DbType="VarChar(10)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
 		public string house_nr
 		{
 			get
@@ -1519,6 +1744,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_postal_code", DbType="VarChar(10)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
 		public string postal_code
 		{
 			get
@@ -1539,6 +1765,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_city", DbType="VarChar(50)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7)]
 		public string city
 		{
 			get
@@ -1559,6 +1786,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_e_mail", DbType="VarChar(150)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8)]
 		public string e_mail
 		{
 			get
@@ -1579,6 +1807,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_employee_type_id", DbType="Int NOT NULL", IsDiscriminator=true)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=9)]
 		public int employee_type_id
 		{
 			get
@@ -1603,6 +1832,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_login", DbType="VarChar(50)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=10)]
 		public string login
 		{
 			get
@@ -1623,6 +1853,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_password", DbType="VarChar(50)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=11)]
 		public string password
 		{
 			get
@@ -1643,6 +1874,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_salt", DbType="Char(8)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=12)]
 		public string salt
 		{
 			get
@@ -1663,6 +1895,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_telephone", DbType="VarChar(20)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=13)]
 		public string telephone
 		{
 			get
@@ -1683,10 +1916,16 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Course", Storage="_Courses", ThisKey="id", OtherKey="depositor_id")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=14, EmitDefaultValue=false)]
 		public EntitySet<Course> Courses
 		{
 			get
 			{
+				if ((this.serializing 
+							&& (this._Courses.HasLoadedOrAssignedValues == false)))
+				{
+					return null;
+				}
 				return this._Courses;
 			}
 			set
@@ -1696,10 +1935,16 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Course1", Storage="_Courses1", ThisKey="id", OtherKey="taxidriver_id")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=15, EmitDefaultValue=false)]
 		public EntitySet<Course> Courses1
 		{
 			get
 			{
+				if ((this.serializing 
+							&& (this._Courses1.HasLoadedOrAssignedValues == false)))
+				{
+					return null;
+				}
 				return this._Courses1;
 			}
 			set
@@ -1785,8 +2030,38 @@ namespace DAL
 			this.SendPropertyChanging();
 			entity.Employee1 = null;
 		}
+		
+		private void Initialize()
+		{
+			this._Courses = new EntitySet<Course>(new Action<Course>(this.attach_Courses), new Action<Course>(this.detach_Courses));
+			this._Courses1 = new EntitySet<Course>(new Action<Course>(this.attach_Courses1), new Action<Course>(this.detach_Courses1));
+			this._Employee_type = default(EntityRef<Employee_type>);
+			OnCreated();
+		}
+		
+		[global::System.Runtime.Serialization.OnDeserializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnDeserializing(StreamingContext context)
+		{
+			this.Initialize();
+		}
+		
+		[global::System.Runtime.Serialization.OnSerializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnSerializing(StreamingContext context)
+		{
+			this.serializing = true;
+		}
+		
+		[global::System.Runtime.Serialization.OnSerializedAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnSerialized(StreamingContext context)
+		{
+			this.serializing = false;
+		}
 	}
 	
+	[global::System.Runtime.Serialization.DataContractAttribute()]
 	public partial class Dispatcher : Employee
 	{
 		
@@ -1798,10 +2073,23 @@ namespace DAL
 		
 		public Dispatcher()
 		{
+			this.Initialize();
+		}
+		
+		private void Initialize()
+		{
 			OnCreated();
+		}
+		
+		[global::System.Runtime.Serialization.OnDeserializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public new void OnDeserializing(StreamingContext context)
+		{
+			this.Initialize();
 		}
 	}
 	
+	[global::System.Runtime.Serialization.DataContractAttribute()]
 	public partial class TaxiDriver : Employee
 	{
 		
@@ -1841,12 +2129,11 @@ namespace DAL
 		
 		public TaxiDriver()
 		{
-			this._Taxi = default(EntityRef<Taxi>);
-			this._Driver_status = default(EntityRef<Driver_status>);
-			OnCreated();
+			this.Initialize();
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_taxi_id", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
 		public System.Nullable<int> taxi_id
 		{
 			get
@@ -1871,6 +2158,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_position_name", DbType="VarChar(150)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
 		public string position_name
 		{
 			get
@@ -1891,6 +2179,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_position_lon", DbType="Decimal(11,7)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
 		public System.Nullable<decimal> position_lon
 		{
 			get
@@ -1911,6 +2200,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_driver_status_id", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
 		public System.Nullable<int> driver_status_id
 		{
 			get
@@ -1935,6 +2225,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_position_lat", DbType="Decimal(11,7)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
 		public System.Nullable<decimal> position_lat
 		{
 			get
@@ -1955,6 +2246,7 @@ namespace DAL
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_licence_number", DbType="VarChar(50)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
 		public string licence_number
 		{
 			get
@@ -2041,8 +2333,23 @@ namespace DAL
 				}
 			}
 		}
+		
+		private void Initialize()
+		{
+			this._Taxi = default(EntityRef<Taxi>);
+			this._Driver_status = default(EntityRef<Driver_status>);
+			OnCreated();
+		}
+		
+		[global::System.Runtime.Serialization.OnDeserializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public new void OnDeserializing(StreamingContext context)
+		{
+			this.Initialize();
+		}
 	}
 	
+	[global::System.Runtime.Serialization.DataContractAttribute()]
 	public partial class Admin : Employee
 	{
 		
@@ -2054,7 +2361,19 @@ namespace DAL
 		
 		public Admin()
 		{
+			this.Initialize();
+		}
+		
+		private void Initialize()
+		{
 			OnCreated();
+		}
+		
+		[global::System.Runtime.Serialization.OnDeserializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public new void OnDeserializing(StreamingContext context)
+		{
+			this.Initialize();
 		}
 	}
 }

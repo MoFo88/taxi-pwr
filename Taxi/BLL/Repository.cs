@@ -26,11 +26,6 @@ namespace BLL
         }
 
         /// <summary>Funkcja autoryzujące użytkownika
-        /// 
-        /// funkcja zwraca userId
-        /// 
-        /// ret -1 => brak uzytkownika o podanym loginie
-        /// ret -2=> zle haslo
         /// </summary>
         /// <param name="login"></param>
         /// <param name="pswd"></param>
@@ -46,7 +41,7 @@ namespace BLL
 
             Employee user = query.SingleOrDefault();
 
-            if (user == null) return -1;
+            if (user == null) throw new UserNotExistException();
 
             ASCIIEncoding ascii = new ASCIIEncoding();
             SHA1 sha = new SHA1CryptoServiceProvider();
@@ -56,7 +51,7 @@ namespace BLL
             byte[] passwordHash = sha.ComputeHash(ascii.GetBytes(pswdSalt));
             string password = Convert.ToBase64String(passwordHash);
 
-            if (user.password != password) return -2;
+            if (user.password != password) throw new WronPasswordException("Wrong password");
 
             return user.id;
         }
@@ -96,9 +91,6 @@ namespace BLL
         }
 
         /// <summary>Funkja dodająca taksówkarza
-        /// ret -1 => uzytlownik o podanym loginie istnieje
-        /// ret 0 => OK
-        /// ret -2 => błąd przy dodawaniu do bazy
         /// </summary>
         /// <param name="name"></param>
         /// <param name="surname"></param>
@@ -111,7 +103,7 @@ namespace BLL
         /// <param name="login"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public static int AddNewTaxiDriver(String name, String surname, String city, String email, String houseNr, String pesel, String licenceNr, String postalCode, String login, String password)
+        public static void AddNewTaxiDriver(String name, String surname, String city, String email, String houseNr, String pesel, String licenceNr, String postalCode, String login, String password)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
             TaxiDriver td = new TaxiDriver();
@@ -125,12 +117,13 @@ namespace BLL
             td.login = login;
             td.pesel = pesel;
             td.postal_code = postalCode;
+            
 
             Employee check = ctx.Employees.SingleOrDefault(u => u.login == td.login);
 
             if (check != null)
             {
-                return -1;
+                throw new UserExistException("User with given login already exist");
             }
 
             td.salt = CreateRandomString(8);
@@ -159,14 +152,13 @@ namespace BLL
             }
             catch(Exception ex)
             {
-                return -2;
+                throw new DatabaseException("Exception with inserting to database");
             }
 
-            return 0;
         }
-        public static int AddNewTaxiDriver(String name, String surname, String login, String password)
+        public static void AddNewTaxiDriver(String name, String surname, String login, String password)
         {
-            return AddNewTaxiDriver(name, surname, null, null, null, null, null, null, login, password);
+            AddNewTaxiDriver(name, surname, null, null, null, null, null, null, login, password);
         }
 
         public static List<Taxi> GetTaxiList()

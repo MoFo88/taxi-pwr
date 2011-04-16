@@ -24,8 +24,7 @@ namespace TestProject
         [TestMethod]
         public void TestMethodAddTaviDriver()
         {
-            int x1 = Repository.AddNewTaxiDriver("jan", "grzegrzolka", "yasio", "yasio1");     
-            Assert.AreEqual(x1, -1);
+            Repository.AddNewTaxiDriver("jan", "grzegrzolka", "yasio", "yasio1");     
         }
 
         [TestMethod]
@@ -44,6 +43,7 @@ namespace TestProject
             Assert.IsTrue(e.employee_type_id == 3);
 
         }
+
 
     }
 }

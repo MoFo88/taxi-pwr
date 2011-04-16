@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="yasio1_taxiDb" Class="TaxiDataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="yasio1_taxiDb" Class="TaxiDataClassesDataContext" Serialization="Unidirectional" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=mssql3.webio.pl,2401;Initial Catalog=yasio1_taxiDb;Persist Security Info=True;User ID=yasio1_superuser" SettingsObjectName="DAL.Properties.Settings" SettingsPropertyName="yasio1_taxiDbConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Car_model" Member="Car_models">
     <Type Name="Car_model">
