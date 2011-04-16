@@ -9,7 +9,7 @@
     
     <h2>Dodaj nowego pracownika</h2>
 
-        <asp:Panel ID="Panel1" runat="server">
+        <asp:Panel ID="p_AddForm" runat="server">
 
             <asp:Label ID="lb_Name" runat="server" AssociatedControlID="tb_Name" 
                 Text="Imię"></asp:Label>
@@ -81,46 +81,49 @@
         </asp:Panel>
         <br />
 
-        <h2>Lista pracowników</h2>
-        <asp:GridView ID="gd_Employees" runat="server" AutoGenerateColumns="False" 
-            CellPadding="4" DataSourceID="LinqDataSource1" ForeColor="#333333" 
-            GridLines="None" AllowSorting="True">
-            <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
-            <Columns>
-                <asp:BoundField DataField="name" HeaderText="Imię" ReadOnly="True" 
-                    SortExpression="name" />
-                <asp:BoundField DataField="surname" HeaderText="Nazwisko" ReadOnly="True" 
-                    SortExpression="surname" />
-                <asp:BoundField DataField="login" HeaderText="Login" ReadOnly="True" 
-                    SortExpression="login" />
-            </Columns>
-            <EditRowStyle BackColor="#999999" />
-            <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-            <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-            <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
-            <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
-            <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
-            <SortedAscendingCellStyle BackColor="#E9E7E2" />
-            <SortedAscendingHeaderStyle BackColor="#506C8C" />
-            <SortedDescendingCellStyle BackColor="#FFFDF8" />
-            <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
+        <asp:Panel ID="p_EmployeesList" runat="server">
+            <h2>
+                Lista pracowników</h2>
+            <asp:GridView ID="gd_Employees" runat="server" AutoGenerateColumns="False" 
+                CellPadding="4" DataSourceID="LinqDataSource1" ForeColor="#333333" 
+                GridLines="None" AllowSorting="True">
+                <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
+                <Columns>
+                    <asp:BoundField DataField="name" HeaderText="Imię" ReadOnly="True" 
+                        SortExpression="name" />
+                    <asp:BoundField DataField="surname" HeaderText="Nazwisko" ReadOnly="True" 
+                        SortExpression="surname" />
+                    <asp:BoundField DataField="login" HeaderText="Login" ReadOnly="True" 
+                        SortExpression="login" />
+                </Columns>
+                <EditRowStyle BackColor="#999999" />
+                <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+                <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+                <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+                <SortedAscendingCellStyle BackColor="#E9E7E2" />
+                <SortedAscendingHeaderStyle BackColor="#506C8C" />
+                <SortedDescendingCellStyle BackColor="#FFFDF8" />
+                <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
 
-<SortedAscendingCellStyle BackColor="#E9E7E2"></SortedAscendingCellStyle>
+    <SortedAscendingCellStyle BackColor="#E9E7E2"></SortedAscendingCellStyle>
 
-<SortedAscendingHeaderStyle BackColor="#506C8C"></SortedAscendingHeaderStyle>
+    <SortedAscendingHeaderStyle BackColor="#506C8C"></SortedAscendingHeaderStyle>
 
-<SortedDescendingCellStyle BackColor="#FFFDF8"></SortedDescendingCellStyle>
+    <SortedDescendingCellStyle BackColor="#FFFDF8"></SortedDescendingCellStyle>
 
-<SortedDescendingHeaderStyle BackColor="#6F8DAE"></SortedDescendingHeaderStyle>
-        </asp:GridView>
+    <SortedDescendingHeaderStyle BackColor="#6F8DAE"></SortedDescendingHeaderStyle>
+            </asp:GridView>
     
 
-        <asp:LinqDataSource ID="LinqDataSource1" runat="server" 
-            ContextTypeName="DAL.TaxiDataClassesDataContext" EntityTypeName="" 
-            Select="new (name, surname, pesel, login, password, Employee_type)" 
-            TableName="Employees">
-        </asp:LinqDataSource>
+            <asp:LinqDataSource ID="LinqDataSource1" runat="server" 
+                ContextTypeName="DAL.TaxiDataClassesDataContext" EntityTypeName="" 
+                Select="new (name, surname, pesel, login, password, Employee_type)" 
+                TableName="Employees">
+            </asp:LinqDataSource>
     
+        </asp:Panel>
 
         </div>
 
