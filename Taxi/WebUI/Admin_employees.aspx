@@ -84,17 +84,43 @@
         <asp:Panel ID="p_EmployeesList" runat="server">
             <h2>
                 Lista pracowników</h2>
-            <asp:GridView ID="gd_Employees" runat="server" AutoGenerateColumns="False" 
-                CellPadding="4" DataSourceID="LinqDataSource1" ForeColor="#333333" 
+            <asp:GridView ID="gv_Employees" runat="server" AutoGenerateColumns="False" 
+                CellPadding="4" DataSourceID="ObjectDataSource1" ForeColor="#333333" 
                 GridLines="None" AllowSorting="True">
                 <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                 <Columns>
-                    <asp:BoundField DataField="name" HeaderText="Imię" ReadOnly="True" 
-                        SortExpression="name" />
-                    <asp:BoundField DataField="surname" HeaderText="Nazwisko" ReadOnly="True" 
+                    <asp:BoundField DataField="taxi_id" HeaderText="taxi_id" 
+                        SortExpression="taxi_id" />
+                    <asp:BoundField DataField="position_name" HeaderText="position_name" 
+                        SortExpression="position_name" />
+                    <asp:BoundField DataField="position_lon" HeaderText="position_lon" 
+                        SortExpression="position_lon" />
+                    <asp:BoundField DataField="driver_status_id" HeaderText="driver_status_id" 
+                        SortExpression="driver_status_id" />
+                    <asp:BoundField DataField="position_lat" HeaderText="position_lat" 
+                        SortExpression="position_lat" />
+                    <asp:BoundField DataField="licence_number" HeaderText="licence_number" 
+                        SortExpression="licence_number" />
+                    <asp:BoundField DataField="id" HeaderText="id" SortExpression="id" />
+                    <asp:BoundField DataField="name" HeaderText="name" SortExpression="name" />
+                    <asp:BoundField DataField="surname" HeaderText="surname" 
                         SortExpression="surname" />
-                    <asp:BoundField DataField="login" HeaderText="Login" ReadOnly="True" 
-                        SortExpression="login" />
+                    <asp:BoundField DataField="pesel" HeaderText="pesel" SortExpression="pesel" />
+                    <asp:BoundField DataField="house_nr" HeaderText="house_nr" 
+                        SortExpression="house_nr" />
+                    <asp:BoundField DataField="postal_code" HeaderText="postal_code" 
+                        SortExpression="postal_code" />
+                    <asp:BoundField DataField="city" HeaderText="city" SortExpression="city" />
+                    <asp:BoundField DataField="e_mail" HeaderText="e_mail" 
+                        SortExpression="e_mail" />
+                    <asp:BoundField DataField="employee_type_id" HeaderText="employee_type_id" 
+                        SortExpression="employee_type_id" />
+                    <asp:BoundField DataField="login" HeaderText="login" SortExpression="login" />
+                    <asp:BoundField DataField="password" HeaderText="password" 
+                        SortExpression="password" />
+                    <asp:BoundField DataField="salt" HeaderText="salt" SortExpression="salt" />
+                    <asp:BoundField DataField="telephone" HeaderText="telephone" 
+                        SortExpression="telephone" />
                 </Columns>
                 <EditRowStyle BackColor="#999999" />
                 <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
@@ -117,11 +143,9 @@
             </asp:GridView>
     
 
-            <asp:LinqDataSource ID="LinqDataSource1" runat="server" 
-                ContextTypeName="DAL.TaxiDataClassesDataContext" EntityTypeName="" 
-                Select="new (name, surname, pesel, login, password, Employee_type)" 
-                TableName="Employees">
-            </asp:LinqDataSource>
+            <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" 
+                SelectMethod="GetAllTaxiDrivers" TypeName="BLL.Repository">
+            </asp:ObjectDataSource>
     
         </asp:Panel>
 
