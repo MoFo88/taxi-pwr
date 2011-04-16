@@ -46,7 +46,7 @@
 
         <h2>Lista zgłoszeń</h2>
         <p>
-                <asp:GridView ID="gd_Orders" runat="server" AutoGenerateColumns="False" 
+                <asp:GridView ID="gv_Orders" runat="server" AutoGenerateColumns="False" 
                     CellPadding="4" DataSourceID="LinqDataSource1" ForeColor="#333333" 
                     GridLines="None" AllowSorting="True">
                     <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
