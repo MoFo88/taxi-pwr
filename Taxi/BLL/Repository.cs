@@ -42,14 +42,8 @@ namespace BLL
             Employee user = query.SingleOrDefault();
 
             if (user == null) throw new UserNotExistException();
-
-            ASCIIEncoding ascii = new ASCIIEncoding();
-            SHA1 sha = new SHA1CryptoServiceProvider();
-
             String pswdSalt = pswd + user.salt;
-
-            byte[] passwordHash = sha.ComputeHash(ascii.GetBytes(pswdSalt));
-            string password = Convert.ToBase64String(passwordHash);
+            String password = CalculateSHA1(pswdSalt, Encoding.ASCII);
 
             if (user.password != password) throw new WronPasswordException("Wrong password");
 
@@ -90,6 +84,14 @@ namespace BLL
             return newPass;
         }
 
+        public static string CalculateSHA1(string text, Encoding enc)
+        {
+            byte[] buffer = enc.GetBytes(text);
+            SHA1CryptoServiceProvider cryptoTransformSHA1 = new SHA1CryptoServiceProvider();
+            string hash = BitConverter.ToString(cryptoTransformSHA1.ComputeHash(buffer)).ToLower().Replace("-", "");
+            return hash;
+        }
+
         /// <summary>Funkja dodająca taksówkarza
         /// </summary>
         /// <param name="name"></param>
@@ -128,19 +130,17 @@ namespace BLL
 
             td.salt = CreateRandomString(8);
 
-            ASCIIEncoding asci = new ASCIIEncoding();
-            SHA1 sha1 = new SHA1CryptoServiceProvider();    
 
             String pwd;
 
             if (password != null)
             {
-                pwd = Convert.ToBase64String(sha1.ComputeHash( asci.GetBytes(password + td.salt ) ));
+                pwd = Repository.CalculateSHA1(password + td.salt, Encoding.ASCII);
             }
             else
             {
                 string randomPwd = CreateRandomString(8);
-                pwd = Convert.ToBase64String(sha1.ComputeHash(asci.GetBytes(randomPwd + td.salt)));
+                pwd = Repository.CalculateSHA1(randomPwd + td.salt, Encoding.ASCII);
             }
 
             td.password = pwd;
