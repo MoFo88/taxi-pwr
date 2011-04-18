@@ -24,7 +24,7 @@ namespace TestProject
         [TestMethod]
         public void TestMethodAddTaviDriver()
         {
-            Repository.AddNewTaxiDriver("jan", "grzegrzolka", "yasio", "yasio1");     
+            Repository.AddNewTaxiDriver("stefan", "posadzki", "stefan", "stefan");     
         }
 
         [TestMethod]
@@ -32,15 +32,8 @@ namespace TestProject
         {
 
 
-            int x1 = Repository.UserAuth("admin", "yasio1");
+            int x1 = Repository.UserAuth("stefan", "stefan");
             Assert.IsTrue(x1 > 0);
-
-            int x2 = Repository.UserAuth("admin", "yasio11");
-            Assert.IsTrue(x2 == -2);
-
-
-            Employee e = Repository.GetUserById(x1);
-            Assert.IsTrue(e.employee_type_id == 3);
 
         }
 
