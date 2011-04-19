@@ -15,13 +15,19 @@ public partial class SiteMaster : System.Web.UI.MasterPage
     }
     protected void LoginControl_Authenticate(object sender, AuthenticateEventArgs e)
     {
-        Login log = (Login)LoginView1.FindControl("Login1");
-        int wynik = Repository.UserAuth(log.UserName, log.Password);
-        //int wynik = Repository.UserAuth("Abc", "Def");
-        if (wynik>=0)
+        try
         {
-            e.Authenticated = true;
-            Session["userName"] = log.UserName;
+            Login log = (Login)LoginView1.FindControl("Login1");
+            int userId = Repository.UserAuth(log.UserName, log.Password);
+            if (userId >= 0)
+            {
+                e.Authenticated = true;
+                Session["userName"] = log.UserName;
+            }
+        }
+        catch (Exception exception)
+        {
+            
         }
     }
 

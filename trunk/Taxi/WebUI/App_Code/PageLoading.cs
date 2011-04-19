@@ -17,8 +17,8 @@ public class PageLoading
 	}
 
     public static void CheckAuthorization() {
-        String abc=(String)(HttpContext.Current.Session)["userName"];
-        if (abc == null)
+        String userName=(String)(HttpContext.Current.Session)["userName"];
+        if (userName == null)
         {
             HttpContext.Current.Response.Redirect("Default.aspx");
         };
