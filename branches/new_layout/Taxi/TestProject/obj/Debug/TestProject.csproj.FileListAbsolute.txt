@@ -1,0 +1,9 @@
+C:\Users\yasio\Desktop\Taxi\trunk\Taxi\TestProject\bin\Debug\TestProject.dll
+C:\Users\yasio\Desktop\Taxi\trunk\Taxi\TestProject\bin\Debug\TestProject.pdb
+C:\Users\yasio\Desktop\Taxi\trunk\Taxi\TestProject\bin\Debug\BLL.dll
+C:\Users\yasio\Desktop\Taxi\trunk\Taxi\TestProject\bin\Debug\DAL.dll
+C:\Users\yasio\Desktop\Taxi\trunk\Taxi\TestProject\bin\Debug\BLL.pdb
+C:\Users\yasio\Desktop\Taxi\trunk\Taxi\TestProject\bin\Debug\DAL.pdb
+C:\Users\yasio\Desktop\Taxi\trunk\Taxi\TestProject\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\yasio\Desktop\Taxi\trunk\Taxi\TestProject\obj\Debug\TestProject.dll
+C:\Users\yasio\Desktop\Taxi\trunk\Taxi\TestProject\obj\Debug\TestProject.pdb
