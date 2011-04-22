@@ -191,7 +191,7 @@ function MapCreatePopupOrder(lonLat, details, showPopup) {
                    new OpenLayers.Size(220, 110),
                    '<div class="map_popup">'+
                    '<div class="order_id">Zamówienie #' + details.id_order + '</div>' +
-                   '<div class="course_date">' + details.date + '</div>' +
+                   '<div class="course_date">' + details.course_date + '</div>' +
                    '<div class="startpoint_name">' + details.startpoint_name + '</div>' +
                    '<div class="notes">Uwagi: ' + details.notes + '</div>' +
                    '</div>',
