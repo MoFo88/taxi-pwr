@@ -32,9 +32,14 @@
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
 
-    <div>
+<div class="main">
+    <div class="maintop"></div>
+    <div class="content">
+        <br class="clear noheight" />
+
+        <div>
     
-    <h2>Dodaj nowego pracownika</h2>
+    <h1>Dodaj nowego pracownika</h1>
 
         <asp:Panel ID="p_AddForm" runat="server">
 
@@ -194,5 +199,10 @@
         </asp:Panel>
 
         </div>
+
+    </div>
+    <div class="mainbottom"></div>
+</div>
+
 
 </asp:Content>

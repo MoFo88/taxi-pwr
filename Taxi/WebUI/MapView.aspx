@@ -1,61 +1,47 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="MapView.aspx.cs" Inherits="Default2" %>
 
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
+    <script src="Scripts/MapView.js" type="text/javascript"></script>
+    <script src="Scripts/MapHandler.js" type="text/javascript"></script>
+    <script src="http://www.openlayers.org/api/OpenLayers.js" type="text/javascript"></script> <!--TODO wczytywać mapkę z dysku, tylko trzeba ikonki pościągać i powprowadzać odpowiednie ścieżki do obrazków-->
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     
-        <style type="text/css">
-      html, body, #basicMap {
-          width: 100%;
-          height: 100%;
-          margin: 0;
-      }
-    </style>
-    <script type="text/javascript" src="http://www.openlayers.org/api/OpenLayers.js"></script>
-   
-    <div id="basicMap" style="width: 100%; height: 500px"></div>
+<div id="itemlist" class="rightmenu orders">
+    <div class="list">
+        <div class="content">
+            <ul>
+            </ul>
+        </div>
+        <div class="bottom"></div>
+    </div>
+    <div class="new">
+        <button>Nowe zgłoszenie</button>
+    </div>
+</div>
 
-        <script type="text/javascript">
-            function init() {
-                map = new OpenLayers.Map("basicMap");
-                var mapnik = new OpenLayers.Layer.OSM();
-                map.addLayer(mapnik);
+<div id="dialog_change_orders">
+    <div class="close">zamknij</div>
+    <input type="hidden" id="id_order" />
+    <label for="order_course_date">Data: </label><input type="text" id="order_course_date" />
+    <label for="order_startpoint_name">Miejsce: </label><input type="text" id="order_startpoint_name" />
+    <label for="order_client_name">Imię i nazwisko: </label><input type="text" id="order_client_name" />
+    <label for="order_client_phone">Telefon: </label><input type="text" id="order_client_phone" />
+    <div class="submitbutton">
+        <button class="add">Dodaj zgłoszenie</button>
+        <button class="edit">Zmień zgłoszenie</button>
+    </div>
+</div>
 
+<div class="main">
+    <div class="maintop"></div>
+    <div class="content">
 
-                var lonLat = new OpenLayers.LonLat(17.06170, 51.10938) // Center of the map
-          .transform(
-            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
-            new OpenLayers.Projection("EPSG:900913") // to Spherical Mercator Projection
-          );
+        <div id="map_view"></div>
 
-                map.setCenter(lonLat, 14 // Zoom level
-        );
-
-
-                var popup = new OpenLayers.Popup("taxi1",
-                   lonLat,
-                   new OpenLayers.Size(70, 70),
-                   '<div style="font:500 11px arial">taxi<br>#1<br>wolny</div>',
-                   true);
-
-                map.addPopup(popup);
-                popup.setOpacity(0.8);
-                //popup.hide();
-
-                var marker = new OpenLayers.Marker(lonLat);
-                marker.setOpacity(0.5);
-
-                var markers = new OpenLayers.Layer.Markers("Markers");
-                map.addLayer(markers);
-                markers.addMarker(marker);
-                marker.events.register('mousedown', marker, function (evt) { popup.visible() ? popup.hide() : popup.show(); OpenLayers.Event.stop(evt); });
-
-
-                map.setCenter(lonLat, 14);
-            }
-            init();
-    </script>
-
+    </div>
+    <div class="mainbottom"></div>
+</div>
 
 
 </asp:Content>
