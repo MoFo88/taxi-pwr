@@ -13,109 +13,38 @@
 </head>
 <body>
     <form runat="server">
-    <div class="page">
-        <div class="header">
-            <div class="title">
-            <img src="Images/logo.jpg" width="150" style="float: left" />
-            <h1 style="float:left">
-                    Taxi "U Ryśka"
-                </h1>
+    <div class="layout">
+        <div class="page">
+            <div class="header">
+            <!--
+                <div class="title">
+                <img src="Images/logo.jpg" width="150" style="float: left" />
+                <h1 style="float:left">
+                        Taxi "U Ryśka"
+                    </h1>
                 
                 
+                </div>
+            -->
+  
             </div>
- 
-            <div id="loginform">
-                <asp:LoginView ID="LoginView1" runat="server">
-                    <AnonymousTemplate>
-                        <asp:Login ID="Login1" runat="server" 
-                            onauthenticate="LoginControl_Authenticate">
-                            <InstructionTextStyle Font-Italic="True" ForeColor="Black" />
-                            <LayoutTemplate>
-                                <table cellpadding="1" cellspacing="0" style="border-collapse:collapse;">
-                                    <tr>
-                                        <td>
-                                            <table cellpadding="0">
-                                                <tr>
-                                                    <td align="center" colspan="2">
-                                                        Log In</td>
-                                                </tr>
-                                                <tr>
-                                                    <td align="right">
-                                                        <asp:Label ID="UserNameLabel" runat="server" AssociatedControlID="UserName">User Name:</asp:Label>
-                                                    </td>
-                                                    <td>
-                                                        <asp:TextBox ID="UserName" runat="server"></asp:TextBox>
-                                                        <asp:RequiredFieldValidator ID="UserNameRequired" runat="server" 
-                                                            ControlToValidate="UserName" ErrorMessage="User Name is required." 
-                                                            ToolTip="User Name is required." ValidationGroup="ctl00$ctl16$Login1">*</asp:RequiredFieldValidator>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td align="right">
-                                                        <asp:Label ID="PasswordLabel" runat="server" AssociatedControlID="Password">Password:</asp:Label>
-                                                    </td>
-                                                    <td>
-                                                        <asp:TextBox ID="Password" runat="server" TextMode="Password"></asp:TextBox>
-                                                        <asp:RequiredFieldValidator ID="PasswordRequired" runat="server" 
-                                                            ControlToValidate="Password" ErrorMessage="Password is required." 
-                                                            ToolTip="Password is required." ValidationGroup="ctl00$ctl16$Login1">*</asp:RequiredFieldValidator>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="2">
-                                                        <asp:CheckBox ID="RememberMe" runat="server" Text="Remember me next time." />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td align="center" colspan="2" style="color:Red;">
-                                                        <asp:Literal ID="FailureText" runat="server" EnableViewState="False"></asp:Literal>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td align="right" colspan="2">
-                                                        <asp:Button ID="LoginButton" runat="server" CommandName="Login" Text="Log In" 
-                                                            ValidationGroup="ctl00$ctl16$Login1" />
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </LayoutTemplate>
-                            <LoginButtonStyle BackColor="White" BorderColor="#CC9966" BorderStyle="Solid" 
-                                BorderWidth="1px" Font-Names="Verdana" Font-Size="0.8em" ForeColor="#990000" />
-                            <TextBoxStyle Font-Size="0.8em" />
-                            <TitleTextStyle BackColor="#990000" Font-Bold="True" Font-Size="0.9em" 
-                                ForeColor="White" />
-                        </asp:Login>
-                    </AnonymousTemplate>
-                    <LoggedInTemplate>
-                <asp:LinkButton ID="LinkButton1" runat="server" onclick="LinkButton1_Click" 
-                            CssClass="linkb_logout">Zakończ pracę</asp:LinkButton>
-                    </LoggedInTemplate>
-                </asp:LoginView>
-            </div>
-            
-            <div class="clear hideSkiplink">
-                <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" 
-                    EnableViewState="False" IncludeStyleBlock="False" Orientation="Horizontal" 
-                    DataSourceID="SiteMapDataSource1" StaticDisplayLevels="2">
-                    <Items>
-                        <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Home"/>
-                    </Items>
+            <div class="clear hideSkiplink topmenu">
+                <asp:Menu ID="MenuTop" runat="server" CssClass="menu" IncludeStyleBlock="False" Orientation="Horizontal" 
+                    DataSourceID="SiteMapDataSource1" StaticDisplayLevels="2" 
+                    MaximumDynamicDisplayLevels="2" SkipLinkText="">
                 </asp:Menu>
                 <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" />
             </div>
+
+        <asp:ContentPlaceHolder ID="MainContent" runat="server">
+
+        </asp:ContentPlaceHolder>
+            <div class="clear">
+            </div>
         </div>
-        <div class="main">
-            <asp:ContentPlaceHolder ID="MainContent" runat="server">
-            </asp:ContentPlaceHolder>
-        </div>
-        <div class="clear">
-        </div>
-    </div>
     <div class="footer">
         
+    </div>
     </div>
     </form>
 </body>
