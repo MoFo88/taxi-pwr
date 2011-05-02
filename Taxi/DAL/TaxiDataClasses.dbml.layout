@@ -38,14 +38,14 @@
         <elementListCompartment Id="b9e0e35a-7a5e-4a9b-b939-377ed4a9dd13" absoluteBounds="7.2650000000000006, 4.2100000000000009, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(10 : 11.0392976888021); (10.5 : 11.0392976888021)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(10 : 11.0392976888021); (10.5 : 11.0392976888021)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/TaxiDataClassesDataContext/Car_model/Car_model_Taxi" />
       <nodes>
         <classShapeMoniker Id="ea2454a2-8a11-48bd-a4cb-8fe136e1a157" />
         <classShapeMoniker Id="22ccb724-82f2-4628-b6d6-2972ff0e16cb" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(15.75 : 7.875); (15.75 : 6.93430826822917)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(15.75 : 7.875); (15.75 : 6.93430826822917)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/TaxiDataClassesDataContext/Course_status/Course_status_Course" />
       <nodes>
         <classShapeMoniker Id="a3886501-665c-4124-8041-cad21bcae22c" />
@@ -64,34 +64,34 @@
         <elementListCompartment Id="2b062cd6-9e96-453a-89d0-ebdbbbf49683" absoluteBounds="9.25, 8.75, 0.125, 0.2493896484375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(12.5 : 10.479376664535); (12.75 : 10.479376664535); (12.75 : 10); (12.499998 : 10); (12.499998 : 9.5881982421875)]" fixedFrom="Caller" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(12.5 : 11.0392976888021); (12.75 : 11.0392976888021); (12.75 : 10); (12.499998 : 10); (12.499998 : 9.5881982421875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/TaxiDataClassesDataContext/Taxi/Taxi_TaxiDriver" />
       <nodes>
         <classShapeMoniker Id="22ccb724-82f2-4628-b6d6-2972ff0e16cb" />
         <classShapeMoniker Id="05cabd69-657c-4a88-b25c-3ab33c5d6d28" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(13.4375 : 10.25); (13.4375 : 9.5881982421875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(13.4375 : 10.25); (13.4375 : 9.5881982421875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/TaxiDataClassesDataContext/Driver_status/Driver_status_TaxiDriver" />
       <nodes>
         <classShapeMoniker Id="0975a9e8-acae-45a8-9e45-6c40605a1b59" />
         <classShapeMoniker Id="05cabd69-657c-4a88-b25c-3ab33c5d6d28" />
       </nodes>
     </associationConnector>
-    <classShape Id="e9706836-283d-4420-9480-3536dbf62da6" absoluteBounds="10.75, 3.875, 2, 3.3093082682291666">
+    <classShape Id="e9706836-283d-4420-9480-3536dbf62da6" absoluteBounds="10.75, 3.875, 2, 3.5016097005208326">
       <DataClassMoniker Name="/TaxiDataClassesDataContext/Employee" />
       <nestedChildShapes>
-        <elementListCompartment Id="68fd37e1-8906-40c8-be98-24832bad0785" absoluteBounds="10.765, 4.335, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="68fd37e1-8906-40c8-be98-24832bad0785" absoluteBounds="10.765, 4.335, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(12.75 : 5.40465413411458); (14.5 : 5.40465413411458)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(12.75 : 6.39984598795573); (14.5 : 6.39984598795573)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/TaxiDataClassesDataContext/Employee/Employee_Course" />
       <nodes>
         <classShapeMoniker Id="e9706836-283d-4420-9480-3536dbf62da6" />
         <classShapeMoniker Id="b7ebba92-4635-45f1-ad26-97f26f9b4d0a" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(12.75 : 4.57732706705729); (14.5 : 4.57732706705729)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(12.75 : 5.77523142496745); (14.5 : 5.77523142496745)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/TaxiDataClassesDataContext/Employee/Employee_Course1" />
       <nodes>
         <classShapeMoniker Id="e9706836-283d-4420-9480-3536dbf62da6" />
@@ -105,25 +105,25 @@
         <classShapeMoniker Id="e9706836-283d-4420-9480-3536dbf62da6" />
       </nodes>
     </associationConnector>
-    <inheritanceConnector edgePoints="[(11.75 : 7.18430826822917); (11.75 : 7.5226); (11.5226 : 7.5226); (11.5226 : 8.5964); (10.25 : 8.5964); (10.25 : 8.75)]" fixedFrom="NotFixed" fixedTo="NotFixed" TargetRelationshipDomainClassId="7a7fe09e-e9ef-4b01-9ff3-bde95e827b62">
+    <inheritanceConnector edgePoints="[(11.75 : 7.37660970052083); (11.75 : 7.54308); (11.54308 : 7.54308); (11.54308 : 8.62712); (10.25 : 8.62712); (10.25 : 8.75)]" fixedFrom="NotFixed" fixedTo="NotFixed" TargetRelationshipDomainClassId="7a7fe09e-e9ef-4b01-9ff3-bde95e827b62">
       <nodes>
         <classShapeMoniker Id="e9706836-283d-4420-9480-3536dbf62da6" />
         <classShapeMoniker Id="d6d2fd41-dffc-482e-8042-a92a01010350" />
       </nodes>
     </inheritanceConnector>
-    <inheritanceConnector edgePoints="[(11.75 : 7.18430826822917); (12.7198444419996 : 7.625)]" manuallyRouted="true" fixedFrom="Algorithm" fixedTo="Algorithm" TargetRelationshipDomainClassId="7a7fe09e-e9ef-4b01-9ff3-bde95e827b62">
+    <inheritanceConnector edgePoints="[(11.75 : 7.37660970052084); (12.7198444419996 : 7.625)]" manuallyRouted="true" fixedFrom="NotFixed" fixedTo="NotFixed" TargetRelationshipDomainClassId="7a7fe09e-e9ef-4b01-9ff3-bde95e827b62">
       <nodes>
         <classShapeMoniker Id="e9706836-283d-4420-9480-3536dbf62da6" />
         <classShapeMoniker Id="05cabd69-657c-4a88-b25c-3ab33c5d6d28" />
       </nodes>
     </inheritanceConnector>
-    <classShape Id="dea85495-6e43-40ac-917c-5fdd24f15039" absoluteBounds="9.25, 7.625, 2, 0.80938964843749961">
+    <classShape Id="dea85495-6e43-40ac-917c-5fdd24f15039" absoluteBounds="9.25, 7.625, 2, 0.8093896484375005">
       <DataClassMoniker Name="/TaxiDataClassesDataContext/Admin" />
       <nestedChildShapes>
         <elementListCompartment Id="849663f9-fbfe-4992-82b8-1902857786fc" absoluteBounds="9.25, 7.625, 0.125, 0.2493896484375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <inheritanceConnector edgePoints="[(11.75 : 7.18430826822917); (11.75 : 7.385); (10.25 : 7.385); (10.25 : 7.625)]" fixedFrom="NotFixed" fixedTo="NotFixed" TargetRelationshipDomainClassId="7a7fe09e-e9ef-4b01-9ff3-bde95e827b62">
+    <inheritanceConnector edgePoints="[(11.75 : 7.37660970052083); (11.75 : 7.50212); (10.25 : 7.50212); (10.25 : 7.625)]" fixedFrom="NotFixed" fixedTo="NotFixed" TargetRelationshipDomainClassId="7a7fe09e-e9ef-4b01-9ff3-bde95e827b62">
       <nodes>
         <classShapeMoniker Id="e9706836-283d-4420-9480-3536dbf62da6" />
         <classShapeMoniker Id="dea85495-6e43-40ac-917c-5fdd24f15039" />

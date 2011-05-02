@@ -8,24 +8,30 @@ namespace BLL
     public class UserExistException : ApplicationException
     {
         public UserExistException(string p) : base(p){}
-        public UserExistException(){ }
+        public UserExistException() : base("User with given login already exist") { }
     }
 
     public class DatabaseException : ApplicationException
     {
-        public DatabaseException() { }
+        public DatabaseException() : base("Exception with inserting to database") { }
         public DatabaseException(string p) : base(p) { }
     }
 
     public class UserNotExistException : ApplicationException
     {
-        public UserNotExistException() { }
+        public UserNotExistException() :base("User don't exist") { }
         public UserNotExistException(string p) : base(p) { }
     }
 
-    public class WronPasswordException : ApplicationException
+    public class WrongPasswordException : ApplicationException
     {
-        public WronPasswordException(){}
-        public WronPasswordException(string p):base(p) { }
+        public WrongPasswordException() : base("Given password isn't correct") {}
+        public WrongPasswordException(string p):base(p) { }
+    }
+
+    public class CourseNotExistException : ApplicationException
+    {
+        public CourseNotExistException() : base("Course don't exist") { }
+        public CourseNotExistException(string p) : base(p) { } 
     }
 }
