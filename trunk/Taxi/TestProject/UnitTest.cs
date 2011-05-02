@@ -24,7 +24,7 @@ namespace TestProject
         [TestMethod]
         public void TestMethodAddTaviDriver()
         {
-            Repository.AddNewTaxiDriver("stefan", "posadzki", "stefan", "stefan");     
+            Repository.AddNewTaxiDriver("stefan", "posadzki", "stefanek", "stefan");     
         }
 
         [TestMethod]

@@ -76,6 +76,7 @@
       <Column Name="password" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="salt" Type="System.String" DbType="Char(8)" CanBeNull="true" />
       <Column Name="telephone" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="street" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Association Name="Employee_Course" Member="Courses" ThisKey="id" OtherKey="depositor_id" Type="Course" />
       <Association Name="Employee_Course1" Member="Courses1" ThisKey="id" OtherKey="taxidriver_id" Type="Course" />
       <Association Name="Employee_type_Employee" Member="Employee_type" ThisKey="employee_type_id" OtherKey="id" Type="Employee_type" IsForeignKey="true" />

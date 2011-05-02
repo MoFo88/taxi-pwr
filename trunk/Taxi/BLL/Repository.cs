@@ -9,23 +9,10 @@ namespace BLL
 {
     public class Repository
     {
-        /// <summary>Funkcja zwraca Listę Typów użytkownika
-        /// 
-        /// </summary>
-        /// <returns>List of Employee_type</returns>
-        public static List<Employee_type> GetAllEmployeeTypes()
-        {
-            //get data context
-            TaxiDataClassesDataContext dc = new TaxiDataClassesDataContext();
 
-            var x = from i
-                    in dc.Employee_types
-                    select i;
+        /* USER */
 
-            return x.ToList();
-        }
-
-        /// <summary>Funkcja autoryzujące użytkownika
+        /// <summary>Funkcja autoryzująca użytkownika
         /// </summary>
         /// <param name="login"></param>
         /// <param name="pswd"></param>
@@ -45,10 +32,104 @@ namespace BLL
             String pswdSalt = pswd + user.salt;
             String password = CalculateSHA1(pswdSalt, Encoding.ASCII);
 
-            if (user.password != password) throw new WronPasswordException("Wrong password");
+            if (user.password != password) throw new WrongPasswordException("Wrong password");
 
             return user.id;
         }
+
+        /// <summary>Pobierz uzytkownika o podanym id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="UserNotExistException"></exception>
+        public static Employee GetUserById(int id)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            Employee e = ctx.Employees.SingleOrDefault(u => u.id == id);
+
+            if (e == null)
+            {
+                throw new UserNotExistException();
+            }
+
+            return e;
+        }
+
+        /// <summary>Usuń uzytkownika o podanym Id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <exception cref="UserNotExistException"></exception>
+        public static void DeleteUser(int userId)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+
+            var x = from u in ctx.Employees where u.id == userId select u;
+
+            Employee user = x.SingleOrDefault();
+
+            if (user == null)
+            {
+                throw new UserNotExistException();
+            }
+
+            ctx.Employees.DeleteOnSubmit(user);
+            ctx.SubmitChanges();
+        }
+
+        //PRIVATE MEMBER
+        private static Employee AddNewUser(
+            String name, 
+            String surname, 
+            String city, 
+            String email, 
+            String houseNr,  
+            String street,
+            String pesel, 
+            String postalCode, 
+            String login, 
+            String password)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            Employee e = new Employee();
+
+            e.name = name;
+            e.surname = surname;
+            e.city = city;
+            e.e_mail = email;
+            e.house_nr = houseNr;
+            e.login = login;
+            e.pesel = pesel;
+            e.postal_code = postalCode;
+            e.street = street;
+
+            //Employee check = ctx.Employees.SingleOrDefault(u => u.login == e.login);
+
+            //if  (check != null)
+            //{
+            //    throw new UserExistException();
+            //}
+
+            e.salt = CreateRandomString(8);
+
+            String pwd;
+
+            if (password != null)
+            {
+                pwd = Repository.CalculateSHA1(password + e.salt, Encoding.ASCII);
+            }
+            else
+            {
+                string randomPwd = CreateRandomString(8);
+                pwd = Repository.CalculateSHA1(randomPwd + e.salt, Encoding.ASCII);
+            }
+
+            e.password = pwd;
+
+            return e;
+
+        }
+
+        /* TAXI DRIVER */
 
         /// <summary> Funkcja zwraca listę wszystkich taksówkarz
         /// </summary>
@@ -58,7 +139,270 @@ namespace BLL
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
             var query = from c in ctx.Employees.OfType<TaxiDriver>() select c;
             return query.ToList();
-        }         
+        }
+
+        /// <summary>Funkja dodająca taksówkarza
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="surname"></param>
+        /// <param name="city"></param>
+        /// <param name="email"></param>
+        /// <param name="houseNr"></param>
+        /// <param name="pesel"></param>
+        /// <param name="licenceNr"></param>
+        /// <param name="postalCode"></param>
+        /// <param name="login"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public static void AddNewTaxiDriver(String name, String surname, String city, String email, String houseNr, String street, String pesel, String licenceNr, String postalCode, String login, String password)
+        {
+            
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+
+            Employee e = Repository.AddNewUser( name, surname, city, email, houseNr, street,  pesel,  postalCode, login, password);
+
+            TaxiDriver td = new TaxiDriver(e);
+
+            td.licence_number = licenceNr;
+
+            ctx.Employees.InsertOnSubmit(td);
+            ctx.SubmitChanges();
+
+        }
+
+        public static void AddNewTaxiDriver(String name, String surname, String login, String password)
+        {
+            AddNewTaxiDriver(name, surname, null, null, null, null, null, null, null, login, password);
+        }
+
+        /// <summary>Zmiana danych taksówkarza
+        /// </summary>
+        /// <param name="taxiDriveId"></param>
+        /// <param name="name"></param>
+        /// <param name="surname"></param>
+        /// <param name="city"></param>
+        /// <param name="email"></param>
+        /// <param name="houseNr"></param>
+        /// <param name="pesel"></param>
+        /// <param name="licenceNr"></param>
+        /// <param name="postalCode"></param>
+        /// <exception cref="UserNotExistException"></exception>
+        public static void EditTaxiDriverData(int taxiDriveId, String name, String surname, String city, String email, String houseNr, String pesel, String licenceNr, String postalCode)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+
+            var x = from t in ctx.Employees.OfType<TaxiDriver>() where t.id == taxiDriveId select t;
+
+            if (x == null)
+            {
+                throw new UserNotExistException();
+            }
+
+            TaxiDriver taxiDriver = x.SingleOrDefault();
+
+            taxiDriver.city = city;
+            taxiDriver.e_mail = email;
+            taxiDriver.house_nr = houseNr;
+            taxiDriver.licence_number = licenceNr;
+            taxiDriver.name = name;
+            taxiDriver.pesel = pesel;
+            taxiDriver.surname = surname;
+            taxiDriver.postal_code = postalCode;
+
+            ctx.SubmitChanges();
+        }
+
+        /// <summary>Pobierz listę taksówkarzy o podanym statusie
+        /// </summary>
+        /// <param name="statusId"></param>
+        /// <returns></returns>
+        public static List<TaxiDriver> GetTaxiDriversByStatusID(int statusId)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+
+            var x =
+                from td in ctx.Employees.OfType<TaxiDriver>()
+                where td.Driver_status.id == statusId
+                select td;
+
+            return x.ToList();
+        }
+        
+        /// <summary>Pobierz listę taksówkarzy o podanym statusie
+        /// </summary>
+        /// <param name="ds"></param>
+        /// <returns></returns>
+        public static List<TaxiDriver> GetTaxiDriversByStatus(Driver_status ds)
+        {
+            return GetTaxiDriversByStatusID(ds.id);
+        }
+
+        /* ADMIN */
+
+        public static void AddNewAdmin(String name, String surname, String city, String email, String houseNr, String street, String pesel,  String postalCode, String login, String password)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            Employee e = Repository.AddNewUser(name, surname, city, email, houseNr, street, pesel, postalCode, login, password);
+            Admin a = new Admin(e);
+
+            ctx.Employees.InsertOnSubmit(a);
+            ctx.SubmitChanges();
+
+        }
+
+        /* DISPATCHER */
+
+        public static void AddNewDispatcher(String name, String surname, String city, String email, String houseNr, String street, String pesel, String postalCode, String login, String password)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            Employee e = Repository.AddNewUser(name, surname, city, email, houseNr, street, pesel, postalCode, login, password);
+            Dispatcher d = new Dispatcher(e);
+
+            ctx.Employees.InsertOnSubmit(d);
+            ctx.SubmitChanges();
+
+        }
+
+
+        /* COURS */
+
+        /// <summary>Dodaj nowy kurs
+        /// </summary>
+        /// <param name="taxidriver_id"></param>
+        /// <param name="depositor_id"></param>
+        /// <param name="client_phone"></param>
+        /// <param name="course_date"></param>
+        /// <param name="course_status_id"></param>
+        /// <param name="client_name"></param>
+        /// <param name="startpoint_name"></param>
+        /// <param name="startpoint_lon"></param>
+        /// <param name="startpoint_lat"></param>
+        /// <param name="endpoint_lon"></param>
+        /// <param name="endpoint_lat"></param>
+        public static void addNewCourse(
+            int taxidriver_id, 
+            int depositor_id, 
+            String client_phone, 
+            DateTime? course_date, 
+            int course_status_id, 
+            String client_name,
+            String startpoint_name, 
+            Decimal startpoint_lon, 
+            Decimal startpoint_lat, 
+            Decimal endpoint_lon, 
+            Decimal endpoint_lat)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            Course course = new Course();
+
+            if (course_date == null)
+            {
+                course_date = DateTime.Now;
+            }
+
+            course.client_phone = client_phone;
+            course.date = DateTime.Now;
+            course.course_date = course_date;
+            course.client_name = client_name;
+            course.course_status_id = course_status_id;
+            course.depositor_id = depositor_id;
+            course.taxidriver_id = taxidriver_id;
+            course.startpoint_lat = startpoint_lat;
+            course.startpoint_lon = startpoint_lon;
+            course.endpoint_lat = endpoint_lat;
+            course.endpoint_lon = endpoint_lon;
+
+
+            ctx.Courses.InsertOnSubmit(course);
+            ctx.SubmitChanges();
+
+        }
+
+
+        /// <summary>Edytuj dane kuru
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <param name="taxidriver_id"></param>
+        /// <param name="depositor_id"></param>
+        /// <param name="client_phone"></param>
+        /// <param name="course_date"></param>
+        /// <param name="course_status_id"></param>
+        /// <param name="client_name"></param>
+        /// <param name="startpoint_name"></param>
+        /// <param name="startpoint_lon"></param>
+        /// <param name="startpoint_lat"></param>
+        /// <param name="endpoint_lon"></param>
+        /// <param name="endpoint_lat"></param>
+        public static void EditCourse(
+            int courseId, 
+            int taxidriver_id, 
+            int depositor_id, 
+            String client_phone, 
+            DateTime? course_date, 
+            int course_status_id, 
+            String client_name,
+            String startpoint_name, 
+            Decimal startpoint_lon, 
+            Decimal startpoint_lat, 
+            Decimal endpoint_lon, 
+            Decimal endpoint_lat)        
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            Course course = ctx.Courses.SingleOrDefault(c => c.id == courseId);
+
+            if (course == null)
+            {
+                throw new CourseNotExistException();
+            }
+
+            if (course_date == null)
+            {
+                course_date = DateTime.Now;
+            }
+
+            course.client_phone = client_phone;
+            course.course_date = course_date;
+            course.client_name = client_name;
+            course.course_status_id = course_status_id;
+            course.depositor_id = depositor_id;
+            course.taxidriver_id = taxidriver_id;
+            course.startpoint_lat = startpoint_lat;
+            course.startpoint_lon = startpoint_lon;
+            course.endpoint_lat = endpoint_lat;
+            course.endpoint_lon = endpoint_lon;
+
+            ctx.SubmitChanges();
+        }
+        
+        /*  */
+
+        /* TAXI */
+        public static List<Taxi> GetTaxiList()
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from c in ctx.Taxis select c;
+            return x.ToList();
+        }
+
+        /// <summary>Funkcja zwraca Listę Typów użytkownika
+        /// </summary>
+        /// <returns>List of Employee_type</returns>
+        public static List<Employee_type> GetAllEmployeeTypes()
+        {
+            //get data context
+            TaxiDataClassesDataContext dc = new TaxiDataClassesDataContext();
+
+            var x = from i
+                    in dc.Employee_types
+                    select i;
+
+            return x.ToList();
+        }
+
+        
+
+        
+        /* PRIVATE MEMBER */
 
         #region Losowy ciąg znaków o zadanej długości
         #endregion
@@ -84,129 +428,14 @@ namespace BLL
             return newPass;
         }
 
-        public static string CalculateSHA1(string text, Encoding enc)
+        #region Suma SHA1
+        #endregion
+        private static string CalculateSHA1(string text, Encoding enc)
         {
             byte[] buffer = enc.GetBytes(text);
             SHA1CryptoServiceProvider cryptoTransformSHA1 = new SHA1CryptoServiceProvider();
             string hash = BitConverter.ToString(cryptoTransformSHA1.ComputeHash(buffer)).ToLower().Replace("-", "");
             return hash;
-        }
-
-        /// <summary>Funkja dodająca taksówkarza
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="surname"></param>
-        /// <param name="city"></param>
-        /// <param name="email"></param>
-        /// <param name="houseNr"></param>
-        /// <param name="pesel"></param>
-        /// <param name="licenceNr"></param>
-        /// <param name="postalCode"></param>
-        /// <param name="login"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public static void AddNewTaxiDriver(String name, String surname, String city, String email, String houseNr, String pesel, String licenceNr, String postalCode, String login, String password)
-        {
-            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
-            TaxiDriver td = new TaxiDriver();
-
-            td.name = name;
-            td.surname = surname;
-            td.city = city;
-            td.e_mail = email;
-            td.house_nr = houseNr;
-            td.licence_number = licenceNr;
-            td.login = login;
-            td.pesel = pesel;
-            td.postal_code = postalCode;
-            
-
-            Employee check = ctx.Employees.SingleOrDefault(u => u.login == td.login);
-
-            if (check != null)
-            {
-                throw new UserExistException("User with given login already exist");
-            }
-
-            td.salt = CreateRandomString(8);
-
-
-            String pwd;
-
-            if (password != null)
-            {
-                pwd = Repository.CalculateSHA1(password + td.salt, Encoding.ASCII);
-            }
-            else
-            {
-                string randomPwd = CreateRandomString(8);
-                pwd = Repository.CalculateSHA1(randomPwd + td.salt, Encoding.ASCII);
-            }
-
-            td.password = pwd;
-
-            try
-            {
-                ctx.Employees.InsertOnSubmit(td);
-                ctx.SubmitChanges();
-            }
-            catch(Exception ex)
-            {
-                throw new DatabaseException("Exception with inserting to database");
-            }
-
-        }
-        public static void AddNewTaxiDriver(String name, String surname, String login, String password)
-        {
-            AddNewTaxiDriver(name, surname, null, null, null, null, null, null, login, password);
-        }
-
-        public static List<Taxi> GetTaxiList()
-        {
-            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
-            var x = from c in ctx.Taxis select c;
-            return x.ToList();
-        }
-
-        public static  Employee GetUserById(int id)
-        {
-            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
-            var x = ctx.Employees.SingleOrDefault(u => u.id == id);
-            
-            Employee e = new Employee();
-            e = (Employee)x;
-            
-            return e;
-        }
-
-        public static void addNewCourse(int taxidriver_id, int depositor_id, String client_phone, DateTime course_date, int course_status_id, String client_name,
-            String startpoint_name, Decimal startpoint_lon,Decimal startpoint_lat, Decimal endpoint_lon, Decimal endpoint_lat)
-        {
-            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
-            Course course = new Course();
-            course.client_phone=client_phone;
-            course.date=System.DateTime.Now;
-            course.course_date = course_date;
-            course.client_name = client_name;
-            course.course_status_id = course_status_id;
-            course.depositor_id = depositor_id;
-            course.taxidriver_id = taxidriver_id;
-            course.startpoint_lat = startpoint_lat;
-            course.startpoint_lon = startpoint_lon;
-            course.endpoint_lat = endpoint_lat;
-            course.endpoint_lon = endpoint_lon;
-            try
-            {
-                ctx.Courses.InsertOnSubmit(course);
-                ctx.SubmitChanges();
-            }
-            catch (Exception e)
-            {
-                
-            }
-
-        }
+        }        
     }
-
-    
 }
