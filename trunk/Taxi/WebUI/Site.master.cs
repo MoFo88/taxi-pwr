@@ -13,28 +13,15 @@ public partial class SiteMaster : System.Web.UI.MasterPage
     {
         
     }
-    protected void LoginControl_Authenticate(object sender, AuthenticateEventArgs e)
+
+    protected bool IsLoggedIn()
     {
-        try
-        {
-            Login log = (Login)LoginView1.FindControl("Login1");
-            int userId = Repository.UserAuth(log.UserName, log.Password);
-            if (userId >= 0)
-            {
-                e.Authenticated = true;
-                Session["userName"] = log.UserName;
-            }
+        if (Session["userName"]!=null && Session["userName"]!="") {
+            return true;
         }
-        catch (Exception exception)
-        {
-            
+        else {
+            return false;
         }
     }
 
-    protected void LinkButton1_Click(object sender, EventArgs e)
-    {
-        Session.Abandon();
-        FormsAuthentication.SignOut();
-        Response.Redirect("Default.aspx");
-    }
 }
