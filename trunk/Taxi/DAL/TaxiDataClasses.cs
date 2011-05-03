@@ -9,6 +9,7 @@ namespace DAL
     {
         public TaxiDriver(Employee e)
         {
+            this.name = e.name;
             this.city = e.city;
             this.e_mail = e.e_mail;
             this.house_nr = e.house_nr;
@@ -29,6 +30,7 @@ namespace DAL
     {
         public Admin(Employee e)
         {
+            this.name = e.name;
             this.city = e.city;
             this.e_mail = e.e_mail;
             this.house_nr = e.house_nr;
@@ -48,6 +50,7 @@ namespace DAL
     {
         public Dispatcher(Employee e)
         {
+            this.name = e.name;
             this.city = e.city;
             this.e_mail = e.e_mail;
             this.house_nr = e.house_nr;
