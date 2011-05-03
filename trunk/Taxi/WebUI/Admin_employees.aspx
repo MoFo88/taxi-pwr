@@ -144,7 +144,7 @@
             </asp:Panel>
 
             <br />
-            <asp:Label ID="lb_Add" runat="server" AssociatedControlID="b_Add" 
+            <asp:Label ID="lb_Submit" runat="server" AssociatedControlID="b_Submit" 
                 Text="Akcje"></asp:Label>
             <asp:Button ID="b_Submit" runat="server" 
                 onclick="b_Add_Click" Text="Dodaj/Zmień" />
