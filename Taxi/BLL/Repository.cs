@@ -76,6 +76,30 @@ namespace BLL
             ctx.SubmitChanges();
         }
 
+        /// <summary> Funkcja zmiany hasła użytkownika
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="newPassword"></param>
+        /// <exception cref="UserNotExistException"></exception>
+        public static void ChangeUserPassword(int userId, String newPassword)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+
+            Employee e = ctx.Employees.SingleOrDefault( em => em.id == userId );
+
+            if (e == null)
+            {
+                throw new UserNotExistException();
+            }
+
+            String NewPassword = Repository.CalculateSHA1(newPassword + e.salt, Encoding.ASCII);
+
+            e.password = NewPassword;
+
+            ctx.SubmitChanges();
+
+        }
+        
         //PRIVATE MEMBER
         private static Employee AddNewUser(
             String name, 
@@ -200,11 +224,11 @@ namespace BLL
         public static void EditTaxiDriverData(int taxiDriveId, String name, String surname, String city, String email, String houseNr, String pesel, String licenceNr, String postalCode)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
-
             var x = from t in ctx.Employees.OfType<TaxiDriver>() where t.id == taxiDriveId select t;
 
             if (x == null)
             {
+
                 throw new UserNotExistException();
             }
 
@@ -222,11 +246,25 @@ namespace BLL
             ctx.SubmitChanges();
         }
 
+        public static void EditTaxiDriverData(int taxiDriverId, String name, String surname, String city, String email, String houseNr, String pesel, String licenceNr, String postalCode, String login, String password)
+        {
+            EditTaxiDriverData(taxiDriverId, name, surname, city, email, houseNr, pesel, licenceNr, postalCode);
+            ChangeUserPassword(taxiDriverId, password);
+
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from t in ctx.Employees.OfType<TaxiDriver>() where t.id == taxiDriverId select t;
+            TaxiDriver taxiDriver = x.SingleOrDefault();
+
+            taxiDriver.login = login;
+
+            ctx.SubmitChanges();
+        }
+
         /// <summary>Pobierz listę taksówkarzy o podanym statusie
         /// </summary>
         /// <param name="statusId"></param>
         /// <returns></returns>
-        public static List<TaxiDriver> GetTaxiDriversByStatusID(int statusId)
+        public static List<TaxiDriver> GetTaxiDriversByStatus(int statusId)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
 
@@ -245,6 +283,41 @@ namespace BLL
         public static List<TaxiDriver> GetTaxiDriversByStatus(Driver_status ds)
         {
             return GetTaxiDriversByStatusID(ds.id);
+        }
+
+        /// <summary> funkcja zwraca listę taksówkarzy, do których przypisana jest taksówka określoneo typu
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static List<TaxiDriver> GetTaxiDriverByCarType(int id)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+
+            var x =
+                from td in ctx.Employees.OfType<TaxiDriver>()
+                where td.Taxi.Car_type.id == id
+                select td;
+
+            return x.ToList();
+        }
+        public static List<TaxiDriver> GetTaxiDriverByCarType(Car_type ct)
+        {
+            return GetTaxiDriverByCarType(ct.id);
+        }
+
+        public static List<TaxiDriver> GetTaxiDriverByStatusAndCarType(int driverStatusId, int carTypeId)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+
+            var x = from td in ctx.Employees.OfType<TaxiDriver>()
+                    where
+                    td.Driver_status.id == driverStatusId
+                    &&
+                    td.Taxi.Car_type.id == carTypeId
+                    select td;
+
+            return x.ToList();
+
         }
 
         /* ADMIN */
@@ -271,6 +344,7 @@ namespace BLL
             ctx.SubmitChanges();
 
         }
+
 
         /* DISPATCHER */
 
@@ -423,7 +497,7 @@ namespace BLL
             return x.ToList();
         }
 
-        /// <summary>Funkcja zwraa listę typów zamochodów
+        /// <summary>Funkcja zwraa listę typów samochodów
         /// </summary>
         /// <returns></returns>
         public static List<Car_type> GetCarModelsList()
@@ -434,6 +508,32 @@ namespace BLL
         }
 
         /*  */
+
+        /// <summary> funkcja dodaje typ samochodu o podanej nazwie
+        /// </summary>
+        /// <param name="name"></param>
+        public static void AddNewCarType(String name)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+
+            Car_type ct = new Car_type();
+            ct.name = name;
+
+            ctx.Car_types.InsertOnSubmit(ct);
+            ctx.SubmitChanges();
+        }
+
+        /// <summary>funkcja usuwająca typ sa taksówki o podanym id
+        /// </summary>
+        /// <param name="id"></param>
+        public static void DeleteCarType(int id)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            Car_type ct = ctx.Car_types.SingleOrDefault( c => c.id == id );
+
+            ctx.Car_types.DeleteOnSubmit(ct);
+            ctx.SubmitChanges();
+        }
 
         /// <summary>Funkcja zwraca Listę Typów użytkownika
         /// </summary>

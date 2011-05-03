@@ -40,6 +40,12 @@ namespace TestProject
             Repository.GetAllEmployees();
         }
 
+        [TestMethod]
+        public void TestMethodAddDispatcher()
+        {
+            Repository.AddNewDispatcher("jan", "grzegrzolka", "kup", "email", "1", "ulica", "aads", "45-08", "stefaneczek", "gruba ryba");
+        }
+
 
     }
 }

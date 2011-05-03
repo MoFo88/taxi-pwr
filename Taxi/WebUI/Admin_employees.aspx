@@ -2,7 +2,7 @@
 
 
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
-<script type="text/javascript">
+    <script type="text/javascript">
     function hideFieldSets() {
         $('#MainContent_p_LoginInfo').addClass('hiddenFieldSet');
         $('#MainContent_p_DriverInfo').addClass('hiddenFieldSet');
