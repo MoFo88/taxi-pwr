@@ -18,4 +18,9 @@ public partial class admin_drivers : System.Web.UI.Page
         Repository.AddNewTaxiDriver(tb_Name.Text, tb_Surname.Text, tb_Login.Text, tb_Password.Text);
         Response.Redirect("Admin_employees.aspx");
     }
+
+    protected void gv_Employees_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
+    }
 }
