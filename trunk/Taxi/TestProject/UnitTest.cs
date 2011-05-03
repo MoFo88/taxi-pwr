@@ -30,11 +30,14 @@ namespace TestProject
         [TestMethod]
         public void TestMethodAuthUser()
         {
-
-
             int x1 = Repository.UserAuth("stefan", "stefan");
             Assert.IsTrue(x1 > 0);
+        }
 
+        [TestMethod]
+        public void TestMethodGetAllEmployees()
+        {
+            Repository.GetAllEmployees();
         }
 
 

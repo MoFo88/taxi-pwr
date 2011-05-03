@@ -129,6 +129,13 @@ namespace BLL
 
         }
 
+        public static List<Employee> GetAllEmployees()
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from e in ctx.Employees select e;
+            return x.ToList();
+        }
+
         /* TAXI DRIVER */
 
         /// <summary> Funkcja zwraca listę wszystkich taksówkarz
@@ -399,8 +406,13 @@ namespace BLL
             return x.ToList();
         }
 
-        
 
+        //public static void GetAllTaxiTypes()
+        //{
+        //    TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+
+        //    var x = from t in ctx.
+        //}
         
         /* PRIVATE MEMBER */
 
