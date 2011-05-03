@@ -9,13 +9,97 @@ h2 {margin:25px 0 15px 0}
 #loginform label {width:auto}
 #loginform .linkb_logout {float:right; color:#000; font:700 12px arial; background:#DDD; padding:2px 4px; margin:4px}
 
+/* MAP
+----------------------------------------------------------*/
+
+#map_view {
+    width: 100%;
+    height: 500px;
+    margin: 0;
+}
+
+/* MAP POPUPS
+----------------------------------------------------------*/
+
+div.map_popup 
+{
+    font:700 11px tahoma;
+    margin:5px 0; 
+    padding:2px 10px; 
+    color:#FFF; 
+    line-height: 15px;
+}
+
+div.map_popup .order_id, div.map_popup .driver_id
+{
+    text-align:center; 
+    border:none; 
+    border-radius:5px;
+    padding:2px 0; 
+    margin:0 0 10px 0; 
+    font:700 12px tahoma;
+}
+
+div.map_popup_groupDiv.driver 
+{
+    background: #99C;
+}
+
+div.map_popup_groupDiv.driver .driver_id 
+{
+    background: #669; 
+}
+
+div.map_popup_groupDiv.order 
+{
+    background: #4C4;
+}
+
+div.map_popup_groupDiv.order .order_id 
+{
+    background: #282; 
+}
+
+div.map_popup .course_date {}
+div.map_popup .startpoint_name {}
+div.map_popup .notes {}
+
+div.map_popup .assign
+{
+    display: block;
+    text-align: center;
+    width: 80px;
+    margin: 8px auto 0 auto;
+    padding: 1px 5px;
+    border-radius: 5px;
+    background: #669;
+    cursor: pointer;
+}
+
+div.map_popup .assign:hover
+{
+    background: #557;
+}
+
+div.map_popup_groupDiv_parent 
+{
+    padding: 0;
+    background: transparent !important;
+}
+
+div.map_popup_groupDiv 
+{
+    height: 118px;
+    border: 1px solid black;
+    border-radius: 12px;
+}
 
 /* DEFAULTS
 ----------------------------------------------------------*/
 
 body   
 {
-    background: #b6b7bc;
+    background: url(../Images/Layout/bg.jpg);
     font-size: .80em;
     font-family: "Helvetica Neue", "Lucida Grande", "Segoe UI", Arial, Helvetica, Verdana, sans-serif;
     margin: 0px;
@@ -61,9 +145,8 @@ h1, h2, h3, h4, h5, h6
 
 h1
 {
-    font-size: 1.6em;
-    padding-bottom: 0px;
-    margin-bottom: 0px;
+    font-size: 1.5em;
+    font-weight: 600;
 }
 
 h2
@@ -98,12 +181,16 @@ first child of the left and right table columns */
 /* PRIMARY LAYOUT ELEMENTS   
 ----------------------------------------------------------*/
 
+.layout
+{
+    background: url(../Images/Layout/bg_top.jpg) repeat-x;
+}
+
 .page
 {
-    width: 960px;
-    background-color: #fff;
-    margin: 20px auto 0px auto;
-    border: 1px solid #496077;
+    width: 800px;
+    margin: 0px auto 0px auto;
+    border: none;
 }
 
 .header
@@ -111,8 +198,9 @@ first child of the left and right table columns */
     position: relative;
     margin: 0px;
     padding: 0px;
-    background: #4b6c9e;
+    background: #4b6c9e url(../Images/Layout/top.jpg) no-repeat;
     width: 100%;
+    height: 255px;
 }
 
 .header h1
@@ -128,9 +216,28 @@ first child of the left and right table columns */
 
 .main
 {
-    padding: 0px 12px;
-    margin: 12px 8px 8px 8px;
-    min-height: 420px;
+    background: #ece3f0 url(../Images/Layout/content_bg.jpg);
+    margin: 12px 0 8px 0;
+    width: 585px;
+}
+
+.main .content 
+{
+    background: url(../Images/Layout/content_bg_content.jpg) no-repeat;
+    padding: 0 12px;
+    min-height: 339px;
+}
+
+.main .maintop 
+{
+    background: #ece3f0 url(../Images/Layout/content_top.jpg) no-repeat;
+    height:21px;
+}
+
+.main .mainbottom 
+{
+    background: #ece3f0 url(../Images/Layout/content_bottom.jpg) no-repeat;
+    height:21px;
 }
 
 .leftCol
@@ -150,6 +257,149 @@ first child of the left and right table columns */
     line-height: normal;
 }
 
+/* NEW ORDER DIALOG
+----------------------------------------------------------*/
+
+div#dialog_change_orders 
+{
+    display: none;
+    background: #EAEAFA;
+    border: solid 1px #000;
+    border-radius: 15px;
+    padding: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 350px;
+    height: 200px;
+    margin: 20px auto auto -200px;
+    z-index: 1000000;
+}
+
+div#dialog_change_orders label
+{
+    width: 100px;
+    color: #000;
+}
+
+div#dialog_change_orders .close
+{
+    float: right;
+    border: 1px solid #777;
+    border-radius: 5px;
+    background: #E0E0F0;
+    font: 700 11px tahoma;
+    padding: 2px 4px;
+    cursor: pointer;
+}
+
+div#dialog_change_orders .close:hover
+{
+    background: #D6D6EA;
+}
+
+div#dialog_change_orders .submitbutton
+{
+    margin: 15px 0 0 20px;
+    text-align: center;
+}
+
+div#dialog_change_orders .submitbutton button
+{
+    display: none;
+}
+
+div#dialog_change_orders.add .submitbutton button.add
+{
+    display: inline-block;
+}
+
+div#dialog_change_orders.edit .submitbutton button.edit
+{
+    display: inline-block;
+}
+
+/* RIGHT MENU 
+----------------------------------------------------------*/
+
+.rightmenu 
+{
+    float: right;
+    width: 200px;
+}
+
+.rightmenu .list
+{
+    background: #ece3f0 url(../Images/Layout/right_bg.jpg) repeat-y;
+}
+
+.rightmenu .new
+{
+    margin: 15px auto 0 auto;
+    text-align: center;
+}
+
+.rightmenu .content 
+{
+    background: url(../Images/Layout/right_top.jpg) no-repeat;
+    padding: 40px 0 0 0;
+    min-height: 320px;
+}
+
+.rightmenu .bottom
+{
+    background: url(../Images/Layout/right_bottom.jpg) no-repeat;
+    height: 18px;
+}
+
+.rightmenu ul
+{
+    font: 500 11px tahoma;
+    line-height:13px;
+    list-style-type: none;
+    padding: 0;
+    color: #faf8fb;
+}
+
+.rightmenu li 
+{
+    background: #b293bf;
+    padding: 5px 2px 5px 8px;
+    border-top: 1px solid #29202d;
+    border-bottom: 1px solid #29202d;
+    margin: 3px 2px;
+    cursor: pointer;
+    position: relative;
+}
+
+.rightmenu li:hover
+{
+    background: #bda0c9;
+}
+
+.rightmenu li.selected
+{
+    background: #99a7cc;
+}
+
+
+.rightmenu div.edit 
+{
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: #9e85a9;
+    border: none;
+    border-radius: 4px;
+    padding: 2px 5px;
+}
+
+.rightmenu div.edit:hover
+{
+    background: #826b8b;
+}
+
+.rightmenu div.id_driver, .rightmenu div.id_order {display: none}
 
 /* TAB MENU   
 ----------------------------------------------------------*/
@@ -160,9 +410,17 @@ div.hideSkiplink
     width:100%;
 }
 
+div.topmenu 
+{
+    height: 30px;
+    margin: 15px 0 20px 0;
+    background: url(../Images/Layout/menu_bg.jpg) no-repeat;
+    width:100%;
+}
+
 div.menu
 {
-    padding: 4px 0px 4px 8px;
+    padding: 0 0 0 18px;
 }
 
 div.menu ul
@@ -173,30 +431,42 @@ div.menu ul
     width: auto;
 }
 
+div.menu ul li 
+{
+    background: #ad90ce url(../Images/Layout/menu_button_bg.jpg);
+    border-left: 1px solid #654f7d;
+    border-right: 1px solid #654f7d;
+    margin:0 6px 0 0;
+}
+
+div.menu ul li:hover
+{
+    background: #7b78cf url(../Images/Layout/menu_button_bg_hover.jpg);
+    border-color: #71598b;
+}
+
 div.menu ul li a, div.menu ul li a:visited
 {
-    background-color: #465c71;
-    border: 1px #4e667d solid;
-    color: #dde4ec;
+    color: #FFF;
     display: block;
-    line-height: 1.35em;
-    padding: 4px 20px;
+    line-height: 30px;
+    padding: 0 20px;
     text-decoration: none;
     white-space: nowrap;
 }
 
 div.menu ul li a:hover
 {
-    background-color: #bfcbd6;
-    color: #465c71;
-    text-decoration: none;
+    background: url(../Images/Layout/menu_button_hover.jpg) no-repeat right;
 }
 
 div.menu ul li a:active
 {
-    background-color: #465c71;
-    color: #cfdbe6;
-    text-decoration: none;
+}
+
+div.menu ul a.selected 
+{
+    background: url(../Images/Layout/menu_button_bg_hover.jpg);
 }
 
 /* FORM ELEMENTS   
@@ -254,6 +524,12 @@ div.accountInfo
 .clear
 {
     clear: both;
+}
+
+.noheight 
+{
+    height: 0;
+    font-size: 1px;
 }
 
 .title

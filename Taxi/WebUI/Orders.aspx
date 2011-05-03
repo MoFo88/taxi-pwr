@@ -5,9 +5,14 @@
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     
-    <div>
+<div class="main">
+    <div class="maintop"></div>
+    <div class="content">
+        <br class="clear noheight" />
+
+        <div>
     
-    <h2>Dodaj nowe zgłoszenie</h2>
+    <h1>Dodaj nowe zgłoszenie</h1>
 
         <asp:Panel ID="p_AddForm" runat="server">
 
@@ -51,16 +56,14 @@
                     GridLines="None" AllowSorting="True">
                     <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                     <Columns>
-                        <asp:BoundField DataField="taxidriver_id" HeaderText="taxidriver_id" 
-                            ReadOnly="True" SortExpression="taxidriver_id" />
-                        <asp:BoundField DataField="date" HeaderText="date" ReadOnly="True" 
-                            SortExpression="date" />
+                        <asp:BoundField DataField="id" HeaderText="id" 
+                            ReadOnly="True" SortExpression="id" />
+                        <asp:BoundField DataField="taxidriver_id" HeaderText="taxidriver_id" ReadOnly="True" 
+                            SortExpression="taxidriver_id" />
+                        <asp:BoundField DataField="date" HeaderText="date" 
+                            ReadOnly="True" SortExpression="date" />
                         <asp:BoundField DataField="startpoint_name" HeaderText="startpoint_name" 
                             ReadOnly="True" SortExpression="startpoint_name" />
-                        <asp:BoundField DataField="course_date" HeaderText="course_date" 
-                            ReadOnly="True" SortExpression="course_date" />
-                        <asp:BoundField DataField="client_phone" HeaderText="client_phone" 
-                            ReadOnly="True" SortExpression="client_phone" />
                         <asp:BoundField DataField="client_name" HeaderText="client_name" 
                             ReadOnly="True" SortExpression="client_name" />
                     </Columns>
@@ -77,12 +80,17 @@
                 </asp:GridView>
                 <asp:LinqDataSource ID="LinqDataSource1" runat="server" 
                     ContextTypeName="DAL.TaxiDataClassesDataContext" EntityTypeName="" 
-                    Select="new (taxidriver_id, date, startpoint_name, course_date, Course_status, client_phone, client_name)" 
+                    Select="new (id, taxidriver_id, date, startpoint_name, client_name, Course_status)" 
                     TableName="Courses">
                 </asp:LinqDataSource>
             </p>
         </asp:Panel>
 
         </div>
+
+    </div>
+    <div class="mainbottom"></div>
+</div>
+
 
 </asp:Content>
