@@ -129,6 +129,9 @@ namespace BLL
 
         }
 
+        /// <summary>Funkcja zwraca listę wszystkich pracowników
+        /// </summary>
+        /// <returns></returns>
         public static List<Employee> GetAllEmployees()
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -246,6 +249,18 @@ namespace BLL
 
         /* ADMIN */
 
+        /// <summary>Dodaj administratora
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="surname"></param>
+        /// <param name="city"></param>
+        /// <param name="email"></param>
+        /// <param name="houseNr"></param>
+        /// <param name="street"></param>
+        /// <param name="pesel"></param>
+        /// <param name="postalCode"></param>
+        /// <param name="login"></param>
+        /// <param name="password"></param>
         public static void AddNewAdmin(String name, String surname, String city, String email, String houseNr, String street, String pesel,  String postalCode, String login, String password)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -259,6 +274,18 @@ namespace BLL
 
         /* DISPATCHER */
 
+        /// <summary>Dodaj dyspozytora
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="surname"></param>
+        /// <param name="city"></param>
+        /// <param name="email"></param>
+        /// <param name="houseNr"></param>
+        /// <param name="street"></param>
+        /// <param name="pesel"></param>
+        /// <param name="postalCode"></param>
+        /// <param name="login"></param>
+        /// <param name="password"></param>
         public static void AddNewDispatcher(String name, String surname, String city, String email, String houseNr, String street, String pesel, String postalCode, String login, String password)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -287,11 +314,11 @@ namespace BLL
         /// <param name="endpoint_lon"></param>
         /// <param name="endpoint_lat"></param>
         public static void addNewCourse(
-            int taxidriver_id, 
-            int depositor_id, 
+            int? taxidriver_id, 
+            int? depositor_id, 
             String client_phone, 
             DateTime? course_date, 
-            int course_status_id, 
+            int? course_status_id, 
             String client_name,
             String startpoint_name, 
             Decimal startpoint_lon, 
@@ -318,6 +345,7 @@ namespace BLL
             course.startpoint_lon = startpoint_lon;
             course.endpoint_lat = endpoint_lat;
             course.endpoint_lon = endpoint_lon;
+            course.startpoint_name = startpoint_name;
 
 
             ctx.Courses.InsertOnSubmit(course);
@@ -381,15 +409,31 @@ namespace BLL
             ctx.SubmitChanges();
         }
         
-        /*  */
+        
 
         /* TAXI */
+
+        /// <summary>Pobierz listę taksówek
+        /// </summary>
+        /// <returns></returns>
         public static List<Taxi> GetTaxiList()
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
             var x = from c in ctx.Taxis select c;
             return x.ToList();
         }
+
+        /// <summary>Funkcja zwraa listę typów zamochodów
+        /// </summary>
+        /// <returns></returns>
+        public static List<Car_type> GetCarModelsList()
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from c in ctx.Car_types select c;
+            return x.ToList();
+        }
+
+        /*  */
 
         /// <summary>Funkcja zwraca Listę Typów użytkownika
         /// </summary>
@@ -406,13 +450,6 @@ namespace BLL
             return x.ToList();
         }
 
-
-        //public static void GetAllTaxiTypes()
-        //{
-        //    TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
-
-        //    var x = from t in ctx.
-        //}
         
         /* PRIVATE MEMBER */
 

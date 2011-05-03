@@ -34,12 +34,6 @@ namespace DAL
     partial void InsertCar_model(Car_model instance);
     partial void UpdateCar_model(Car_model instance);
     partial void DeleteCar_model(Car_model instance);
-    partial void InsertTaxi(Taxi instance);
-    partial void UpdateTaxi(Taxi instance);
-    partial void DeleteTaxi(Taxi instance);
-    partial void InsertCourse(Course instance);
-    partial void UpdateCourse(Course instance);
-    partial void DeleteCourse(Course instance);
     partial void InsertCourse_status(Course_status instance);
     partial void UpdateCourse_status(Course_status instance);
     partial void DeleteCourse_status(Course_status instance);
@@ -52,6 +46,15 @@ namespace DAL
     partial void InsertEmployee(Employee instance);
     partial void UpdateEmployee(Employee instance);
     partial void DeleteEmployee(Employee instance);
+    partial void InsertCar_type(Car_type instance);
+    partial void UpdateCar_type(Car_type instance);
+    partial void DeleteCar_type(Car_type instance);
+    partial void InsertTaxi(Taxi instance);
+    partial void UpdateTaxi(Taxi instance);
+    partial void DeleteTaxi(Taxi instance);
+    partial void InsertCourse(Course instance);
+    partial void UpdateCourse(Course instance);
+    partial void DeleteCourse(Course instance);
     #endregion
 		
 		public TaxiDataClassesDataContext() : 
@@ -92,22 +95,6 @@ namespace DAL
 			}
 		}
 		
-		public System.Data.Linq.Table<Taxi> Taxis
-		{
-			get
-			{
-				return this.GetTable<Taxi>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Course> Courses
-		{
-			get
-			{
-				return this.GetTable<Course>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Course_status> Course_status
 		{
 			get
@@ -137,6 +124,30 @@ namespace DAL
 			get
 			{
 				return this.GetTable<Employee>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Car_type> Car_types
+		{
+			get
+			{
+				return this.GetTable<Car_type>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Taxi> Taxis
+		{
+			get
+			{
+				return this.GetTable<Taxi>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Course> Courses
+		{
+			get
+			{
+				return this.GetTable<Course>();
 			}
 		}
 	}
@@ -364,739 +375,6 @@ namespace DAL
 		public void OnSerialized(StreamingContext context)
 		{
 			this.serializing = false;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Taxi")]
-	[global::System.Runtime.Serialization.DataContractAttribute()]
-	public partial class Taxi : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private int _car_model_id;
-		
-		private string _registration_number;
-		
-		private string _taxi_number;
-		
-		private EntitySet<TaxiDriver> _TaxiDrivers;
-		
-		private EntityRef<Car_model> _Car_model;
-		
-		private bool serializing;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void Oncar_model_idChanging(int value);
-    partial void Oncar_model_idChanged();
-    partial void Onregistration_numberChanging(string value);
-    partial void Onregistration_numberChanged();
-    partial void Ontaxi_numberChanging(string value);
-    partial void Ontaxi_numberChanged();
-    #endregion
-		
-		public Taxi()
-		{
-			this.Initialize();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_car_model_id", DbType="Int NOT NULL")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
-		public int car_model_id
-		{
-			get
-			{
-				return this._car_model_id;
-			}
-			set
-			{
-				if ((this._car_model_id != value))
-				{
-					if (this._Car_model.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Oncar_model_idChanging(value);
-					this.SendPropertyChanging();
-					this._car_model_id = value;
-					this.SendPropertyChanged("car_model_id");
-					this.Oncar_model_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_registration_number", DbType="VarChar(15) NOT NULL", CanBeNull=false)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
-		public string registration_number
-		{
-			get
-			{
-				return this._registration_number;
-			}
-			set
-			{
-				if ((this._registration_number != value))
-				{
-					this.Onregistration_numberChanging(value);
-					this.SendPropertyChanging();
-					this._registration_number = value;
-					this.SendPropertyChanged("registration_number");
-					this.Onregistration_numberChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_taxi_number", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
-		public string taxi_number
-		{
-			get
-			{
-				return this._taxi_number;
-			}
-			set
-			{
-				if ((this._taxi_number != value))
-				{
-					this.Ontaxi_numberChanging(value);
-					this.SendPropertyChanging();
-					this._taxi_number = value;
-					this.SendPropertyChanged("taxi_number");
-					this.Ontaxi_numberChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Taxi_TaxiDriver", Storage="_TaxiDrivers", ThisKey="id", OtherKey="taxi_id")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5, EmitDefaultValue=false)]
-		public EntitySet<TaxiDriver> TaxiDrivers
-		{
-			get
-			{
-				if ((this.serializing 
-							&& (this._TaxiDrivers.HasLoadedOrAssignedValues == false)))
-				{
-					return null;
-				}
-				return this._TaxiDrivers;
-			}
-			set
-			{
-				this._TaxiDrivers.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Car_model_Taxi", Storage="_Car_model", ThisKey="car_model_id", OtherKey="id", IsForeignKey=true)]
-		public Car_model Car_model
-		{
-			get
-			{
-				return this._Car_model.Entity;
-			}
-			set
-			{
-				Car_model previousValue = this._Car_model.Entity;
-				if (((previousValue != value) 
-							|| (this._Car_model.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Car_model.Entity = null;
-						previousValue.Taxis.Remove(this);
-					}
-					this._Car_model.Entity = value;
-					if ((value != null))
-					{
-						value.Taxis.Add(this);
-						this._car_model_id = value.id;
-					}
-					else
-					{
-						this._car_model_id = default(int);
-					}
-					this.SendPropertyChanged("Car_model");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_TaxiDrivers(TaxiDriver entity)
-		{
-			this.SendPropertyChanging();
-			entity.Taxi = this;
-		}
-		
-		private void detach_TaxiDrivers(TaxiDriver entity)
-		{
-			this.SendPropertyChanging();
-			entity.Taxi = null;
-		}
-		
-		private void Initialize()
-		{
-			this._TaxiDrivers = new EntitySet<TaxiDriver>(new Action<TaxiDriver>(this.attach_TaxiDrivers), new Action<TaxiDriver>(this.detach_TaxiDrivers));
-			this._Car_model = default(EntityRef<Car_model>);
-			OnCreated();
-		}
-		
-		[global::System.Runtime.Serialization.OnDeserializingAttribute()]
-		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
-		public void OnDeserializing(StreamingContext context)
-		{
-			this.Initialize();
-		}
-		
-		[global::System.Runtime.Serialization.OnSerializingAttribute()]
-		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
-		public void OnSerializing(StreamingContext context)
-		{
-			this.serializing = true;
-		}
-		
-		[global::System.Runtime.Serialization.OnSerializedAttribute()]
-		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
-		public void OnSerialized(StreamingContext context)
-		{
-			this.serializing = false;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Course")]
-	[global::System.Runtime.Serialization.DataContractAttribute()]
-	public partial class Course : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private string _client_phone;
-		
-		private int _rep_id;
-		
-		private int _taxi_id;
-		
-		private System.DateTime _date;
-		
-		private string _startpoint_name;
-		
-		private decimal _startpoint_lat;
-		
-		private decimal _startpoint_lon;
-		
-		private decimal _endpoint_lat;
-		
-		private decimal _endpoint_lon;
-		
-		private int _course_status_id;
-		
-		private System.Nullable<System.DateTime> _course_date;
-		
-		private string _client_name;
-		
-		private EntityRef<Course_status> _Course_status;
-		
-		private EntityRef<Employee> _Employee;
-		
-		private EntityRef<Employee> _Employee1;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void Onclient_phoneChanging(string value);
-    partial void Onclient_phoneChanged();
-    partial void Ondepositor_idChanging(int value);
-    partial void Ondepositor_idChanged();
-    partial void Ontaxidriver_idChanging(int value);
-    partial void Ontaxidriver_idChanged();
-    partial void OndateChanging(System.DateTime value);
-    partial void OndateChanged();
-    partial void Onstartpoint_nameChanging(string value);
-    partial void Onstartpoint_nameChanged();
-    partial void Onstartpoint_latChanging(decimal value);
-    partial void Onstartpoint_latChanged();
-    partial void Onstartpoint_lonChanging(decimal value);
-    partial void Onstartpoint_lonChanged();
-    partial void Onendpoint_latChanging(decimal value);
-    partial void Onendpoint_latChanged();
-    partial void Onendpoint_lonChanging(decimal value);
-    partial void Onendpoint_lonChanged();
-    partial void Oncourse_status_idChanging(int value);
-    partial void Oncourse_status_idChanged();
-    partial void Oncourse_dateChanging(System.Nullable<System.DateTime> value);
-    partial void Oncourse_dateChanged();
-    partial void Onclient_nameChanging(string value);
-    partial void Onclient_nameChanged();
-    #endregion
-		
-		public Course()
-		{
-			this.Initialize();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_client_phone", DbType="VarChar(15)")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
-		public string client_phone
-		{
-			get
-			{
-				return this._client_phone;
-			}
-			set
-			{
-				if ((this._client_phone != value))
-				{
-					this.Onclient_phoneChanging(value);
-					this.SendPropertyChanging();
-					this._client_phone = value;
-					this.SendPropertyChanged("client_phone");
-					this.Onclient_phoneChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="rep_id", Storage="_rep_id", DbType="Int NOT NULL")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
-		public int depositor_id
-		{
-			get
-			{
-				return this._rep_id;
-			}
-			set
-			{
-				if ((this._rep_id != value))
-				{
-					this.Ondepositor_idChanging(value);
-					this.SendPropertyChanging();
-					this._rep_id = value;
-					this.SendPropertyChanged("depositor_id");
-					this.Ondepositor_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="taxi_id", Storage="_taxi_id", DbType="Int NOT NULL")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
-		public int taxidriver_id
-		{
-			get
-			{
-				return this._taxi_id;
-			}
-			set
-			{
-				if ((this._taxi_id != value))
-				{
-					this.Ontaxidriver_idChanging(value);
-					this.SendPropertyChanging();
-					this._taxi_id = value;
-					this.SendPropertyChanged("taxidriver_id");
-					this.Ontaxidriver_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_date", DbType="DateTime NOT NULL")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
-		public System.DateTime date
-		{
-			get
-			{
-				return this._date;
-			}
-			set
-			{
-				if ((this._date != value))
-				{
-					this.OndateChanging(value);
-					this.SendPropertyChanging();
-					this._date = value;
-					this.SendPropertyChanged("date");
-					this.OndateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_startpoint_name", DbType="VarChar(250) NOT NULL", CanBeNull=false)]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
-		public string startpoint_name
-		{
-			get
-			{
-				return this._startpoint_name;
-			}
-			set
-			{
-				if ((this._startpoint_name != value))
-				{
-					this.Onstartpoint_nameChanging(value);
-					this.SendPropertyChanging();
-					this._startpoint_name = value;
-					this.SendPropertyChanged("startpoint_name");
-					this.Onstartpoint_nameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_startpoint_lat", DbType="Decimal(11,7) NOT NULL")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7)]
-		public decimal startpoint_lat
-		{
-			get
-			{
-				return this._startpoint_lat;
-			}
-			set
-			{
-				if ((this._startpoint_lat != value))
-				{
-					this.Onstartpoint_latChanging(value);
-					this.SendPropertyChanging();
-					this._startpoint_lat = value;
-					this.SendPropertyChanged("startpoint_lat");
-					this.Onstartpoint_latChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_startpoint_lon", DbType="Decimal(11,7) NOT NULL")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8)]
-		public decimal startpoint_lon
-		{
-			get
-			{
-				return this._startpoint_lon;
-			}
-			set
-			{
-				if ((this._startpoint_lon != value))
-				{
-					this.Onstartpoint_lonChanging(value);
-					this.SendPropertyChanging();
-					this._startpoint_lon = value;
-					this.SendPropertyChanged("startpoint_lon");
-					this.Onstartpoint_lonChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_endpoint_lat", DbType="Decimal(11,7) NOT NULL")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=9)]
-		public decimal endpoint_lat
-		{
-			get
-			{
-				return this._endpoint_lat;
-			}
-			set
-			{
-				if ((this._endpoint_lat != value))
-				{
-					this.Onendpoint_latChanging(value);
-					this.SendPropertyChanging();
-					this._endpoint_lat = value;
-					this.SendPropertyChanged("endpoint_lat");
-					this.Onendpoint_latChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_endpoint_lon", DbType="Decimal(11,7) NOT NULL")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=10)]
-		public decimal endpoint_lon
-		{
-			get
-			{
-				return this._endpoint_lon;
-			}
-			set
-			{
-				if ((this._endpoint_lon != value))
-				{
-					this.Onendpoint_lonChanging(value);
-					this.SendPropertyChanging();
-					this._endpoint_lon = value;
-					this.SendPropertyChanged("endpoint_lon");
-					this.Onendpoint_lonChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_course_status_id", DbType="Int NOT NULL")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=11)]
-		public int course_status_id
-		{
-			get
-			{
-				return this._course_status_id;
-			}
-			set
-			{
-				if ((this._course_status_id != value))
-				{
-					if (this._Course_status.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Oncourse_status_idChanging(value);
-					this.SendPropertyChanging();
-					this._course_status_id = value;
-					this.SendPropertyChanged("course_status_id");
-					this.Oncourse_status_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_course_date", DbType="DateTime")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=12)]
-		public System.Nullable<System.DateTime> course_date
-		{
-			get
-			{
-				return this._course_date;
-			}
-			set
-			{
-				if ((this._course_date != value))
-				{
-					this.Oncourse_dateChanging(value);
-					this.SendPropertyChanging();
-					this._course_date = value;
-					this.SendPropertyChanged("course_date");
-					this.Oncourse_dateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_client_name", DbType="VarChar(150)")]
-		[global::System.Runtime.Serialization.DataMemberAttribute(Order=13)]
-		public string client_name
-		{
-			get
-			{
-				return this._client_name;
-			}
-			set
-			{
-				if ((this._client_name != value))
-				{
-					this.Onclient_nameChanging(value);
-					this.SendPropertyChanging();
-					this._client_name = value;
-					this.SendPropertyChanged("client_name");
-					this.Onclient_nameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Course_status_Course", Storage="_Course_status", ThisKey="course_status_id", OtherKey="id", IsForeignKey=true)]
-		public Course_status Course_status
-		{
-			get
-			{
-				return this._Course_status.Entity;
-			}
-			set
-			{
-				Course_status previousValue = this._Course_status.Entity;
-				if (((previousValue != value) 
-							|| (this._Course_status.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Course_status.Entity = null;
-						previousValue.Courses.Remove(this);
-					}
-					this._Course_status.Entity = value;
-					if ((value != null))
-					{
-						value.Courses.Add(this);
-						this._course_status_id = value.id;
-					}
-					else
-					{
-						this._course_status_id = default(int);
-					}
-					this.SendPropertyChanged("Course_status");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Course", Storage="_Employee", ThisKey="depositor_id", OtherKey="id", IsForeignKey=true)]
-		public Employee Employee
-		{
-			get
-			{
-				return this._Employee.Entity;
-			}
-			set
-			{
-				Employee previousValue = this._Employee.Entity;
-				if (((previousValue != value) 
-							|| (this._Employee.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Employee.Entity = null;
-						previousValue.Courses.Remove(this);
-					}
-					this._Employee.Entity = value;
-					if ((value != null))
-					{
-						value.Courses.Add(this);
-						this._rep_id = value.id;
-					}
-					else
-					{
-						this._rep_id = default(int);
-					}
-					this.SendPropertyChanged("Employee");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Course1", Storage="_Employee1", ThisKey="taxidriver_id", OtherKey="id", IsForeignKey=true)]
-		public Employee Employee1
-		{
-			get
-			{
-				return this._Employee1.Entity;
-			}
-			set
-			{
-				Employee previousValue = this._Employee1.Entity;
-				if (((previousValue != value) 
-							|| (this._Employee1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Employee1.Entity = null;
-						previousValue.Courses1.Remove(this);
-					}
-					this._Employee1.Entity = value;
-					if ((value != null))
-					{
-						value.Courses1.Add(this);
-						this._taxi_id = value.id;
-					}
-					else
-					{
-						this._taxi_id = default(int);
-					}
-					this.SendPropertyChanged("Employee1");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void Initialize()
-		{
-			this._Course_status = default(EntityRef<Course_status>);
-			this._Employee = default(EntityRef<Employee>);
-			this._Employee1 = default(EntityRef<Employee>);
-			OnCreated();
-		}
-		
-		[global::System.Runtime.Serialization.OnDeserializingAttribute()]
-		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
-		public void OnDeserializing(StreamingContext context)
-		{
-			this.Initialize();
 		}
 	}
 	
@@ -2130,9 +1408,9 @@ namespace DAL
 		
 		private string _licence_number;
 		
-		private EntityRef<Taxi> _Taxi;
-		
 		private EntityRef<Driver_status> _Driver_status;
+		
+		private EntityRef<Taxi> _Taxi;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -2291,40 +1569,6 @@ namespace DAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Taxi_TaxiDriver", Storage="_Taxi", ThisKey="taxi_id", OtherKey="id", IsForeignKey=true)]
-		public Taxi Taxi
-		{
-			get
-			{
-				return this._Taxi.Entity;
-			}
-			set
-			{
-				Taxi previousValue = this._Taxi.Entity;
-				if (((previousValue != value) 
-							|| (this._Taxi.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Taxi.Entity = null;
-						previousValue.TaxiDrivers.Remove(this);
-					}
-					this._Taxi.Entity = value;
-					if ((value != null))
-					{
-						value.TaxiDrivers.Add(this);
-						this._taxi_id = value.id;
-					}
-					else
-					{
-						this._taxi_id = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Taxi");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Driver_status_TaxiDriver", Storage="_Driver_status", ThisKey="driver_status_id", OtherKey="id", IsForeignKey=true)]
 		public Driver_status Driver_status
 		{
@@ -2359,10 +1603,44 @@ namespace DAL
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Taxi_TaxiDriver", Storage="_Taxi", ThisKey="taxi_id", OtherKey="id", IsForeignKey=true)]
+		public Taxi Taxi
+		{
+			get
+			{
+				return this._Taxi.Entity;
+			}
+			set
+			{
+				Taxi previousValue = this._Taxi.Entity;
+				if (((previousValue != value) 
+							|| (this._Taxi.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Taxi.Entity = null;
+						previousValue.TaxiDrivers.Remove(this);
+					}
+					this._Taxi.Entity = value;
+					if ((value != null))
+					{
+						value.TaxiDrivers.Add(this);
+						this._taxi_id = value.id;
+					}
+					else
+					{
+						this._taxi_id = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Taxi");
+				}
+			}
+		}
+		
 		private void Initialize()
 		{
-			this._Taxi = default(EntityRef<Taxi>);
 			this._Driver_status = default(EntityRef<Driver_status>);
+			this._Taxi = default(EntityRef<Taxi>);
 			OnCreated();
 		}
 		
@@ -2397,6 +1675,956 @@ namespace DAL
 		[global::System.Runtime.Serialization.OnDeserializingAttribute()]
 		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
 		public new void OnDeserializing(StreamingContext context)
+		{
+			this.Initialize();
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="yasio1_superuser.Car_type")]
+	[global::System.Runtime.Serialization.DataContractAttribute()]
+	public partial class Car_type : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _name;
+		
+		private int _id;
+		
+		private EntitySet<Taxi> _Taxis;
+		
+		private bool serializing;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    #endregion
+		
+		public Car_type()
+		{
+			this.Initialize();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this.OnnameChanging(value);
+					this.SendPropertyChanging();
+					this._name = value;
+					this.SendPropertyChanged("name");
+					this.OnnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Car_type_Taxi", Storage="_Taxis", ThisKey="id", OtherKey="id_car_type")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3, EmitDefaultValue=false)]
+		public EntitySet<Taxi> Taxis
+		{
+			get
+			{
+				if ((this.serializing 
+							&& (this._Taxis.HasLoadedOrAssignedValues == false)))
+				{
+					return null;
+				}
+				return this._Taxis;
+			}
+			set
+			{
+				this._Taxis.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Taxis(Taxi entity)
+		{
+			this.SendPropertyChanging();
+			entity.Car_type = this;
+		}
+		
+		private void detach_Taxis(Taxi entity)
+		{
+			this.SendPropertyChanging();
+			entity.Car_type = null;
+		}
+		
+		private void Initialize()
+		{
+			this._Taxis = new EntitySet<Taxi>(new Action<Taxi>(this.attach_Taxis), new Action<Taxi>(this.detach_Taxis));
+			OnCreated();
+		}
+		
+		[global::System.Runtime.Serialization.OnDeserializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnDeserializing(StreamingContext context)
+		{
+			this.Initialize();
+		}
+		
+		[global::System.Runtime.Serialization.OnSerializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnSerializing(StreamingContext context)
+		{
+			this.serializing = true;
+		}
+		
+		[global::System.Runtime.Serialization.OnSerializedAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnSerialized(StreamingContext context)
+		{
+			this.serializing = false;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Taxi")]
+	[global::System.Runtime.Serialization.DataContractAttribute()]
+	public partial class Taxi : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private int _car_model_id;
+		
+		private string _registration_number;
+		
+		private string _taxi_number;
+		
+		private int _id_car_type;
+		
+		private EntitySet<TaxiDriver> _TaxiDrivers;
+		
+		private EntityRef<Car_model> _Car_model;
+		
+		private EntityRef<Car_type> _Car_type;
+		
+		private bool serializing;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void Oncar_model_idChanging(int value);
+    partial void Oncar_model_idChanged();
+    partial void Onregistration_numberChanging(string value);
+    partial void Onregistration_numberChanged();
+    partial void Ontaxi_numberChanging(string value);
+    partial void Ontaxi_numberChanged();
+    partial void Onid_car_typeChanging(int value);
+    partial void Onid_car_typeChanged();
+    #endregion
+		
+		public Taxi()
+		{
+			this.Initialize();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_car_model_id", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+		public int car_model_id
+		{
+			get
+			{
+				return this._car_model_id;
+			}
+			set
+			{
+				if ((this._car_model_id != value))
+				{
+					if (this._Car_model.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Oncar_model_idChanging(value);
+					this.SendPropertyChanging();
+					this._car_model_id = value;
+					this.SendPropertyChanged("car_model_id");
+					this.Oncar_model_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_registration_number", DbType="VarChar(15) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+		public string registration_number
+		{
+			get
+			{
+				return this._registration_number;
+			}
+			set
+			{
+				if ((this._registration_number != value))
+				{
+					this.Onregistration_numberChanging(value);
+					this.SendPropertyChanging();
+					this._registration_number = value;
+					this.SendPropertyChanged("registration_number");
+					this.Onregistration_numberChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_taxi_number", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+		public string taxi_number
+		{
+			get
+			{
+				return this._taxi_number;
+			}
+			set
+			{
+				if ((this._taxi_number != value))
+				{
+					this.Ontaxi_numberChanging(value);
+					this.SendPropertyChanging();
+					this._taxi_number = value;
+					this.SendPropertyChanged("taxi_number");
+					this.Ontaxi_numberChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id_car_type", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
+		public int id_car_type
+		{
+			get
+			{
+				return this._id_car_type;
+			}
+			set
+			{
+				if ((this._id_car_type != value))
+				{
+					if (this._Car_type.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onid_car_typeChanging(value);
+					this.SendPropertyChanging();
+					this._id_car_type = value;
+					this.SendPropertyChanged("id_car_type");
+					this.Onid_car_typeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Taxi_TaxiDriver", Storage="_TaxiDrivers", ThisKey="id", OtherKey="taxi_id")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6, EmitDefaultValue=false)]
+		public EntitySet<TaxiDriver> TaxiDrivers
+		{
+			get
+			{
+				if ((this.serializing 
+							&& (this._TaxiDrivers.HasLoadedOrAssignedValues == false)))
+				{
+					return null;
+				}
+				return this._TaxiDrivers;
+			}
+			set
+			{
+				this._TaxiDrivers.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Car_model_Taxi", Storage="_Car_model", ThisKey="car_model_id", OtherKey="id", IsForeignKey=true)]
+		public Car_model Car_model
+		{
+			get
+			{
+				return this._Car_model.Entity;
+			}
+			set
+			{
+				Car_model previousValue = this._Car_model.Entity;
+				if (((previousValue != value) 
+							|| (this._Car_model.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Car_model.Entity = null;
+						previousValue.Taxis.Remove(this);
+					}
+					this._Car_model.Entity = value;
+					if ((value != null))
+					{
+						value.Taxis.Add(this);
+						this._car_model_id = value.id;
+					}
+					else
+					{
+						this._car_model_id = default(int);
+					}
+					this.SendPropertyChanged("Car_model");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Car_type_Taxi", Storage="_Car_type", ThisKey="id_car_type", OtherKey="id", IsForeignKey=true)]
+		public Car_type Car_type
+		{
+			get
+			{
+				return this._Car_type.Entity;
+			}
+			set
+			{
+				Car_type previousValue = this._Car_type.Entity;
+				if (((previousValue != value) 
+							|| (this._Car_type.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Car_type.Entity = null;
+						previousValue.Taxis.Remove(this);
+					}
+					this._Car_type.Entity = value;
+					if ((value != null))
+					{
+						value.Taxis.Add(this);
+						this._id_car_type = value.id;
+					}
+					else
+					{
+						this._id_car_type = default(int);
+					}
+					this.SendPropertyChanged("Car_type");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_TaxiDrivers(TaxiDriver entity)
+		{
+			this.SendPropertyChanging();
+			entity.Taxi = this;
+		}
+		
+		private void detach_TaxiDrivers(TaxiDriver entity)
+		{
+			this.SendPropertyChanging();
+			entity.Taxi = null;
+		}
+		
+		private void Initialize()
+		{
+			this._TaxiDrivers = new EntitySet<TaxiDriver>(new Action<TaxiDriver>(this.attach_TaxiDrivers), new Action<TaxiDriver>(this.detach_TaxiDrivers));
+			this._Car_model = default(EntityRef<Car_model>);
+			this._Car_type = default(EntityRef<Car_type>);
+			OnCreated();
+		}
+		
+		[global::System.Runtime.Serialization.OnDeserializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnDeserializing(StreamingContext context)
+		{
+			this.Initialize();
+		}
+		
+		[global::System.Runtime.Serialization.OnSerializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnSerializing(StreamingContext context)
+		{
+			this.serializing = true;
+		}
+		
+		[global::System.Runtime.Serialization.OnSerializedAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnSerialized(StreamingContext context)
+		{
+			this.serializing = false;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Course")]
+	[global::System.Runtime.Serialization.DataContractAttribute()]
+	public partial class Course : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _client_phone;
+		
+		private System.Nullable<int> _depositor_id;
+		
+		private System.Nullable<int> _taxidriver_id;
+		
+		private System.DateTime _date;
+		
+		private string _startpoint_name;
+		
+		private decimal _startpoint_lat;
+		
+		private decimal _startpoint_lon;
+		
+		private decimal _endpoint_lat;
+		
+		private decimal _endpoint_lon;
+		
+		private System.Nullable<int> _course_status_id;
+		
+		private System.Nullable<System.DateTime> _course_date;
+		
+		private string _client_name;
+		
+		private EntityRef<Employee> _Employee;
+		
+		private EntityRef<Employee> _Employee1;
+		
+		private EntityRef<Course_status> _Course_status;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void Onclient_phoneChanging(string value);
+    partial void Onclient_phoneChanged();
+    partial void Ondepositor_idChanging(System.Nullable<int> value);
+    partial void Ondepositor_idChanged();
+    partial void Ontaxidriver_idChanging(System.Nullable<int> value);
+    partial void Ontaxidriver_idChanged();
+    partial void OndateChanging(System.DateTime value);
+    partial void OndateChanged();
+    partial void Onstartpoint_nameChanging(string value);
+    partial void Onstartpoint_nameChanged();
+    partial void Onstartpoint_latChanging(decimal value);
+    partial void Onstartpoint_latChanged();
+    partial void Onstartpoint_lonChanging(decimal value);
+    partial void Onstartpoint_lonChanged();
+    partial void Onendpoint_latChanging(decimal value);
+    partial void Onendpoint_latChanged();
+    partial void Onendpoint_lonChanging(decimal value);
+    partial void Onendpoint_lonChanged();
+    partial void Oncourse_status_idChanging(System.Nullable<int> value);
+    partial void Oncourse_status_idChanged();
+    partial void Oncourse_dateChanging(System.Nullable<System.DateTime> value);
+    partial void Oncourse_dateChanged();
+    partial void Onclient_nameChanging(string value);
+    partial void Onclient_nameChanged();
+    #endregion
+		
+		public Course()
+		{
+			this.Initialize();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_client_phone", DbType="VarChar(15)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+		public string client_phone
+		{
+			get
+			{
+				return this._client_phone;
+			}
+			set
+			{
+				if ((this._client_phone != value))
+				{
+					this.Onclient_phoneChanging(value);
+					this.SendPropertyChanging();
+					this._client_phone = value;
+					this.SendPropertyChanged("client_phone");
+					this.Onclient_phoneChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="rep_id", Storage="_depositor_id", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+		public System.Nullable<int> depositor_id
+		{
+			get
+			{
+				return this._depositor_id;
+			}
+			set
+			{
+				if ((this._depositor_id != value))
+				{
+					this.Ondepositor_idChanging(value);
+					this.SendPropertyChanging();
+					this._depositor_id = value;
+					this.SendPropertyChanged("depositor_id");
+					this.Ondepositor_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="taxi_id", Storage="_taxidriver_id", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+		public System.Nullable<int> taxidriver_id
+		{
+			get
+			{
+				return this._taxidriver_id;
+			}
+			set
+			{
+				if ((this._taxidriver_id != value))
+				{
+					this.Ontaxidriver_idChanging(value);
+					this.SendPropertyChanging();
+					this._taxidriver_id = value;
+					this.SendPropertyChanged("taxidriver_id");
+					this.Ontaxidriver_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_date", DbType="DateTime NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
+		public System.DateTime date
+		{
+			get
+			{
+				return this._date;
+			}
+			set
+			{
+				if ((this._date != value))
+				{
+					this.OndateChanging(value);
+					this.SendPropertyChanging();
+					this._date = value;
+					this.SendPropertyChanged("date");
+					this.OndateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_startpoint_name", DbType="VarChar(250) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
+		public string startpoint_name
+		{
+			get
+			{
+				return this._startpoint_name;
+			}
+			set
+			{
+				if ((this._startpoint_name != value))
+				{
+					this.Onstartpoint_nameChanging(value);
+					this.SendPropertyChanging();
+					this._startpoint_name = value;
+					this.SendPropertyChanged("startpoint_name");
+					this.Onstartpoint_nameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_startpoint_lat", DbType="Decimal(11,7) NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7)]
+		public decimal startpoint_lat
+		{
+			get
+			{
+				return this._startpoint_lat;
+			}
+			set
+			{
+				if ((this._startpoint_lat != value))
+				{
+					this.Onstartpoint_latChanging(value);
+					this.SendPropertyChanging();
+					this._startpoint_lat = value;
+					this.SendPropertyChanged("startpoint_lat");
+					this.Onstartpoint_latChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_startpoint_lon", DbType="Decimal(11,7) NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8)]
+		public decimal startpoint_lon
+		{
+			get
+			{
+				return this._startpoint_lon;
+			}
+			set
+			{
+				if ((this._startpoint_lon != value))
+				{
+					this.Onstartpoint_lonChanging(value);
+					this.SendPropertyChanging();
+					this._startpoint_lon = value;
+					this.SendPropertyChanged("startpoint_lon");
+					this.Onstartpoint_lonChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_endpoint_lat", DbType="Decimal(11,7) NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=9)]
+		public decimal endpoint_lat
+		{
+			get
+			{
+				return this._endpoint_lat;
+			}
+			set
+			{
+				if ((this._endpoint_lat != value))
+				{
+					this.Onendpoint_latChanging(value);
+					this.SendPropertyChanging();
+					this._endpoint_lat = value;
+					this.SendPropertyChanged("endpoint_lat");
+					this.Onendpoint_latChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_endpoint_lon", DbType="Decimal(11,7) NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=10)]
+		public decimal endpoint_lon
+		{
+			get
+			{
+				return this._endpoint_lon;
+			}
+			set
+			{
+				if ((this._endpoint_lon != value))
+				{
+					this.Onendpoint_lonChanging(value);
+					this.SendPropertyChanging();
+					this._endpoint_lon = value;
+					this.SendPropertyChanged("endpoint_lon");
+					this.Onendpoint_lonChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_course_status_id", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=11)]
+		public System.Nullable<int> course_status_id
+		{
+			get
+			{
+				return this._course_status_id;
+			}
+			set
+			{
+				if ((this._course_status_id != value))
+				{
+					if (this._Course_status.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Oncourse_status_idChanging(value);
+					this.SendPropertyChanging();
+					this._course_status_id = value;
+					this.SendPropertyChanged("course_status_id");
+					this.Oncourse_status_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_course_date", DbType="DateTime")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=12)]
+		public System.Nullable<System.DateTime> course_date
+		{
+			get
+			{
+				return this._course_date;
+			}
+			set
+			{
+				if ((this._course_date != value))
+				{
+					this.Oncourse_dateChanging(value);
+					this.SendPropertyChanging();
+					this._course_date = value;
+					this.SendPropertyChanged("course_date");
+					this.Oncourse_dateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_client_name", DbType="VarChar(150)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=13)]
+		public string client_name
+		{
+			get
+			{
+				return this._client_name;
+			}
+			set
+			{
+				if ((this._client_name != value))
+				{
+					this.Onclient_nameChanging(value);
+					this.SendPropertyChanging();
+					this._client_name = value;
+					this.SendPropertyChanged("client_name");
+					this.Onclient_nameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Course", Storage="_Employee", ThisKey="depositor_id", OtherKey="id", IsForeignKey=true)]
+		public Employee Employee
+		{
+			get
+			{
+				return this._Employee.Entity;
+			}
+			set
+			{
+				Employee previousValue = this._Employee.Entity;
+				if (((previousValue != value) 
+							|| (this._Employee.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Employee.Entity = null;
+						previousValue.Courses.Remove(this);
+					}
+					this._Employee.Entity = value;
+					if ((value != null))
+					{
+						value.Courses.Add(this);
+						this._depositor_id = value.id;
+					}
+					else
+					{
+						this._depositor_id = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Employee");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Course1", Storage="_Employee1", ThisKey="taxidriver_id", OtherKey="id", IsForeignKey=true)]
+		public Employee Employee1
+		{
+			get
+			{
+				return this._Employee1.Entity;
+			}
+			set
+			{
+				Employee previousValue = this._Employee1.Entity;
+				if (((previousValue != value) 
+							|| (this._Employee1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Employee1.Entity = null;
+						previousValue.Courses1.Remove(this);
+					}
+					this._Employee1.Entity = value;
+					if ((value != null))
+					{
+						value.Courses1.Add(this);
+						this._taxidriver_id = value.id;
+					}
+					else
+					{
+						this._taxidriver_id = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Employee1");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Course_status_Course", Storage="_Course_status", ThisKey="course_status_id", OtherKey="id", IsForeignKey=true)]
+		public Course_status Course_status
+		{
+			get
+			{
+				return this._Course_status.Entity;
+			}
+			set
+			{
+				Course_status previousValue = this._Course_status.Entity;
+				if (((previousValue != value) 
+							|| (this._Course_status.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Course_status.Entity = null;
+						previousValue.Courses.Remove(this);
+					}
+					this._Course_status.Entity = value;
+					if ((value != null))
+					{
+						value.Courses.Add(this);
+						this._course_status_id = value.id;
+					}
+					else
+					{
+						this._course_status_id = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Course_status");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void Initialize()
+		{
+			this._Employee = default(EntityRef<Employee>);
+			this._Employee1 = default(EntityRef<Employee>);
+			this._Course_status = default(EntityRef<Course_status>);
+			OnCreated();
+		}
+		
+		[global::System.Runtime.Serialization.OnDeserializingAttribute()]
+		[global::System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+		public void OnDeserializing(StreamingContext context)
 		{
 			this.Initialize();
 		}
