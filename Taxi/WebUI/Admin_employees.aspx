@@ -39,7 +39,7 @@
 
         <div>
     
-    <h1>Dodaj nowego pracownika</h1>
+    <h1 id="h1_Title">DODAWANIE/EDYCJA pracownika</h1>
 
         <asp:Panel ID="p_AddForm" runat="server">
 
@@ -77,7 +77,11 @@
                 ControlToValidate="tb_Pesel" ErrorMessage="Wymagane pole" Font-Bold="True" 
                 ForeColor="Red"></asp:RequiredFieldValidator>
             <br />
-            <asp:Label ID="lb_House_nr" runat="server" Text="Adres / nr domu" 
+            <asp:Label ID="lb_Street" runat="server" Text="Ulica" 
+                AssociatedControlID="tb_Street"></asp:Label>
+            <asp:TextBox ID="tb_Street" runat="server"></asp:TextBox>
+            <br />
+            <asp:Label ID="lb_House_nr" runat="server" Text="Nr domu" 
                 AssociatedControlID="tb_House_nr"></asp:Label>
             <asp:TextBox ID="tb_House_nr" runat="server"></asp:TextBox>
             <asp:RequiredFieldValidator ID="RequiredFieldValidator_tbAddress" 
@@ -142,8 +146,8 @@
             <br />
             <asp:Label ID="lb_Add" runat="server" AssociatedControlID="b_Add" 
                 Text="Akcje"></asp:Label>
-            <asp:Button ID="b_Add" runat="server" 
-                onclick="b_Add_Click" Text="Dodaj" />
+            <asp:Button ID="b_Submit" runat="server" 
+                onclick="b_Add_Click" Text="Dodaj/Zmień" />
 
         </asp:Panel>
         <br />
@@ -152,42 +156,25 @@
             <h2>
                 Lista pracowników</h2>
             <asp:GridView ID="gv_Employees" runat="server" AutoGenerateColumns="False" 
-                CellPadding="4" DataSourceID="ObjectDataSource1" ForeColor="#333333" 
-                GridLines="None" AllowSorting="True">
+                CellPadding="4" DataSourceID="ds_Employees" ForeColor="#333333" 
+                GridLines="None" AllowSorting="True" 
+                onselectedindexchanged="gv_Employees_SelectedIndexChanged">
                 <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                 <Columns>
-                    <asp:BoundField DataField="taxi_id" HeaderText="taxi_id" 
-                        SortExpression="taxi_id" />
                     <asp:BoundField DataField="position_name" HeaderText="position_name" 
                         SortExpression="position_name" />
-                    <asp:BoundField DataField="position_lon" HeaderText="position_lon" 
-                        SortExpression="position_lon" />
-                    <asp:BoundField DataField="driver_status_id" HeaderText="driver_status_id" 
-                        SortExpression="driver_status_id" />
-                    <asp:BoundField DataField="position_lat" HeaderText="position_lat" 
-                        SortExpression="position_lat" />
                     <asp:BoundField DataField="licence_number" HeaderText="licence_number" 
                         SortExpression="licence_number" />
-                    <asp:BoundField DataField="id" HeaderText="id" SortExpression="id" />
                     <asp:BoundField DataField="name" HeaderText="name" SortExpression="name" />
                     <asp:BoundField DataField="surname" HeaderText="surname" 
                         SortExpression="surname" />
-                    <asp:BoundField DataField="pesel" HeaderText="pesel" SortExpression="pesel" />
-                    <asp:BoundField DataField="house_nr" HeaderText="house_nr" 
-                        SortExpression="house_nr" />
-                    <asp:BoundField DataField="postal_code" HeaderText="postal_code" 
-                        SortExpression="postal_code" />
-                    <asp:BoundField DataField="city" HeaderText="city" SortExpression="city" />
-                    <asp:BoundField DataField="e_mail" HeaderText="e_mail" 
-                        SortExpression="e_mail" />
                     <asp:BoundField DataField="employee_type_id" HeaderText="employee_type_id" 
                         SortExpression="employee_type_id" />
-                    <asp:BoundField DataField="login" HeaderText="login" SortExpression="login" />
-                    <asp:BoundField DataField="password" HeaderText="password" 
-                        SortExpression="password" />
-                    <asp:BoundField DataField="salt" HeaderText="salt" SortExpression="salt" />
                     <asp:BoundField DataField="telephone" HeaderText="telephone" 
                         SortExpression="telephone" />
+                    <asp:ButtonField CommandName="Delete" Text="del" />
+                    <asp:HyperLinkField DataNavigateUrlFields="id" 
+                        DataNavigateUrlFormatString="Admin_employees.aspx?edit={0}" Text="edit" />
                 </Columns>
                 <EditRowStyle BackColor="#999999" />
                 <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
@@ -210,7 +197,7 @@
             </asp:GridView>
     
 
-            <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" 
+            <asp:ObjectDataSource ID="ds_Employees" runat="server" 
                 SelectMethod="GetAllTaxiDrivers" TypeName="BLL.Repository">
             </asp:ObjectDataSource>
     
