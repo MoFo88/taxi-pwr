@@ -32,5 +32,25 @@ public class WebService : System.Web.Services.WebService {
     {
         return Repository.GetAllTaxiDrivers();
     }
+
+    [WebMethod]
+    public bool setTaxiCoord(Decimal lon, Decimal lat)
+    {
+        //odczytanie z kontekstu sesyjnego użytkownika zalogowanego użytkownika
+        return Repository.setTaxiPosition(lon,lat,1); // jak na razie 1
+    }
+
+    [WebMethod]
+    public bool setTaxiStatus(int status)
+    {
+        //mozliwe rozdzielenie na kilka metod:
+        // setTaxiStatusOnCourse
+        // setTaxiStatusFree
+        // setTaxiStatusBusy
+        //itp itd - DO USTALENIA
+        return Repository.setTaxiState(status,1); //zmieniamy ryska ;)
+    }
+
+    
     
 }

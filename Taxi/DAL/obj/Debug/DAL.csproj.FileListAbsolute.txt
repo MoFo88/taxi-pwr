@@ -1,0 +1,12 @@
+C:\Users\yasio\Desktop\Taxi\Taxi\DAL\bin\Debug\DAL.dll.config
+C:\Users\yasio\Desktop\Taxi\Taxi\DAL\bin\Debug\DAL.dll
+C:\Users\yasio\Desktop\Taxi\Taxi\DAL\bin\Debug\DAL.pdb
+C:\Users\yasio\Desktop\Taxi\Taxi\DAL\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\yasio\Desktop\Taxi\Taxi\DAL\obj\Debug\DAL.dll
+C:\Users\yasio\Desktop\Taxi\Taxi\DAL\obj\Debug\DAL.pdb
+D:\Programowanie\gospodarka\taxi-pwr\trunk\Taxi\DAL\bin\Debug\DAL.dll.config
+D:\Programowanie\gospodarka\taxi-pwr\trunk\Taxi\DAL\bin\Debug\DAL.dll
+D:\Programowanie\gospodarka\taxi-pwr\trunk\Taxi\DAL\bin\Debug\DAL.pdb
+D:\Programowanie\gospodarka\taxi-pwr\trunk\Taxi\DAL\obj\Debug\ResolveAssemblyReference.cache
+D:\Programowanie\gospodarka\taxi-pwr\trunk\Taxi\DAL\obj\Debug\DAL.dll
+D:\Programowanie\gospodarka\taxi-pwr\trunk\Taxi\DAL\obj\Debug\DAL.pdb

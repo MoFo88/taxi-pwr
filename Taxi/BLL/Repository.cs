@@ -592,6 +592,33 @@ namespace BLL
             return x.ToList();
         }
 
+        /// <summary>Aktualizuje polozenie taksowkarza
+        /// </summary>
+        /// <returns>nothing</returns>
+        public static bool setTaxiPosition(Decimal lon, Decimal lat,int idTaxi)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from i in ctx.Employees.OfType<TaxiDriver>() where i.id == idTaxi && i.employee_type_id == 1 select i;
+            TaxiDriver td = x.SingleOrDefault();
+            td.position_lon = lon;
+            td.position_lat = lat;
+            ctx.SubmitChanges();
+            //na razie zwraca zawsze true ;), moze wypadaloby zwrocic stan taksowkarza?
+            return true;
+        }
+
+        public static bool setTaxiState(int state, int idTaxi)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from i in ctx.Employees.OfType<TaxiDriver>() where i.id == idTaxi && i.employee_type_id == 1 select i;
+            TaxiDriver td = x.SingleOrDefault();
+            var y = from i in ctx.Driver_status where i.id == state select i;
+            td.Driver_status = y.SingleOrDefault();
+            //na razie zwraca zawsze true ;), moze wypadaloby zwrocic stan taksowkarza?
+            ctx.SubmitChanges();
+            return true;
+        }
+
         
         /* PRIVATE MEMBER */
 
@@ -627,6 +654,8 @@ namespace BLL
             SHA1CryptoServiceProvider cryptoTransformSHA1 = new SHA1CryptoServiceProvider();
             string hash = BitConverter.ToString(cryptoTransformSHA1.ComputeHash(buffer)).ToLower().Replace("-", "");
             return hash;
-        }        
+        }
+
+      
     }
 }
