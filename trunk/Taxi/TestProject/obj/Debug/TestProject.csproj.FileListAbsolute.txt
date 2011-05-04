@@ -7,3 +7,12 @@ C:\Users\yasio\Desktop\Taxi\trunk\Taxi\TestProject\bin\Debug\DAL.pdb
 C:\Users\yasio\Desktop\Taxi\trunk\Taxi\TestProject\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\yasio\Desktop\Taxi\trunk\Taxi\TestProject\obj\Debug\TestProject.dll
 C:\Users\yasio\Desktop\Taxi\trunk\Taxi\TestProject\obj\Debug\TestProject.pdb
+D:\Programowanie\gospodarka\taxi-pwr\trunk\Taxi\TestProject\bin\Debug\TestProject.dll
+D:\Programowanie\gospodarka\taxi-pwr\trunk\Taxi\TestProject\bin\Debug\TestProject.pdb
+D:\Programowanie\gospodarka\taxi-pwr\trunk\Taxi\TestProject\bin\Debug\BLL.dll
+D:\Programowanie\gospodarka\taxi-pwr\trunk\Taxi\TestProject\bin\Debug\DAL.dll
+D:\Programowanie\gospodarka\taxi-pwr\trunk\Taxi\TestProject\bin\Debug\BLL.pdb
+D:\Programowanie\gospodarka\taxi-pwr\trunk\Taxi\TestProject\bin\Debug\DAL.pdb
+D:\Programowanie\gospodarka\taxi-pwr\trunk\Taxi\TestProject\obj\Debug\ResolveAssemblyReference.cache
+D:\Programowanie\gospodarka\taxi-pwr\trunk\Taxi\TestProject\obj\Debug\TestProject.dll
+D:\Programowanie\gospodarka\taxi-pwr\trunk\Taxi\TestProject\obj\Debug\TestProject.pdb
