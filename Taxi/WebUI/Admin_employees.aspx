@@ -80,6 +80,9 @@
             <asp:Label ID="lb_Street" runat="server" Text="Ulica" 
                 AssociatedControlID="tb_Street"></asp:Label>
             <asp:TextBox ID="tb_Street" runat="server"></asp:TextBox>
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator_tbStreet" runat="server" 
+                ControlToValidate="tb_Street" ErrorMessage="Wymagane pole" Font-Bold="True" 
+                ForeColor="Red"></asp:RequiredFieldValidator>
             <br />
             <asp:Label ID="lb_House_nr" runat="server" Text="Nr domu" 
                 AssociatedControlID="tb_House_nr"></asp:Label>
@@ -172,9 +175,9 @@
                         SortExpression="employee_type_id" />
                     <asp:BoundField DataField="telephone" HeaderText="telephone" 
                         SortExpression="telephone" />
-                    <asp:ButtonField CommandName="Delete" Text="del" />
+                    <asp:ButtonField CommandName="Delete" Text="Usuń" />
                     <asp:HyperLinkField DataNavigateUrlFields="id" 
-                        DataNavigateUrlFormatString="Admin_employees.aspx?edit={0}" Text="edit" />
+                        DataNavigateUrlFormatString="Admin_employees.aspx?edit={0}" Text="Edytuj" />
                 </Columns>
                 <EditRowStyle BackColor="#999999" />
                 <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
