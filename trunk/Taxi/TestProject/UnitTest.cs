@@ -47,5 +47,18 @@ namespace TestProject
         }
 
 
+        [TestMethod]
+        public void TestMethodAddDispatcher()
+        {
+            Repository.AddNewDispatcher("jan", "grzegrzolka", "kup", "email", "1", "ulica", "aads", "45-08", "stefaneczek", "gruba ryba");
+        }
+
+        [TestMethod]
+        public void TestMethodAddDispatcher()
+        {
+            Repository.AddNewDispatcher("jan", "grzegrzolka", "kup", "email", "1", "ulica", "aads", "45-08", "stefaneczek", "gruba ryba");
+        }
+
+
     }
 }
