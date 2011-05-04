@@ -163,6 +163,48 @@ namespace BLL
             return x.ToList();
         }
 
+        /// <summary>zmiana danych employee
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="name"></param>
+        /// <param name="surname"></param>
+        /// <param name="city"></param>
+        /// <param name="street"></param>
+        /// <param name="house_nr"></param>
+        /// <param name="postal_code"></param>
+        /// <param name="e_mail"></param>
+        /// <param name="pesel"></param>
+        /// <param name="telephone"></param>
+        public static void EditUserData(
+            int userId,
+            String name,
+            String surname,
+            String city,
+            String street,
+            String house_nr,
+            String postal_code,
+            String e_mail,
+            String pesel,
+            String telephone)
+        {
+
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+
+            Employee e = ctx.Employees.FirstOrDefault(em => em.id == userId);
+
+            e.name = name;
+            e.surname = surname;
+            e.city = city;
+            e.street = street;
+            e.house_nr = house_nr;
+            e.postal_code = postal_code;
+            e.e_mail = e_mail;
+            e.pesel = pesel;
+            e.telephone =  telephone;
+
+            ctx.SubmitChanges();
+
+        }
         /* TAXI DRIVER */
 
         /// <summary> Funkcja zwraca listę wszystkich taksówkarz
@@ -282,7 +324,7 @@ namespace BLL
         /// <returns></returns>
         public static List<TaxiDriver> GetTaxiDriversByStatus(Driver_status ds)
         {
-            return GetTaxiDriversByStatusID(ds.id);
+            return GetTaxiDriversByStatus(ds.id);
         }
 
         /// <summary> funkcja zwraca listę taksówkarzy, do których przypisana jest taksówka określoneo typu
