@@ -28,11 +28,13 @@ namespace BLL
 
             Employee user = query.SingleOrDefault();
 
-            if (user == null) throw new UserNotExistException();
+            if (user == null)
+                throw new UserNotExistException();
             String pswdSalt = pswd + user.salt;
             String password = CalculateSHA1(pswdSalt, Encoding.ASCII);
 
-            if (user.password != password) throw new WrongPasswordException("Wrong password");
+            if (user.password != password)
+                throw new WrongPasswordException("Wrong password");
 
             return user.id;
         }
@@ -63,7 +65,9 @@ namespace BLL
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
 
-            var x = from u in ctx.Employees where u.id == userId select u;
+            var x = from u in ctx.Employees
+                    where u.id == userId
+                    select u;
 
             Employee user = x.SingleOrDefault();
 
@@ -85,7 +89,7 @@ namespace BLL
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
 
-            Employee e = ctx.Employees.SingleOrDefault( em => em.id == userId );
+            Employee e = ctx.Employees.SingleOrDefault(em => em.id == userId);
 
             if (e == null)
             {
@@ -99,18 +103,18 @@ namespace BLL
             ctx.SubmitChanges();
 
         }
-        
+
         //PRIVATE MEMBER
         private static Employee AddNewUser(
-            String name, 
-            String surname, 
-            String city, 
-            String email, 
-            String houseNr,  
+            String name,
+            String surname,
+            String city,
+            String email,
+            String houseNr,
             String street,
-            String pesel, 
-            String postalCode, 
-            String login, 
+            String pesel,
+            String postalCode,
+            String login,
             String password)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -159,7 +163,8 @@ namespace BLL
         public static List<Employee> GetAllEmployees()
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
-            var x = from e in ctx.Employees select e;
+            var x = from e in ctx.Employees
+                    select e;
             return x.ToList();
         }
 
@@ -200,7 +205,7 @@ namespace BLL
             e.postal_code = postal_code;
             e.e_mail = e_mail;
             e.pesel = pesel;
-            e.telephone =  telephone;
+            e.telephone = telephone;
 
             ctx.SubmitChanges();
 
@@ -213,7 +218,8 @@ namespace BLL
         public static List<TaxiDriver> GetAllTaxiDrivers()
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
-            var query = from c in ctx.Employees.OfType<TaxiDriver>() select c;
+            var query = from c in ctx.Employees.OfType<TaxiDriver>()
+                        select c;
             return query.ToList();
         }
 
@@ -232,10 +238,10 @@ namespace BLL
         /// <returns></returns>
         public static void AddNewTaxiDriver(String name, String surname, String city, String email, String houseNr, String street, String pesel, String licenceNr, String postalCode, String login, String password)
         {
-            
+
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
 
-            Employee e = Repository.AddNewUser( name, surname, city, email, houseNr, street,  pesel,  postalCode, login, password);
+            Employee e = Repository.AddNewUser(name, surname, city, email, houseNr, street, pesel, postalCode, login, password);
 
             TaxiDriver td = new TaxiDriver(e);
 
@@ -266,7 +272,9 @@ namespace BLL
         public static void EditTaxiDriverData(int taxiDriveId, String name, String surname, String city, String email, String houseNr, String pesel, String licenceNr, String postalCode)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
-            var x = from t in ctx.Employees.OfType<TaxiDriver>() where t.id == taxiDriveId select t;
+            var x = from t in ctx.Employees.OfType<TaxiDriver>()
+                    where t.id == taxiDriveId
+                    select t;
 
             if (x == null)
             {
@@ -294,7 +302,9 @@ namespace BLL
             ChangeUserPassword(taxiDriverId, password);
 
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
-            var x = from t in ctx.Employees.OfType<TaxiDriver>() where t.id == taxiDriverId select t;
+            var x = from t in ctx.Employees.OfType<TaxiDriver>()
+                    where t.id == taxiDriverId
+                    select t;
             TaxiDriver taxiDriver = x.SingleOrDefault();
 
             taxiDriver.login = login;
@@ -317,7 +327,7 @@ namespace BLL
 
             return x.ToList();
         }
-        
+
         /// <summary>Pobierz listę taksówkarzy o podanym statusie
         /// </summary>
         /// <param name="ds"></param>
@@ -376,7 +386,7 @@ namespace BLL
         /// <param name="postalCode"></param>
         /// <param name="login"></param>
         /// <param name="password"></param>
-        public static void AddNewAdmin(String name, String surname, String city, String email, String houseNr, String street, String pesel,  String postalCode, String login, String password)
+        public static void AddNewAdmin(String name, String surname, String city, String email, String houseNr, String street, String pesel, String postalCode, String login, String password)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
             Employee e = Repository.AddNewUser(name, surname, city, email, houseNr, street, pesel, postalCode, login, password);
@@ -430,16 +440,16 @@ namespace BLL
         /// <param name="endpoint_lon"></param>
         /// <param name="endpoint_lat"></param>
         public static void addNewCourse(
-            int? taxidriver_id, 
-            int? depositor_id, 
-            String client_phone, 
-            DateTime? course_date, 
-            int? course_status_id, 
+            int? taxidriver_id,
+            int? depositor_id,
+            String client_phone,
+            DateTime? course_date,
+            int? course_status_id,
             String client_name,
-            String startpoint_name, 
-            Decimal startpoint_lon, 
-            Decimal startpoint_lat, 
-            Decimal endpoint_lon, 
+            String startpoint_name,
+            Decimal startpoint_lon,
+            Decimal startpoint_lat,
+            Decimal endpoint_lon,
             Decimal endpoint_lat)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -485,18 +495,18 @@ namespace BLL
         /// <param name="endpoint_lon"></param>
         /// <param name="endpoint_lat"></param>
         public static void EditCourse(
-            int courseId, 
-            int taxidriver_id, 
-            int depositor_id, 
-            String client_phone, 
-            DateTime? course_date, 
-            int course_status_id, 
+            int courseId,
+            int taxidriver_id,
+            int depositor_id,
+            String client_phone,
+            DateTime? course_date,
+            int course_status_id,
             String client_name,
-            String startpoint_name, 
-            Decimal startpoint_lon, 
-            Decimal startpoint_lat, 
-            Decimal endpoint_lon, 
-            Decimal endpoint_lat)        
+            String startpoint_name,
+            Decimal startpoint_lon,
+            Decimal startpoint_lat,
+            Decimal endpoint_lon,
+            Decimal endpoint_lat)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
             Course course = ctx.Courses.SingleOrDefault(c => c.id == courseId);
@@ -524,8 +534,8 @@ namespace BLL
 
             ctx.SubmitChanges();
         }
-        
-        
+
+
 
         /* TAXI */
 
@@ -535,7 +545,8 @@ namespace BLL
         public static List<Taxi> GetTaxiList()
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
-            var x = from c in ctx.Taxis select c;
+            var x = from c in ctx.Taxis
+                    select c;
             return x.ToList();
         }
 
@@ -545,7 +556,8 @@ namespace BLL
         public static List<Car_type> GetCarModelsList()
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
-            var x = from c in ctx.Car_types select c;
+            var x = from c in ctx.Car_types
+                    select c;
             return x.ToList();
         }
 
@@ -571,7 +583,7 @@ namespace BLL
         public static void DeleteCarType(int id)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
-            Car_type ct = ctx.Car_types.SingleOrDefault( c => c.id == id );
+            Car_type ct = ctx.Car_types.SingleOrDefault(c => c.id == id);
 
             ctx.Car_types.DeleteOnSubmit(ct);
             ctx.SubmitChanges();
@@ -595,10 +607,12 @@ namespace BLL
         /// <summary>Aktualizuje polozenie taksowkarza
         /// </summary>
         /// <returns>nothing</returns>
-        public static bool setTaxiPosition(Decimal lon, Decimal lat,int idTaxi)
+        public static bool setTaxiPosition(Decimal lon, Decimal lat, int idTaxi)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
-            var x = from i in ctx.Employees.OfType<TaxiDriver>() where i.id == idTaxi && i.employee_type_id == 1 select i;
+            var x = from i in ctx.Employees.OfType<TaxiDriver>()
+                    where i.id == idTaxi && i.employee_type_id == 1
+                    select i;
             TaxiDriver td = x.SingleOrDefault();
             td.position_lon = lon;
             td.position_lat = lat;
@@ -610,16 +624,20 @@ namespace BLL
         public static bool setTaxiState(int state, int idTaxi)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
-            var x = from i in ctx.Employees.OfType<TaxiDriver>() where i.id == idTaxi && i.employee_type_id == 1 select i;
+            var x = from i in ctx.Employees.OfType<TaxiDriver>()
+                    where i.id == idTaxi && i.employee_type_id == 1
+                    select i;
             TaxiDriver td = x.SingleOrDefault();
-            var y = from i in ctx.Driver_status where i.id == state select i;
+            var y = from i in ctx.Driver_status
+                    where i.id == state
+                    select i;
             td.Driver_status = y.SingleOrDefault();
             //na razie zwraca zawsze true ;), moze wypadaloby zwrocic stan taksowkarza?
             ctx.SubmitChanges();
             return true;
         }
 
-        
+
         /* PRIVATE MEMBER */
 
         #region Losowy ciąg znaków o zadanej długości
@@ -628,12 +646,12 @@ namespace BLL
         {
 
             Random random = new Random();
-           
+
             MD5 md5 = new MD5CryptoServiceProvider();
             byte[] hash = md5.ComputeHash(Encoding.ASCII.GetBytes(random.Next().ToString()));
             string password = Convert.ToBase64String(hash).Substring(0, length);
             string newPass = "";
-            
+
             // Uppercase at random 
             random = new Random();
             for (int i = 0; i < password.Length; i++)
@@ -656,6 +674,6 @@ namespace BLL
             return hash;
         }
 
-      
+
     }
 }
