@@ -47,9 +47,11 @@ public class WebService : System.Web.Services.WebService {
     }
 
     [WebMethod]
-    public bool setTaxiCoord(Decimal lon, Decimal lat)
+    public bool setTaxiCoord(double longitude, double latitude)
     {
         //odczytanie z kontekstu sesyjnego użytkownika zalogowanego użytkownika
+        decimal lon = (decimal)longitude;//latwiejsze rozwiazanie, bo w javie nie ma decimala
+        decimal lat = (decimal)latitude;
         return Repository.setTaxiPosition(lon,lat,1); // jak na razie 1
     }
 
