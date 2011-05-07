@@ -99,7 +99,7 @@ div.map_popup_groupDiv
 
 body   
 {
-    background: url(../Images/Layout/bg.jpg);
+    background: url(../Images/Layout/bg.png);
     font-size: .80em;
     font-family: "Helvetica Neue", "Lucida Grande", "Segoe UI", Arial, Helvetica, Verdana, sans-serif;
     margin: 0px;
@@ -183,12 +183,12 @@ first child of the left and right table columns */
 
 .layout
 {
-    background: url(../Images/Layout/bg_top.jpg) repeat-x;
+    background: url(../Images/Layout/bg_top.png) repeat-x;
 }
 
 .page
 {
-    width: 800px;
+    width: 1100px;
     margin: 0px auto 0px auto;
     border: none;
 }
@@ -198,9 +198,14 @@ first child of the left and right table columns */
     position: relative;
     margin: 0px;
     padding: 0px;
-    background: #4b6c9e url(../Images/Layout/top.jpg) no-repeat;
+    background: url(../Images/Layout/top.png) no-repeat;
     width: 100%;
     height: 255px;
+}
+
+.header.hidden 
+{
+    display: none;
 }
 
 .header h1
@@ -216,27 +221,32 @@ first child of the left and right table columns */
 
 .main
 {
-    background: #ece3f0 url(../Images/Layout/content_bg.jpg);
-    margin: 12px 0 8px 0;
-    width: 585px;
+    margin: 0 0 8px 0;
+    width: 885px;
 }
 
 .main .content 
 {
-    background: url(../Images/Layout/content_bg_content.jpg) no-repeat;
+    background: url(../Images/Layout/content_bg.png) repeat-y;
+    min-height: 339px;
+}
+
+.main .content2
+{
+    background: url(../Images/Layout/content_bg_content.png) no-repeat;
     padding: 0 12px;
     min-height: 339px;
 }
 
 .main .maintop 
 {
-    background: #ece3f0 url(../Images/Layout/content_top.jpg) no-repeat;
+    background: url(../Images/Layout/content_top.png) no-repeat;
     height:21px;
 }
 
 .main .mainbottom 
 {
-    background: #ece3f0 url(../Images/Layout/content_bottom.jpg) no-repeat;
+    background: url(../Images/Layout/content_bottom.png) no-repeat;
     height:21px;
 }
 
@@ -330,7 +340,12 @@ div#dialog_change_orders.edit .submitbutton button.edit
 
 .rightmenu .list
 {
-    background: #ece3f0 url(../Images/Layout/right_bg.jpg) repeat-y;
+}
+
+.rightmenu .list .title
+{
+    background: url(../Images/Layout/right_title.png) no-repeat;
+    height: 40px;
 }
 
 .rightmenu .new
@@ -341,14 +356,19 @@ div#dialog_change_orders.edit .submitbutton button.edit
 
 .rightmenu .content 
 {
-    background: url(../Images/Layout/right_top.jpg) no-repeat;
-    padding: 40px 0 0 0;
+    background: url(../Images/Layout/right_bg.png) repeat-y;
+    min-height: 320px;
+}
+
+.rightmenu .content2 
+{
+    background: url(../Images/Layout/right_top.png) no-repeat;
     min-height: 320px;
 }
 
 .rightmenu .bottom
 {
-    background: url(../Images/Layout/right_bottom.jpg) no-repeat;
+    background: url(../Images/Layout/right_bottom.png) no-repeat;
     height: 18px;
 }
 
@@ -357,6 +377,7 @@ div#dialog_change_orders.edit .submitbutton button.edit
     font: 500 11px tahoma;
     line-height:13px;
     list-style-type: none;
+    margin: 0;
     padding: 0;
     color: #faf8fb;
 }
@@ -367,7 +388,7 @@ div#dialog_change_orders.edit .submitbutton button.edit
     padding: 5px 2px 5px 8px;
     border-top: 1px solid #29202d;
     border-bottom: 1px solid #29202d;
-    margin: 3px 2px;
+    margin: 0 2px 3px 2px;
     cursor: pointer;
     position: relative;
 }
@@ -413,9 +434,9 @@ div.hideSkiplink
 div.topmenu 
 {
     height: 30px;
-    margin: 15px 0 20px 0;
-    background: url(../Images/Layout/menu_bg.jpg) no-repeat;
-    width:100%;
+    padding: 15px 0 20px 0;
+    background: url(../Images/Layout/menu_bg.png) no-repeat 0 15px;
+    width: 100%;
 }
 
 div.menu
@@ -433,7 +454,7 @@ div.menu ul
 
 div.menu ul li 
 {
-    background: #ad90ce url(../Images/Layout/menu_button_bg.jpg);
+    background: #ad90ce url(../Images/Layout/menu_button_bg.png);
     border-left: 1px solid #654f7d;
     border-right: 1px solid #654f7d;
     margin:0 6px 0 0;
@@ -441,7 +462,7 @@ div.menu ul li
 
 div.menu ul li:hover
 {
-    background: #7b78cf url(../Images/Layout/menu_button_bg_hover.jpg);
+    background: #7b78cf url(../Images/Layout/menu_button_bg_hover.png);
     border-color: #71598b;
 }
 
@@ -457,7 +478,7 @@ div.menu ul li a, div.menu ul li a:visited
 
 div.menu ul li a:hover
 {
-    background: url(../Images/Layout/menu_button_hover.jpg) no-repeat right;
+    background: url(../Images/Layout/menu_button_hover.png) no-repeat right;
 }
 
 div.menu ul li a:active
@@ -466,7 +487,26 @@ div.menu ul li a:active
 
 div.menu ul a.selected 
 {
-    background: url(../Images/Layout/menu_button_bg_hover.jpg);
+    background: url(../Images/Layout/menu_button_bg_hover.png);
+}
+
+div.topmenu div#menuToggle 
+{
+    width: 31px;
+    height: 30px; 
+    background-repeat: no-repeat;
+    float: right;
+    cursor: pointer;
+}
+
+div#menuToggle.hide 
+{
+    background-image: url(../Images/Layout/menu_button_up.png)
+}
+
+div#menuToggle.show
+{
+    background-image: url(../Images/Layout/menu_button_down.png)
 }
 
 /* FORM ELEMENTS   
@@ -532,6 +572,7 @@ div.accountInfo
     font-size: 1px;
 }
 
+/*
 .title
 {
     display: block;
@@ -539,6 +580,7 @@ div.accountInfo
     text-align: left;
     width: auto;
 }
+*/
 
 .loginDisplay
 {

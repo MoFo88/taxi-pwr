@@ -9,9 +9,12 @@
     
 <div id="itemlist" class="rightmenu orders">
     <div class="list">
+        <div class="title"></div>
         <div class="content">
-            <ul>
-            </ul>
+            <div class="content2">
+                <ul></ul>
+                <br />
+            </div>
         </div>
         <div class="bottom"></div>
     </div>
@@ -22,11 +25,11 @@
 
 <div id="dialog_change_orders">
     <div class="close">zamknij</div>
-    <input type="hidden" id="id_order" />
-    <label for="order_course_date">Data: </label><input type="text" id="order_course_date" />
-    <label for="order_startpoint_name">Miejsce: </label><input type="text" id="order_startpoint_name" />
-    <label for="order_client_name">Imię i nazwisko: </label><input type="text" id="order_client_name" />
-    <label for="order_client_phone">Telefon: </label><input type="text" id="order_client_phone" />
+    <input type="hidden" id="tb_id_order" />
+    <label for="tb_order_course_date">Data: </label><input type="text" id="tb_order_course_date" />
+    <label for="tb_order_startpoint_name">Adres: </label><input type="text" id="tb_order_startpoint_name" />
+    <label for="tb_order_client_name">Imię i nazwisko: </label><input type="text" id="tb_order_client_name" />
+    <label for="tb_order_client_phone">Telefon: </label><input type="text" id="tb_order_client_phone" />
     <div class="submitbutton">
         <button class="add">Dodaj zgłoszenie</button>
         <button class="edit">Zmień zgłoszenie</button>
@@ -36,9 +39,11 @@
 <div class="main">
     <div class="maintop"></div>
     <div class="content">
+    <div class="content2">
 
         <div id="map_view"></div>
 
+    </div>
     </div>
     <div class="mainbottom"></div>
 </div>

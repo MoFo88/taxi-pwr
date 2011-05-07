@@ -83,7 +83,7 @@ function MapCreatePopupDriver(lonLat, details, showPopup) {
     var popup = new OpenLayers.Popup(details.id_order, // auto generate id
                    lonLat,
                    new OpenLayers.Size(220, 120),
-                   '<div class="map_popup">'+
+                   '<div class="map_popup" style="position:relative; z-index:500">' +
                    '<div class="driver_id">Taksówkarz #' + details.id_driver + '</div>' +
                    '<div class="status"">Stan: ' + details.status + '</div>' +
                    '<div class="registration">Rejestracja: ' + details.registration_number + '</div>' +
@@ -189,7 +189,7 @@ function MapCreatePopupOrder(lonLat, details, showPopup) {
     var popup = new OpenLayers.Popup(details.id_order, // auto generate id
                    lonLat,
                    new OpenLayers.Size(220, 110),
-                   '<div class="map_popup">'+
+                   '<div class="map_popup" style="position:relative; z-index:560">'+
                    '<div class="order_id">Zamówienie #' + details.id_order + '</div>' +
                    '<div class="course_date">' + details.course_date + '</div>' +
                    '<div class="startpoint_name">' + details.startpoint_name + '</div>' +

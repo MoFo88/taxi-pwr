@@ -8,6 +8,8 @@
     <link href="Styles/jquery-ui.css" rel="stylesheet" type="text/css" />
     <script src="Scripts/jquery.min.js" type="text/javascript"></script>
     <script src="Scripts/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="Scripts/jquery.cookie.js" type="text/javascript"></script>
+    <script src="Scripts/MenuHandler.js" type="text/javascript"></script>
     <asp:ContentPlaceHolder ID="HeadContent" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -15,23 +17,11 @@
     <form runat="server">
     <div class="layout">
         <div class="page">
-            <div class="header">
-            <!--
-                <div class="title">
-                <img src="Images/logo.jpg" width="150" style="float: left" />
-                <h1 style="float:left">
-                        Taxi "U Ryśka"
-                    </h1>
-                
-                
-                </div>
-            -->
-  
-            </div>
+            <div id="div_header" class="header" runat="server"></div>
             <div class="clear hideSkiplink topmenu">
                 <asp:Menu ID="MenuTop" runat="server" CssClass="menu" IncludeStyleBlock="False" Orientation="Horizontal" 
                     DataSourceID="SiteMapDataSource1" StaticDisplayLevels="2" 
-                    MaximumDynamicDisplayLevels="2" SkipLinkText="">
+                    MaximumDynamicDisplayLevels="2" SkipLinkText="" Width="100%">
                 </asp:Menu>
                 <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" />
             </div>

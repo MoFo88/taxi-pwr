@@ -8,6 +8,7 @@
 <div class="main">
     <div class="maintop"></div>
     <div class="content">
+    <div class="content2">
         <br class="clear noheight" />
 
         <div>
@@ -88,6 +89,7 @@
 
         </div>
 
+    </div>
     </div>
     <div class="mainbottom"></div>
 </div>
