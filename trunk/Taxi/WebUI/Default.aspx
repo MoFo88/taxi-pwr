@@ -8,6 +8,7 @@
 <div class="main">
     <div class="maintop"></div>
     <div class="content">
+    <div class="content2">
         <br class="clear noheight" />
 
         <asp:Button ID="Button1" runat="server" Text="Get All Employee Types:" 
@@ -102,6 +103,7 @@
         <asp:LinqDataSource ID="LinqDataSource1" runat="server" EntityTypeName="">
         </asp:LinqDataSource>
 
+    </div>
     </div>
     <div class="mainbottom"></div>
 </div>

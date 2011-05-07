@@ -8,10 +8,12 @@
 <div class="main">
     <div class="maintop"></div>
     <div class="content">
+    <div class="content2">
         <br class="clear noheight" />
 
         <h1>Nastąpiło wylogowanie z serwisu.</h1>
         
+    </div>
     </div>
     <div class="mainbottom"></div>
 </div>
