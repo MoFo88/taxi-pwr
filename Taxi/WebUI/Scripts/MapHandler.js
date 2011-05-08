@@ -19,6 +19,7 @@
     visibleOrders = new Array();
     visibleDriversSelected = null;
     visibleOrdersSelected = null;
+    visibleSelectedPoint = null;
 
 }
 
@@ -259,4 +260,31 @@ function MapSelectOrder(order_obj) {
     // Trzeba przywrócić punkt który usunęliśmy przed chwilą
     MapShowMarkersOrder(orders, true);
     MapShowMarkersDriver(drivers, true);
+}
+
+function MapShowPoint(lon, lat, zoom) { // zoom==centerMap
+    // Usuń poprzedni znacznik
+    if (visibleSelectedPoint != null) {
+        //mapView.removePopup(visibleSelectedPoint.popup); // ten znacznik nie ma popupa
+        mapMarkers.removeMarker(visibleSelectedPoint.marker);
+        //visibleSelectedPoint.popup.destroy(); // ten znacznik nie ma popupa
+        visibleSelectedPoint.marker.destroy();
+        visibleSelectedPoint = null;
+    }
+
+    // Dodaj nowy znacznik
+    lonLat = MapCreateLonLat(lon, lat);
+    var id = 0;
+    icon = markerIconOrderTargetSelected.clone();
+    var marker = new OpenLayers.Marker(lonLat, icon.clone());
+    marker.setOpacity(1);
+    mapMarkers.addMarker(marker);
+    if (zoom > 0) mapView.setCenter(marker.lonlat); // lonLat, zoom
+    visibleSelectedPoint = {
+        marker: marker,
+        details: {
+            lon: lon,
+            lat: lat
+        }
+    };
 }

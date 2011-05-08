@@ -1,4 +1,40 @@
-﻿function dialog_change_orders_fill(div_dco, order) {
+﻿function selectOrder(container, element) {
+    MapSelectOrder(element);
+    container.find('li').removeClass('selected');
+    element.addClass('selected');
+    setTimeout(function () { //TODO wprowadzamy opóźnienie w pobieraniu taksówek, bo inaczej jeśli zamówienie znika w momencie kliknięcia, to nie pojawia się popup - to jest jeszcze do przetestowania
+        GetOrderList();
+    }, 300);
+}
+
+function showPointByAddress(address) {
+    address+=', Wrocław, Polska';
+    $.ajax({
+        type: 'GET',
+        url: 'GetLonLatByAddress.aspx',
+        data: {
+            address: address
+        },
+        success: function (data) {
+            response=$(data).text();
+            response='startpoint_data='+response.substring(38, response.length-2);
+            eval(response);
+            pointLon=startpoint_data.Placemark[0].Point.coordinates[0];
+            pointLat=startpoint_data.Placemark[0].Point.coordinates[1];
+            MapShowPoint(pointLon, pointLat, 15); // lon, lat, zoom==centerMap
+        },
+    });
+}
+
+function var_dump(obj) {
+   if(typeof obj == "object") {
+      return "Type: "+typeof(obj)+((obj.constructor) ? "\nConstructor: "+obj.constructor : "")+"\nValue: " + obj;
+   } else {
+      return "Type: "+typeof(obj)+"\nValue: "+obj;
+   }
+}//end function var_dump
+
+function dialog_change_orders_fill(div_dco, order) {
     if (order==null) {
         order={
             id_order: '',
@@ -24,11 +60,17 @@ $(document).dblclick(function () {
 });
 
 $(document).ready(function () {
+
+    // Inicjalizacja mapy i wyświetlenie pozyci w menu po prawej
     MapInit();
     GetOrderList();
+
+    // Interval wyświetlający zgłoszenia w menu po prawej
     setInterval(function () {
         GetOrderList();
     }, 5000);
+
+    // Przycisk dodawania nowego zgłoszenia
     $('div.rightmenu .new button').button().click(function () {
         div_dco=$('div#dialog_change_orders');
         if (div_dco.is(':visible')) div_dco.slideUp(150, function () {
@@ -39,6 +81,22 @@ $(document).ready(function () {
         div_dco.slideDown(300);
         return false;
     });
+
+    // Odczytywanie na bieżąco lokalizacji wpisywanego adresu
+    order_startpoint_name_timeout=null;
+    $('#tb_order_startpoint_name').keyup(function () {
+        if (order_startpoint_name_timeout!=null) {
+            clearTimeout(order_startpoint_name_timeout);
+            order_startpoint_name_timeout=null;
+        };
+        address=$(this).val();
+
+        order_startpoint_name_timeout=setTimeout(function () {
+            showPointByAddress(address);
+        }, 300);
+    });
+
+    // Reakcja na zatwierdzenie formularza zmiany/dodawania zgłoszenia
     $('div#dialog_change_orders button').button().click(function () {
         $('div#dialog_change_orders').slideDown(300);
         div_dco=$('div#dialog_change_orders');
@@ -62,9 +120,13 @@ $(document).ready(function () {
         GetOrderList();
         return false;
     });
+
+    // Reakcja na przycisk zamykajacy okno dodawania/zmiany zgłoszenia
     $('div#dialog_change_orders .close').click(function() {
         $('div#dialog_change_orders').slideUp(300);
     });
+
+    // Przeciąganie okna dodawania/zmiany zgłoszenia
     $('div#dialog_change_orders').draggable({
         drag: function (e, ui) {
             $.cookie('dialog_change_orders_x', ui.offset.left);
@@ -103,12 +165,7 @@ function FillOrderList(orders) {
         if (order.id_order == visibleOrdersSelected) item_obj.addClass('selected');
         container.append(item_obj);
         item_obj.click(function () {
-            MapSelectOrder($(this));
-            container.find('li').removeClass('selected');
-            $(this).addClass('selected');
-            setTimeout(function () { //TODO wprowadzamy opóźnienie w pobieraniu taksówek, bo inaczej jeśli zamówienie znika w momencie kliknięcia, to nie pojawia się popup - to jest jeszcze do przetestowania
-                GetOrderList();
-            }, 300);
+            selectOrder(container, $(this));
         });
         item_obj.find('div.edit').click(function (a) {
             var id_order = $(this).parent().find('div.id_order').text();
@@ -120,6 +177,8 @@ function FillOrderList(orders) {
             else dialog_change_orders_fill(div_dco, order);
             div_dco.removeClass('add').addClass('edit');
             div_dco.slideDown(300);
+            selectOrder($(this).parent());
+            //showPointByAddress($('#tb_order_startpoint_name').val());
             return false;
         });
     }
