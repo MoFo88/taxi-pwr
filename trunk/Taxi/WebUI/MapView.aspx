@@ -24,7 +24,8 @@
 </div>
 
 <div id="dialog_change_orders">
-    <div class="close">zamknij</div>
+    <div class="close">X</div>
+    <div class="title">Zgłoszenia</div>
     <input type="hidden" id="tb_id_order" />
     <label for="tb_order_course_date">Data: </label><input type="text" id="tb_order_course_date" />
     <label for="tb_order_startpoint_name">Adres: </label><input type="text" id="tb_order_startpoint_name" />

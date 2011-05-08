@@ -70,7 +70,8 @@ $(document).ready(function () {
             $.cookie('dialog_change_orders_x', ui.offset.left);
             $.cookie('dialog_change_orders_y', ui.offset.top);
         },
-        distance: 15
+        distance: 15,
+        handle: '.title'
     });
 });
 

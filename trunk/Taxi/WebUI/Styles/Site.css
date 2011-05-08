@@ -280,10 +280,25 @@ div#dialog_change_orders
     position: absolute;
     top: 50px;
     left: 50px;
-    width: 350px;
+    width: 300px;
     height: 200px;
     margin: 0;
     z-index: 1000000;
+}
+
+div#dialog_change_orders .title 
+{
+    background: #E5D5FA;
+    font: 700 11px tahoma;
+    padding: 2px 8px;
+    cursor: move;
+    margin: 0 0 15px 0;
+}
+
+div#dialog_change_orders .title, div#dialog_change_orders .close 
+{
+    border: 1px solid #777;
+    border-radius: 5px;
 }
 
 div#dialog_change_orders label
@@ -295,17 +310,23 @@ div#dialog_change_orders label
 div#dialog_change_orders .close
 {
     float: right;
-    border: 1px solid #777;
-    border-radius: 5px;
-    background: #E0E0F0;
+    background: #D22;
     font: 700 11px tahoma;
     padding: 2px 4px;
     cursor: pointer;
+    color: #FFF;
+    width: 14px;
+    text-align: center;
+}
+
+div#dialog_change_orders .title, div#dialog_change_orders .close 
+{
+    line-height: 14px;
 }
 
 div#dialog_change_orders .close:hover
 {
-    background: #D6D6EA;
+    background: #F11;
 }
 
 div#dialog_change_orders .submitbutton
