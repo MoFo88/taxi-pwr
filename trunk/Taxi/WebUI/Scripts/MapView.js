@@ -1,12 +1,13 @@
 ﻿function dialog_change_orders_fill(div_dco, order) {
-    if (order==null) 
-    order={
-        id_order: '',
-        course_date: '',
-        startpoint_name: '',
-        client_name: '',
-        client_phone: '',
-    };
+    if (order==null) {
+        order={
+            id_order: '',
+            course_date: '',
+            startpoint_name: '',
+            client_name: '',
+            client_phone: '',
+        };
+    }
     div_dco.find('#tb_id_order').val(order.id_order);
     div_dco.find('#tb_order_course_date').val(order.course_date);
     div_dco.find('#tb_order_startpoint_name').val(order.startpoint_name);
@@ -51,7 +52,7 @@ $(document).ready(function () {
                 client_phone: div_dco.find('#tb_order_client_phone').val(),
             },
             function (data) {
-                alert("OK");
+                alert(data);
                 GetOrderList();
             })
             //.success(function () { alert("second success"); })
