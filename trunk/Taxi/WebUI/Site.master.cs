@@ -11,7 +11,7 @@ public partial class SiteMaster : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Request.Cookies["menuHidden"].Value == "1")
+        if (Request.Cookies["menuHidden"]!=null && Request.Cookies["menuHidden"].Value == "1")
         {
             div_header.Attributes["style"] = "display:none";
         }
