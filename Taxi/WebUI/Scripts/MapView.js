@@ -1,4 +1,24 @@
-﻿$(document).dblclick(function () {
+﻿function dialog_change_orders_fill(div_dco, order) {
+    if (order==null) 
+    order={
+        id_order: '',
+        course_date: '',
+        startpoint_name: '',
+        client_name: '',
+        client_phone: '',
+    };
+    div_dco.find('#tb_id_order').val(order.id_order);
+    div_dco.find('#tb_order_course_date').val(order.course_date);
+    div_dco.find('#tb_order_startpoint_name').val(order.startpoint_name);
+    div_dco.find('#tb_order_client_name').val(order.client_name);
+    div_dco.find('#tb_order_client_phone').val(order.client_phone);
+    if ($.cookie('dialog_change_orders_x')!=null) {
+        div_dco.get(0).style.left=$.cookie('dialog_change_orders_x')+'px';
+        div_dco.get(0).style.top=$.cookie('dialog_change_orders_y')+'px';
+    }
+}
+
+$(document).dblclick(function () {
     //MapShowMarkersDriver(tmpTaxi);
 });
 
@@ -9,9 +29,13 @@ $(document).ready(function () {
         GetOrderList();
     }, 5000);
     $('div.rightmenu .new button').button().click(function () {
-        div=$('div#dialog_change_orders');
-        div.removeClass('edit').addClass('add');
-        div.slideDown(300);
+        div_dco=$('div#dialog_change_orders');
+        if (div_dco.is(':visible')) div_dco.slideUp(150, function () {
+            dialog_change_orders_fill(div_dco, null);
+        });
+        else dialog_change_orders_fill(div_dco, null);
+        div_dco.removeClass('edit').addClass('add');
+        div_dco.slideDown(300);
         return false;
     });
     $('div#dialog_change_orders button').button().click(function () {
@@ -39,6 +63,13 @@ $(document).ready(function () {
     });
     $('div#dialog_change_orders .close').click(function() {
         $('div#dialog_change_orders').slideUp(300);
+    });
+    $('div#dialog_change_orders').draggable({
+        drag: function (e, ui) {
+            $.cookie('dialog_change_orders_x', ui.offset.left);
+            $.cookie('dialog_change_orders_y', ui.offset.top);
+        },
+        distance: 15
     });
 });
 
@@ -81,12 +112,10 @@ function FillOrderList(orders) {
             var id_order = $(this).parent().find('div.id_order').text();
             var order = visibleOrders[id_order].details;
             var div_dco=$('div#dialog_change_orders');
-            if (div_dco.is(':visible')) div_dco.slideUp(150);
-            div_dco.find('#tb_id_order').val(order.id_order);
-            div_dco.find('#tb_order_course_date').val(order.course_date);
-            div_dco.find('#tb_order_startpoint_name').val(order.startpoint_name);
-            div_dco.find('#tb_order_client_name').val(order.client_name);
-            div_dco.find('#tb_order_client_phone').val(order.client_phone);
+            if (div_dco.is(':visible')) div_dco.slideUp(150, function () {
+                dialog_change_orders_fill(div_dco, order);
+            });
+            else dialog_change_orders_fill(div_dco, order);
             div_dco.removeClass('add').addClass('edit');
             div_dco.slideDown(300);
             return false;
