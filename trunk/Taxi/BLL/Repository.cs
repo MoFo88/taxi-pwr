@@ -844,7 +844,8 @@ namespace BLL
 
         /*
          * Metody w C# z wielkiej litery piszemy, 
-         * nie wiem czy jak to poprawie to papiemu sie nic nie spirdoli wiec na razie zostawiam 
+         * nie wiem czy jak to poprawie to papiemu sie nic nie spirdoli wiec na razie zostawiam
+         * Mam nadzieje, ze papiemu sie to wszystko zjebie!
          */
 
         public static bool setTaxiPosition(Decimal lon, Decimal lat,int idTaxi)
@@ -877,7 +878,46 @@ namespace BLL
             return true;
         }
 
-        
+        /// <summary>
+        /// Funkcja dla ŁebSerwisu. Zwraca skrocona informacje dla taksowkarza o aktualnych kursach przypisanych do niego
+        /// </summary>
+        /// <returns></returns>
+        public static CourseData GetCourseData(int idDriver)
+        {
+            CourseData coursedata = new CourseData();
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from i
+                    in ctx.Courses where i.taxidriver_id == idDriver
+                    select i;
+            Course course = x.SingleOrDefault();
+            coursedata.LocationName = course.startpoint_name;
+            coursedata.ClientName = course.client_name;
+            coursedata.ClientPhone = course.client_phone;
+            coursedata.IdCourse = course.id;
+            return coursedata;
+        }
+
+        /// <summary>
+        /// Funkcja dla WS. Sprawdza czy dla danego taksowkarza przypisane zostaly kursy.
+        /// </summary>
+        /// <param name="idDriver"></param>
+        /// <returns></returns>
+        public static bool isCourseAvailable(int idDriver)
+        {
+            CourseData coursedata = new CourseData();
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from i
+                    in ctx.Courses
+                    where i.taxidriver_id == idDriver
+                    select i;
+            if (x.Count() > 0)
+            {
+                Course course = x.SingleOrDefault();
+                return true;
+            }
+            else return false;
+        }
+
         /* PRIVATE MEMBER */
 
         #region Losowy ciąg znaków o zadanej długości
