@@ -34,4 +34,28 @@ namespace BLL
         public CourseNotExistException() : base("Course don't exist") { }
         public CourseNotExistException(string p) : base(p) { } 
     }
+
+    public class TaxiNotExistException : ApplicationException
+    {
+        public TaxiNotExistException() : base("Taxi don't exist") { }
+        public TaxiNotExistException(string p) : base(p) { }
+    }
+
+    public class TaxiExistException : ApplicationException
+    {
+        public TaxiExistException() : base("Taxi with given data allready exist") { }
+        public TaxiExistException(string p) : base(p) {}
+    }
+
+    public class CarModelNotExistException : ApplicationException
+    {
+        public CarModelNotExistException() : base("Car model not exist") { }
+        public CarModelNotExistException(string p) : base(p) { }
+    }
+
+    public class CarTypeNotExistException : ApplicationException
+    {
+        public CarTypeNotExistException() : base("Car type not exist") { }
+        public CarTypeNotExistException(string p) : base(p) { }
+    }
 }

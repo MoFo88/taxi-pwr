@@ -15,7 +15,7 @@ namespace TestProject
         public void TestMethodGetAllTaxiDrivers()
         {
             List<TaxiDriver> l = Repository.GetAllTaxiDrivers();
-            
+
             Assert.IsNotNull( l.First() );
             Assert.IsTrue(l.First() is TaxiDriver);
             
@@ -43,20 +43,16 @@ namespace TestProject
         [TestMethod]
         public void TestMethodAddDispatcher()
         {
-            Repository.AddNewDispatcher("jan", "grzegrzolka", "kup", "email", "1", "ulica", "aads", "45-08", "stefaneczek", "gruba ryba");
+            Repository.AddNewDispatcher("oo", "looo", "kup", "email", "1", "ulica", "aads", "45-08", "stefaneczek", "gruba ryba");
+        }
+
+        [TestMethod]
+        public void TestMethodAddTaxiDriver()
+        {
+            Repository.AddNewTaxiDriver("rysiu", "taksówkarz", "city", "lala", "1", "ulica", "123123", null, null, "login", "pass");
         }
 
 
-        //[TestMethod]
-        //public void TestMethodAddDispatcher()
-        //{
-        //    Repository.AddNewDispatcher("jan", "grzegrzolka", "kup", "email", "1", "ulica", "aads", "45-08", "stefaneczek", "gruba ryba");
-        //}
 
-        //[TestMethod]
-        //public void TestMethodAddDispatcher()
-        //{
-        //    Repository.AddNewDispatcher("jan", "grzegrzolka", "kup", "email", "1", "ulica", "aads", "45-08", "stefaneczek", "gruba ryba");
-        //}
     }
 }
