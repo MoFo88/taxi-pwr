@@ -22,48 +22,86 @@ public class WebService : System.Web.Services.WebService {
         //InitializeComponent(); 
     }
 
-    [WebMethod]
-    public string HelloWorld()
-    {
-        return "Hello World";
-    }
-
-    [WebMethod]
-    public string Add(int val1, int val2)
-    {
-        return "The Sum of two number= " + (val1 + val2);
-    }
-
-    [WebMethod]
-    public List<Employee_type> GetAllEmployeeTypes() 
-    {
-        return Repository.GetAllEmployeeTypes();
-    }
-
-    [WebMethod]
-    public List<TaxiDriver> GetAllTaxiDrivers()
-    {
-        return Repository.GetAllTaxiDrivers();
-    }
-
-    [WebMethod]
-    public bool setTaxiCoord(double longitude, double latitude)
+    [WebMethod(EnableSession = true)]
+    public bool SetTaxiCoord(double longitude, double latitude)
     {
         //odczytanie z kontekstu sesyjnego użytkownika zalogowanego użytkownika
         decimal lon = (decimal)longitude;//latwiejsze rozwiazanie, bo w javie nie ma decimala
         decimal lat = (decimal)latitude;
-        return Repository.setTaxiPosition(lon,lat,1); // jak na razie 1
+        int idDriver;
+        if (Session["idDriver"] == null)
+            return false;
+        else
+            idDriver = (int)Session["idDriver"];
+        return Repository.setTaxiPosition(lon,lat,idDriver); // jak na razie 1
     }
 
-    [WebMethod]
-    public bool setTaxiStatus(int status)
+    [WebMethod(EnableSession = true)]
+    public bool SetTaxiStatus(int status)
     {
         //mozliwe rozdzielenie na kilka metod:
         // setTaxiStatusOnCourse
         // setTaxiStatusFree
         // setTaxiStatusBusy
         //itp itd - DO USTALENIA
-        return Repository.setTaxiState(status,1); //zmieniamy ryska ;)
+        int idDriver;
+        if (Session["idDriver"] == null)
+            return false;
+        else
+            idDriver = (int)Session["idDriver"];
+        return Repository.setTaxiState(status,idDriver); //zmieniamy ryska ;)
     }
 
+    [WebMethod(EnableSession = true)]
+    public bool LoginDriver(String login, String password)
+    {
+        try
+        {
+            Session["idDriver"]=Repository.UserAuth(login, password);
+        }
+        catch
+        {
+            return false;
+        }
+        return true;
+    }
+
+    [WebMethod(EnableSession = true)]
+    public bool LogoutDriver()
+    {
+        Session.RemoveAll();
+        return true;
+    }
+
+    [WebMethod(EnableSession = true)]
+    public bool CheckCourse() {
+        int idDriver;
+        if (Session["idDriver"] == null)
+            return false;
+        else
+            idDriver = (int)Session["idDriver"];
+        return Repository.isCourseAvailable(idDriver);
+    }
+
+    [WebMethod(EnableSession = true)]
+    public CourseData GetCourseData() {
+        int idDriver;
+        if (Session["idDriver"] == null)
+            return null;
+        else
+            idDriver = (int)Session["idDriver"];
+        return Repository.GetCourseData(idDriver);
+    }
+
+    [WebMethod(EnableSession = true)]
+    public bool DeclineCourse()
+    {
+        return true;
+    }
+
+    [WebMethod(EnableSession = true)]
+    public bool AcceptCourse()
+    {
+        return true;
+    }
 }
