@@ -1,0 +1,14 @@
+1) tworzenie pliku zawieraj¹caego tablicê (JavaScript) taksówkarzy
+  - wszystkich
+  - spe³niaj¹cych kryteria dla wybranego zg³oszenia (wg ID zg³oszenia), np. odpowiednia liczba miejsc
+  - przypisanych do danego zg³oszenia (niekoniecznie, ale mo¿e siê przydaæ)
+2) tworzenie pliku zawieraj¹cego tablicê (JavaScript) zg³oszeñ
+  - wszystkich
+  - bez przypisanego taksówkarza
+  - z przypisanym taksówkarzem (jeœli to jest jakoœ bardzo skomplikowane i znacznie ró¿ni siê od punktu poprzedniego to na razie nie, bo nie jest to chyba potrzebne, ale mo¿e siê przyda kiedyœ)
+2) wi¹zanie taksówkarzy ze zg³oszeniem
+  - powi¹¿
+  - usuñ powi¹zanie, np. jakby siê taksówkarz rozmyœli³ - mo¿e to byæ na przyk³ad na takiej zasadzie ¿e ja ajaxem wyœlê zapytanie np. CourseAssignDriver.aspx?employee_id=0&course_id=0
+3) dodawanie, usuwanie, modyfikacja, wyœwietlanie pracowników
+4) usuwanie zg³oszeñ - mo¿e to byæ na przyk³ad na takiej zasadzie ¿e ja ajaxem wyœlê zapytanie np. CoursesDelete.aspx?id=0
+
