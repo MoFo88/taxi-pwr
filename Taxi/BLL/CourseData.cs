@@ -12,6 +12,7 @@ namespace BLL
 
         public int IdCourse
         {
+		
             get { return idCourse; }
             set { idCourse = value; }
         }
