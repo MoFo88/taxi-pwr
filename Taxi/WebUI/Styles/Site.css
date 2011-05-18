@@ -9,6 +9,14 @@ h2 {margin:25px 0 15px 0}
 #loginform label {width:auto}
 #loginform .linkb_logout {float:right; color:#000; font:700 12px arial; background:#DDD; padding:2px 4px; margin:4px}
 
+/* TIMEPICKER */
+
+* .ui-timepicker-div .ui-widget-header{ margin-bottom: 8px; }
+* .ui-timepicker-div dl{ text-align: left; }
+* .ui-timepicker-div dl dt{ height: 25px; }
+* .ui-timepicker-div dl dd{ margin: -25px 0 10px 65px; }
+* .ui-timepicker-div td { font-size: 90%; }
+
 /* MAP
 ----------------------------------------------------------*/
 

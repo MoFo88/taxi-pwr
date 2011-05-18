@@ -1,10 +1,24 @@
-﻿function selectOrder(container, element) {
+﻿function getCurrentDateTime() {
+    var curtime = new Date();
+    var curhour = curtime.getHours();
+    var curmin = curtime.getMinutes();
+    var cursec = curtime.getSeconds();
+    var time = "";
+ 
+    date=curtime.getFullYear()+'-'+(curtime.getMonth()+1<10?'0':'')+(curtime.getMonth()+1)+'-'+curtime.getDate();
+    time = (curtime.getHours())+':'+
+            (curtime.getMinutes()<10?'0':'')+curtime.getMinutes();
+ 
+    return date+' '+time;
+}
+
+function selectOrder(container, element) {
     MapSelectOrder(element);
     container.find('li').removeClass('selected');
     element.addClass('selected');
     setTimeout(function () { //TODO wprowadzamy opóźnienie w pobieraniu taksówek, bo inaczej jeśli zamówienie znika w momencie kliknięcia, to nie pojawia się popup - to jest jeszcze do przetestowania
         GetOrderList();
-    }, 300);
+    }, 500);
 }
 
 function showPointByAddress(address) {
@@ -45,7 +59,10 @@ function dialog_change_orders_fill(div_dco, order) {
         };
     }
     div_dco.find('#tb_id_order').val(order.id_order);
-    div_dco.find('#tb_order_course_date').val(order.course_date);
+    if (order.course_date=='')
+        $('#tb_order_course_date').val(getCurrentDateTime());
+    else
+        div_dco.find('#tb_order_course_date').val(order.course_date);
     div_dco.find('#tb_order_startpoint_name').val(order.startpoint_name);
     div_dco.find('#tb_order_client_name').val(order.client_name);
     div_dco.find('#tb_order_client_phone').val(order.client_phone);
@@ -79,7 +96,13 @@ $(document).ready(function () {
         else dialog_change_orders_fill(div_dco, null);
         div_dco.removeClass('edit').addClass('add');
         div_dco.slideDown(300);
+        div_dco.find('#tb_order_startpoint_name').focus();
         return false;
+    });
+
+    // Pole daty dodawania zgłoszenia jako kalendarz
+    $('#tb_order_course_date').datetimepicker({
+        dateFormat: 'yy-mm-dd'
     });
 
     // Odczytywanie na bieżąco lokalizacji wpisywanego adresu
