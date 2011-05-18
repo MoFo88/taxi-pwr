@@ -51,6 +51,12 @@
         <asp:Panel ID="p_OrdersList" runat="server">
 
         <h2>Lista zgłoszeń</h2>
+            <p>
+                Rodzaj :
+                <asp:DropDownList ID="DropDownList_Status" runat="server" 
+                    onselectedindexchanged="DropDownList_Status_SelectedIndexChanged">
+                </asp:DropDownList>
+            </p>
         <p>
                 <asp:GridView ID="gv_Orders" runat="server" AutoGenerateColumns="False" 
                     CellPadding="4" DataSourceID="LinqDataSource1" ForeColor="#333333" 
