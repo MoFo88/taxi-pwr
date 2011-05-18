@@ -266,7 +266,7 @@ function MapSelectOrder(order_obj) {
 }
 
 function MapShowPoint(lon, lat, zoom) { // zoom => centerMap
-    // Usuwamy z mapy znaczniki wybranego zgłoszenia
+    // Usuwamy z mapy znaczniki wybranego wcześniej zgłoszenia
     // Usuwamy stare zaznaczenie
     selectedOrder = visibleOrders[visibleOrdersSelected];
     MapRemoveMarkerOrder(selectedOrder, visibleOrdersSelected);
@@ -276,8 +276,8 @@ function MapShowPoint(lon, lat, zoom) { // zoom => centerMap
     visibleOrdersSelected = null;
     visibleDriversSelected = null;
     // Trzeba przywrócić punkt który usunęliśmy przed chwilą
-    MapShowMarkersOrder(orders, true);
-    MapShowMarkersDriver(drivers, true);
+    MapShowMarkersOrder(orders, false);
+    MapShowMarkersDriver(drivers, false);
 
     // Usuń poprzedni znacznik
     if (visibleSelectedPoint != null) {
