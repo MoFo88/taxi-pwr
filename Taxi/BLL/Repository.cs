@@ -945,6 +945,15 @@ namespace BLL
             return x.ToList();
         }
 
+        public static List<Course> getCoursesByStatusId(int id)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from c in ctx.Courses
+                    where c.course_status_id == id
+                    select c;
+            return x.ToList();
+        }
+
         /* PRIVATE MEMBER */
 
         #region Losowy ciąg znaków o zadanej długości
