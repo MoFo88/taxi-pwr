@@ -161,12 +161,12 @@ $(document).ready(function () {
 });
 
 function GetOrderList() {
-    orders = $.getScript('GetOrderList.aspx', function () {
+    orders = $.getScript('Lists/GetOrderList.txt', function () {
         FillOrderList(orders);
         MapShowMarkersOrder(orders);
         MapShowMarkersOrder(orders);
     });
-    drivers = $.getScript('GetDriverList.aspx?id_order=' + visibleOrdersSelected, function () {
+    drivers = $.getScript('Lists/GetDriverList.txt?id_order=' + visibleOrdersSelected, function () {
         MapShowMarkersDriver(drivers);
     });
 }
