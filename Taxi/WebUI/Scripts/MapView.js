@@ -108,7 +108,6 @@ $(document).ready(function () {
     // Odczytywanie na bieżąco lokalizacji wpisywanego adresu
     order_startpoint_name_timeout=null;
     $('#tb_order_startpoint_name').keyup(function () {
-        MapShowPoint();
         if (order_startpoint_name_timeout!=null) {
             clearTimeout(order_startpoint_name_timeout);
             order_startpoint_name_timeout=null;
