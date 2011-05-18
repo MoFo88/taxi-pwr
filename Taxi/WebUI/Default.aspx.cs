@@ -20,7 +20,7 @@ public partial class _Default : System.Web.UI.Page
         GridView1.DataBind();
 
         WebService x = new WebService();
-        List<TaxiDriver> a = x.GetAllTaxiDrivers();
+        //List<TaxiDriver> a = x.GetAllTaxiDrivers(); // brak takiej metody
 
 
     }
