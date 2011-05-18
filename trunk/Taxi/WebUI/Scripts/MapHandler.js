@@ -235,6 +235,9 @@ function MapInitIcons() {
 }
 
 function MapSelectOrder(order_obj) {
+    // Odznaczamy punkt (dodawanie/zmienianie zgłoszenia)
+    MapShowPoint();
+
     // Pobieramy nowe ID taksówkarza i zamówienia
     id_order = order_obj.find('div.id_order').text();
     id_driver = order_obj.find('div.id_driver').text();
@@ -262,7 +265,20 @@ function MapSelectOrder(order_obj) {
     MapShowMarkersDriver(drivers, true);
 }
 
-function MapShowPoint(lon, lat, zoom) { // zoom==centerMap
+function MapShowPoint(lon, lat, zoom) { // zoom => centerMap
+    // Usuwamy z mapy znaczniki wybranego zgłoszenia
+    // Usuwamy stare zaznaczenie
+    selectedOrder = visibleOrders[visibleOrdersSelected];
+    MapRemoveMarkerOrder(selectedOrder, visibleOrdersSelected);
+    selectedDriver = visibleDrivers[visibleDriversSelected];
+    MapRemoveMarkerDriver(selectedDriver, visibleDriversSelected);
+    // Zapamiętujemy nowe miejsce (czyli null, bo chcemy je usunąć)
+    visibleOrdersSelected = null;
+    visibleDriversSelected = null;
+    // Trzeba przywrócić punkt który usunęliśmy przed chwilą
+    MapShowMarkersOrder(orders, true);
+    MapShowMarkersDriver(drivers, true);
+
     // Usuń poprzedni znacznik
     if (visibleSelectedPoint != null) {
         //mapView.removePopup(visibleSelectedPoint.popup); // ten znacznik nie ma popupa
@@ -273,18 +289,20 @@ function MapShowPoint(lon, lat, zoom) { // zoom==centerMap
     }
 
     // Dodaj nowy znacznik
-    lonLat = MapCreateLonLat(lon, lat);
-    var id = 0;
-    icon = markerIconOrderTargetSelected.clone();
-    var marker = new OpenLayers.Marker(lonLat, icon.clone());
-    marker.setOpacity(1);
-    mapMarkers.addMarker(marker);
-    if (zoom > 0) mapView.setCenter(marker.lonlat); // lonLat, zoom
-    visibleSelectedPoint = {
-        marker: marker,
-        details: {
-            lon: lon,
-            lat: lat
-        }
+    if (lon!=null && lat!=null) {
+        lonLat = MapCreateLonLat(lon, lat);
+        var id = 0;
+        icon = markerIconOrderTargetSelected.clone();
+        var marker = new OpenLayers.Marker(lonLat, icon.clone());
+        marker.setOpacity(1);
+        mapMarkers.addMarker(marker);
+        if (zoom > 0) mapView.setCenter(marker.lonlat); // lonLat, zoom
+        visibleSelectedPoint = {
+            marker: marker,
+            details: {
+                lon: lon,
+                lat: lat
+            }
+        };
     };
 }
