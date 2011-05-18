@@ -918,6 +918,33 @@ namespace BLL
             else return false;
         }
 
+        /* Marcina */
+
+        public static List<Course> getAllUnsignedCourses()
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from c in ctx.Courses
+                    where c.course_status_id == 1
+                    select c;
+            return x.ToList();
+        }
+        
+        public static List<Course> getAllCourses()
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from c in ctx.Courses
+                    select c;
+            return x.ToList();
+        }
+
+        public static List<Course_status> getCoursesStatus()
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from c in ctx.Course_status
+                    select c;
+            return x.ToList();
+        }
+
         /* PRIVATE MEMBER */
 
         #region Losowy ciąg znaków o zadanej długości

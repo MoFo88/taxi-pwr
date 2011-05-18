@@ -14,7 +14,8 @@ public partial class Orders : System.Web.UI.Page
     }
     protected void b_Add_Click(object sender, EventArgs e)
     {
-        Repository.addNewCourse(2, 2, tb_Client_phone.Text, Convert.ToDateTime(tb_Course_date.Text), 0, tb_Client_name.Text, tb_Startpoint_name.Text, 56, 17, 57, 18);
+        Repository.addNewCourse(33, 38, tb_Client_phone.Text,
+            Convert.ToDateTime(tb_Course_date.Text), 1, tb_Client_name.Text, tb_Startpoint_name.Text, 56, 17, 57, 18);
         Response.Redirect("Orders.aspx");
     }
 }
