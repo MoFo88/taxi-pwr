@@ -30,12 +30,13 @@ public class CreatingDriverList
         foreach (TaxiDriver driver in drivers)
         {
             sw.WriteLine("Driver = {");
-            sw.WriteLine("lon: " + driver.position_lon + ",");
-            sw.WriteLine("lat: " + driver.position_lat + ",");
+            sw.WriteLine("lon: " + driver.position_lon.ToString().Replace(',', '.') + ",");
+            sw.WriteLine("lat: " + driver.position_lat.ToString().Replace(',', '.') + ",");
             sw.WriteLine("id_driver: " + driver.id + ",");
             sw.WriteLine("status: " + driver.driver_status_id + ",");
-            sw.WriteLine("registration_number: ASD 1234" + ",");
-            sw.WriteLine("license_number: " + driver.licence_number + "};");
+            sw.WriteLine("registration_number: 'ASD 1234'" + ",");
+            sw.WriteLine("license_number: '" + driver.licence_number + "'};");
+            sw.WriteLine("drivers[drivers.length] = driver;");
         }
         sw.Close();
     }
