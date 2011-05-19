@@ -6,7 +6,7 @@
     var time = "";
  
     date=curtime.getFullYear()+'-'+(curtime.getMonth()+1<10?'0':'')+(curtime.getMonth()+1)+'-'+curtime.getDate();
-    time = (curtime.getHours())+':'+
+    time = (curtime.getHours()<10?'0':'')+(curtime.getHours())+':'+
             (curtime.getMinutes()<10?'0':'')+curtime.getMinutes();
  
     return date+' '+time;
@@ -36,6 +36,8 @@ function showPointByAddress(address) {
             pointLon=startpoint_data.Placemark[0].Point.coordinates[0];
             pointLat=startpoint_data.Placemark[0].Point.coordinates[1];
             MapShowPoint(pointLon, pointLat, 15); // lon, lat, zoom==centerMap
+            $('#tb_order_lon').val(pointLon);
+            $('#tb_order_lat').val(pointLat);
         },
     });
 }
@@ -131,6 +133,8 @@ $(document).ready(function () {
                 startpoint_name: div_dco.find('#tb_order_startpoint_name').val(),
                 client_name: div_dco.find('#tb_order_client_name').val(),
                 client_phone: div_dco.find('#tb_order_client_phone').val(),
+                lon: div_dco.find('#tb_order_lon').val(),
+                lat: div_dco.find('#tb_order_lat').val(),
             },
             function (data) {
                 alert(data);
