@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.master" CodeFile="Admin_employees.aspx.cs" Inherits="admin_drivers" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.master" CodeFile="AddNewEmployee.aspx.cs" Inherits="addNewEmployee" %>
 
 
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
@@ -40,7 +40,7 @@
 
         <div>
     
-    <h1 id="h1_Title">DODAWANIE/EDYCJA pracownika</h1>
+    <h1 id="h1_Title">DODAWANIE pracownika</h1>
 
         <asp:Panel ID="p_AddForm" runat="server">
 
@@ -151,61 +151,10 @@
             <asp:Label ID="lb_Submit" runat="server" AssociatedControlID="b_Submit" 
                 Text="Akcje"></asp:Label>
             <asp:Button ID="b_Submit" runat="server" 
-                onclick="b_Add_Click" Text="Dodaj/Zmień" />
+                onclick="b_Add_Click" Text="Dodaj" Width="127px" />
 
         </asp:Panel>
         <br />
-
-        <asp:Panel ID="p_EmployeesList" runat="server">
-            <h2>
-                Lista pracowników</h2>
-            <asp:GridView ID="gv_Employees" runat="server" AutoGenerateColumns="False" 
-                CellPadding="4" DataSourceID="ds_Employees" ForeColor="#333333" 
-                GridLines="None" AllowSorting="True" 
-                onselectedindexchanged="gv_Employees_SelectedIndexChanged">
-                <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
-                <Columns>
-                    <asp:BoundField DataField="position_name" HeaderText="position_name" 
-                        SortExpression="position_name" />
-                    <asp:BoundField DataField="licence_number" HeaderText="licence_number" 
-                        SortExpression="licence_number" />
-                    <asp:BoundField DataField="name" HeaderText="name" SortExpression="name" />
-                    <asp:BoundField DataField="surname" HeaderText="surname" 
-                        SortExpression="surname" />
-                    <asp:BoundField DataField="employee_type_id" HeaderText="employee_type_id" 
-                        SortExpression="employee_type_id" />
-                    <asp:BoundField DataField="telephone" HeaderText="telephone" 
-                        SortExpression="telephone" />
-                    <asp:ButtonField CommandName="Delete" Text="Usuń" />
-                    <asp:HyperLinkField DataNavigateUrlFields="id" 
-                        DataNavigateUrlFormatString="Admin_employees.aspx?edit={0}" Text="Edytuj" />
-                </Columns>
-                <EditRowStyle BackColor="#999999" />
-                <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-                <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-                <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
-                <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
-                <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
-                <SortedAscendingCellStyle BackColor="#E9E7E2" />
-                <SortedAscendingHeaderStyle BackColor="#506C8C" />
-                <SortedDescendingCellStyle BackColor="#FFFDF8" />
-                <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
-
-    <SortedAscendingCellStyle BackColor="#E9E7E2"></SortedAscendingCellStyle>
-
-    <SortedAscendingHeaderStyle BackColor="#506C8C"></SortedAscendingHeaderStyle>
-
-    <SortedDescendingCellStyle BackColor="#FFFDF8"></SortedDescendingCellStyle>
-
-    <SortedDescendingHeaderStyle BackColor="#6F8DAE"></SortedDescendingHeaderStyle>
-            </asp:GridView>
-    
-
-            <asp:ObjectDataSource ID="ds_Employees" runat="server" 
-                SelectMethod="GetAllTaxiDrivers" TypeName="BLL.Repository">
-            </asp:ObjectDataSource>
-    
-        </asp:Panel>
 
         </div>
 

@@ -29,6 +29,8 @@ public partial class Orders : System.Web.UI.Page
         int? statusId = int.Parse(this.DropDownList_Status.SelectedValue);
         if (statusId != null)
         {
+            this.gv_Orders.DataSource = null;
+            this.gv_Orders.DataBind();
             this.gv_Orders.DataSource = Repository.getCoursesByStatusId((int)statusId);
             this.gv_Orders.DataBind();
         }

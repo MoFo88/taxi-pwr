@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
     <siteMapNode url="Default.aspx" title="Start" description="">
-      <siteMapNode url="Admin_employees.aspx" title="Pracownicy" description="" />
+      <siteMapNode url="EmployeesList.aspx" title="Pracownicy" description="">
+        <siteMapNode url="AddNewEmployee.aspx" title="Dodaj"/>
+      </siteMapNode>
       <siteMapNode url="Orders.aspx" title="Zgłoszenia" description="" />
       <siteMapNode url="MapView.aspx" title="Widok mapy" description="" />
       <siteMapNode url="Logout.aspx" title="Wyloguj" description="" />
