@@ -954,6 +954,24 @@ namespace BLL
             return x.ToList();
         }
 
+        public static List<Car_type> getAllCarTypes()
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from c in ctx.Car_types
+                    select c;
+            return x.ToList();
+        }
+
+        public static Employee getEmployeeById(int id)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from c in ctx.Employees
+                    where c.id == id
+                    select c;
+            return x.SingleOrDefault();
+        }
+        
+
         /* PRIVATE MEMBER */
 
         #region Losowy ciąg znaków o zadanej długości
