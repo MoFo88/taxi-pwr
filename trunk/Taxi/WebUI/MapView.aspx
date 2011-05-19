@@ -28,6 +28,8 @@
     <div class="close">X</div>
     <div class="title">Zgłoszenia</div>
     <input type="hidden" id="tb_id_order" />
+    <input type="hidden" id="tb_order_lon" />
+    <input type="hidden" id="tb_order_lat" />
     <label for="tb_order_course_date">Data: </label><input type="text" id="tb_order_course_date" />
     <label for="tb_order_startpoint_name">Adres: </label><input type="text" id="tb_order_startpoint_name" />
     <label for="tb_order_client_name">Imię i nazwisko: </label><input type="text" id="tb_order_client_name" />
