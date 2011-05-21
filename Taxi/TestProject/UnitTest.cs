@@ -43,13 +43,14 @@ namespace TestProject
         [TestMethod]
         public void TestMethodAddDispatcher()
         {
-            Repository.AddNewDispatcher("oo", "looo", "kup", "email", "1", "ulica", "aads", "45-08", "stefaneczek", "gruba ryba");
+            Repository.AddNewDispatcher("oo", "looo", "kup", "email", "1", "ulica", "aads", "45-08", "stefaneczek", "gruba ryba", "123456789");
         }
 
         [TestMethod]
         public void TestMethodAddTaxiDriver()
         {
-            Repository.AddNewTaxiDriver("rysiu", "taksówkarz", "city", "lala", "1", "ulica", "123123", null, null, "login", "pass");
+            Repository.AddNewTaxiDriver("rysiu", "taksówkarz", "city", "lala", "1", "ulica", "123123", null, null, "login", "pass","123456789",
+                "Audi", "A4","2005","5","LZ 12345", "PDT23412", 1);
         }
 
 
