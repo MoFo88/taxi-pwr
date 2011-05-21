@@ -42,23 +42,26 @@ public partial class addNewEmployee : System.Web.UI.Page
         if (employee_type == "admin")
         {
             Repository.AddNewAdmin(tb_Name.Text, tb_Surname.Text, tb_City.Text, tb_E_mail.Text, tb_House_nr.Text,
-                                   tb_Street.Text, tb_Pesel.Text, tb_Postal_code.Text, tb_Login.Text, tb_Password.Text);
-            Response.Redirect("Admin_employees.aspx");
+                                   tb_Street.Text, tb_Pesel.Text, tb_Postal_code.Text, tb_Login.Text, tb_Password.Text, tb_Telephone.Text);
+            Response.Redirect("EmployeesList.aspx");
             clearControls();
             
         }
-        else if (employee_type == "dispatcher")
+        else if (employee_type == "dispositor")
         {
             Repository.AddNewDispatcher(tb_Name.Text, tb_Surname.Text, tb_City.Text, tb_E_mail.Text, tb_House_nr.Text,
-                                        tb_Street.Text, tb_Pesel.Text, tb_Postal_code.Text, tb_Login.Text, tb_Password.Text);
-            Response.Redirect("Admin_employees.aspx");
+                                        tb_Street.Text, tb_Pesel.Text, tb_Postal_code.Text, tb_Login.Text, tb_Password.Text, tb_Telephone.Text);
+            Response.Redirect("EmployeesList.aspx");
             clearControls();
         }
         else if (employee_type == "driver")
         {
+            int carType = int.Parse(ddl_Car_model.SelectedValue);
             Repository.AddNewTaxiDriver(tb_Name.Text, tb_Surname.Text, tb_City.Text, tb_E_mail.Text, tb_House_nr.Text,
-                                        tb_Street.Text, tb_Pesel.Text, tb_Licence_number.Text, tb_Postal_code.Text, tb_Login.Text, tb_Password.Text);
-            Response.Redirect("Admin_employees.aspx");
+                                        tb_Street.Text, tb_Pesel.Text, tb_Licence_number.Text, tb_Postal_code.Text, tb_Login.Text, tb_Password.Text, tb_Telephone.Text,
+                                        tb_CarBrand.Text, tb_CarModel.Text, tb_ProductionYear.Text, tb_SeatPlaces.Text,
+                                        tb_Registration_number.Text, tb_Taxi_number.Text, carType);
+            Response.Redirect("EmployeesList.aspx");
             clearControls();
         }
     }

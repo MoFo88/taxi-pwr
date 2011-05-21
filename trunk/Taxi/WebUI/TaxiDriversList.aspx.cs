@@ -4,14 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using BLL;
 using DAL;
+using BLL;
 
-public partial class employeeList : System.Web.UI.Page
+public partial class TaxiDriversList : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        PageLoading.CheckAuthorization();
+
     }
     protected void gv_Employees_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -22,10 +22,6 @@ public partial class employeeList : System.Web.UI.Page
         if (emp is TaxiDriver)
         {
             Response.Redirect("EditTaxiDriver.aspx");
-        }
-        else
-        {
-            Response.Redirect("EditAdminOrDispatcher.aspx");
         }
     }
 }

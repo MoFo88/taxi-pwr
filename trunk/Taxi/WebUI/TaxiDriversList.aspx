@@ -1,9 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.master" CodeFile="EmployeesList.aspx.cs" Inherits="employeeList" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="TaxiDriversList.aspx.cs" Inherits="TaxiDriversList" %>
 
-
-<asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
 </asp:Content>
-<asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
 
 <div class="main">
     <div class="maintop"></div>
@@ -13,7 +12,7 @@
 
         <div>
     
-    <h1 id="h1_Title">Lista pracowików</h1>
+    <h1 id="h1_Title">Lista Taksówkarzy</h1>
 
         <br />
 
@@ -21,8 +20,7 @@
             <asp:GridView ID="gv_Employees" runat="server" AutoGenerateColumns="False" 
                 CellPadding="4" DataSourceID="ds_Employees" ForeColor="#333333" 
                 GridLines="None" AllowSorting="True" DataKeyNames="id"
-                onselectedindexchanged="gv_Employees_SelectedIndexChanged" 
-                >
+                onselectedindexchanged="gv_Employees_SelectedIndexChanged">
                 <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                 <Columns>
                     <asp:BoundField DataField="name" HeaderText="name" SortExpression="Imie" />
@@ -69,7 +67,7 @@
     
 
             <asp:ObjectDataSource ID="ds_Employees" runat="server" 
-                SelectMethod="GetAllEmployees" TypeName="BLL.Repository">
+                SelectMethod="GetAllTaxiDrivers" TypeName="BLL.Repository">
             </asp:ObjectDataSource>
     
         </asp:Panel>
@@ -83,3 +81,4 @@
 
 
 </asp:Content>
+

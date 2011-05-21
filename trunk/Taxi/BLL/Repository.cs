@@ -129,7 +129,8 @@ namespace BLL
             String pesel, 
             String postalCode, 
             String login, 
-            String password)
+            String password,
+            String telephone)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
             Employee e = new Employee();
@@ -143,6 +144,7 @@ namespace BLL
             e.pesel = pesel;
             e.postal_code = postalCode;
             e.street = street;
+            e.telephone = telephone;
 
             Employee check = ctx.Employees.SingleOrDefault(u => u.login == e.login);
 
@@ -278,17 +280,23 @@ namespace BLL
         /// <returns></returns>
         /// <exception cref="UserExistException"></exception>
         /// JG
-        public static void AddNewTaxiDriver(String name, String surname, String city, String email, String houseNr, String street, String pesel, String licenceNr, String postalCode, String login, String password)
+        public static void AddNewTaxiDriver(String name, String surname, String city, String email, 
+            String houseNr, String street, String pesel, String licenceNr, String postalCode, String login, String password, String telephone,
+            String carBrand, String carModel, String productionYear, String seatPlaces, String registrationNumber, String taxiNumber, int carType)
         {
             
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
 
-            Employee e = Repository.AddNewUser( name, surname, city, email, houseNr, street,  pesel,  postalCode, login, password);
+            int carModelId = Repository.addNewCarModel(carBrand, carModel, productionYear, seatPlaces);
+
+            int taxiId = AddNewTaxi(taxiNumber, registrationNumber, carModelId, carType);
+
+            Employee e = Repository.AddNewUser( name, surname, city, email, houseNr, street,  pesel,  postalCode, login, password, telephone);
 
             TaxiDriver td = new TaxiDriver(e);
 
             td.licence_number = licenceNr;
-
+            td.taxi_id = taxiId;
             ctx.Employees.InsertOnSubmit(td);
             ctx.SubmitChanges();
 
@@ -304,7 +312,7 @@ namespace BLL
         /// JG
         public static void AddNewTaxiDriver(String name, String surname, String login, String password)
         {
-            AddNewTaxiDriver(name, surname, null, null, null, null, null, null, null, login, password);
+            //AddNewTaxiDriver(name, surname, null, null, null, null, null, null, null, login, password);
         }
 
         /// <summary>Zmiana danych taksówkarza
@@ -321,14 +329,25 @@ namespace BLL
         /// <exception cref="UserNotExistException"></exception>
         /// <exception cref="UserExistException"></exception>
         /// JG
-        public static void EditTaxiDriverData(int taxiDriveId, String login, String name, String surname, String city, String street, String email, String houseNr, String pesel, String licenceNr, String postalCode, String phone)
+        public static void EditTaxiDriver(int idDriver, String name, String surname, String city, String email, 
+            String houseNr, String street, String pesel, String licenceNr, String postalCode, String telephone, String login,
+            String carBrand, String carModel, String productionYear, String seatPlaces, String registrationNumber, String taxiNumber, int carType)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
-            TaxiDriver taxiDriver = ctx.Employees.OfType<TaxiDriver>().SingleOrDefault(u => u.id == taxiDriveId);
+            TaxiDriver taxiDriver = ctx.Employees.OfType<TaxiDriver>().SingleOrDefault(u => u.id == idDriver);
             if (taxiDriver == null) { throw new UserNotExistException(); }
-            Repository.EditUserData(taxiDriveId, login, name, surname, city, street, houseNr, postalCode, email, pesel, phone); 
+            Repository.EditUserData(idDriver, login, name, surname, city, street, houseNr, postalCode, email, pesel, telephone); 
            
             taxiDriver.licence_number = licenceNr;
+            taxiDriver.Taxi.registration_number = registrationNumber;
+            taxiDriver.Taxi.taxi_number = taxiNumber;
+
+            taxiDriver.Taxi.Car_model.producer = carBrand;
+            taxiDriver.Taxi.Car_model.production_year = int.Parse(productionYear);
+            taxiDriver.Taxi.Car_model.seats = int.Parse(seatPlaces);
+            taxiDriver.Taxi.Car_model.model = carModel;
+
+            taxiDriver.Taxi.id_car_type = carType;
 
             ctx.SubmitChanges();
         }
@@ -424,10 +443,10 @@ namespace BLL
         /// <param name="password"></param>
         /// <exception cref="UserExistException"></exception>
         /// JG
-        public static void AddNewAdmin(String name, String surname, String city, String email, String houseNr, String street, String pesel,  String postalCode, String login, String password)
+        public static void AddNewAdmin(String name, String surname, String city, String email, String houseNr, String street, String pesel,  String postalCode, String login, String password, String telephone)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
-            Employee e = Repository.AddNewUser(name, surname, city, email, houseNr, street, pesel, postalCode, login, password);
+            Employee e = Repository.AddNewUser(name, surname, city, email, houseNr, street, pesel, postalCode, login, password, telephone);
             Admin a = new Admin(e);
 
             ctx.Employees.InsertOnSubmit(a);
@@ -479,10 +498,10 @@ namespace BLL
         /// <param name="password"></param>
         /// <exception cref="UserExistException"></exception>
         /// JG
-        public static void AddNewDispatcher(String name, String surname, String city, String email, String houseNr, String street, String pesel, String postalCode, String login, String password)
+        public static void AddNewDispatcher(String name, String surname, String city, String email, String houseNr, String street, String pesel, String postalCode, String login, String password, String telephone)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
-            Employee e = Repository.AddNewUser(name, surname, city, email, houseNr, street, pesel, postalCode, login, password);
+            Employee e = Repository.AddNewUser(name, surname, city, email, houseNr, street, pesel, postalCode, login, password, telephone);
             Dispatcher d = new Dispatcher(e);
 
             ctx.Employees.InsertOnSubmit(d);
@@ -696,7 +715,7 @@ namespace BLL
         /// <exception cref="CarTypeNotExistException"></exception>
         /// JG
         /// todo: test
-        public static void AddNewTaxi(String taxiNumber, String registrationNumber, int carModelId, int carTypeId)
+        public static int AddNewTaxi(String taxiNumber, String registrationNumber, int carModelId, int carTypeId)
         {
 
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -722,6 +741,7 @@ namespace BLL
 
             ctx.Taxis.InsertOnSubmit( taxi );
             ctx.SubmitChanges();
+            return taxi.id;
         }
 
         /// <summary> Edytuj dane taksówki
@@ -970,7 +990,41 @@ namespace BLL
                     select c;
             return x.SingleOrDefault();
         }
-        
+
+        public static int addNewCarModel(String brand, String model, String productionYear, String seatPlaces)
+        {
+            Car_model car_model = new Car_model();
+            car_model.producer = brand;
+            car_model.model = model;
+            car_model.production_year = int.Parse(productionYear);
+            car_model.seats = int.Parse(seatPlaces);
+
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            ctx.Car_models.InsertOnSubmit(car_model);
+            ctx.SubmitChanges();
+
+            return car_model.id;
+        }
+
+        public static List<Employee> getAllAdmins()
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from c in ctx.Employees
+                    where c.employee_type_id == 3
+                    select c;
+
+            return x.ToList();
+        }
+
+        public static List<Employee> getAllDispatchers()
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from c in ctx.Employees
+                    where c.employee_type_id == 2
+                    select c;
+
+            return x.ToList();
+        }
 
         /* PRIVATE MEMBER */
 
