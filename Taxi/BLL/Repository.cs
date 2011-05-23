@@ -918,6 +918,21 @@ namespace BLL
         }
 
         /// <summary>
+        /// Metoda usuwajaca przypisanie kursu do taksowkarza (WebService)
+        /// </summary>
+        /// <param name="idDriver"></param>
+        /// <returns></returns>
+        public static bool DeclineCourse(int idDriver)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from i in ctx.Employees.OfType<TaxiDriver>() where i.id == idDriver select i;
+            TaxiDriver td = x.SingleOrDefault();
+            td.Courses = null;
+            td.Courses1 = null;
+            return true;
+        }
+
+        /// <summary>
         /// Funkcja dla WS. Sprawdza czy dla danego taksowkarza przypisane zostaly kursy.
         /// </summary>
         /// <param name="idDriver"></param>
