@@ -39,11 +39,6 @@ public class WebService : System.Web.Services.WebService {
     [WebMethod(EnableSession = true)]
     public bool SetTaxiStatus(int status)
     {
-        //mozliwe rozdzielenie na kilka metod:
-        // setTaxiStatusOnCourse
-        // setTaxiStatusFree
-        // setTaxiStatusBusy
-        //itp itd - DO USTALENIA
         int idDriver;
         if (Session["idDriver"] == null)
             return false;
@@ -96,12 +91,12 @@ public class WebService : System.Web.Services.WebService {
     [WebMethod(EnableSession = true)]
     public bool DeclineCourse()
     {
-        return true;
+        int idDriver;
+        if (Session["idDriver"] == null)
+            return false;
+        else
+            idDriver = (int)Session["idDriver"];
+        return Repository.DeclineCourse(idDriver);
     }
 
-    [WebMethod(EnableSession = true)]
-    public bool AcceptCourse()
-    {
-        return true;
-    }
 }
