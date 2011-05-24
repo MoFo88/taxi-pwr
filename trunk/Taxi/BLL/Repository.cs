@@ -368,6 +368,42 @@ namespace BLL
 
             return x.ToList();
         }
+
+        /// <summary>
+        /// Pobierz 5 najblizszych taksowek o podanym statusie
+        /// </summary>
+        /// <param name="statusId"></param>
+        /// <returns></returns>
+        public static List<TaxiDriver> GetNearestTaxi(decimal lon, decimal lat, int status)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x =
+                (from td in ctx.Employees.OfType<TaxiDriver>()
+                let dist = Math.Sqrt((Double)((td.position_lon-lon)*(td.position_lon-lon))+(Double)((td.position_lat-lat)*(td.position_lat-lat)))
+                where td.driver_status_id==status
+                orderby dist
+                select td).Take(5);
+            return x.ToList();
+        }
+
+        /// <summary>
+        /// Pobierz 5 najblizszych taksowek o podanym statusie i okreslonej minimalnej liczbie miejsc
+        /// </summary>
+        /// <param name="statusId"></param>
+        /// <returns></returns>
+        public static List<TaxiDriver> GetNearestTaxiBySeats(decimal lon, decimal lat, int status, int seats)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x =
+                (from td in ctx.Employees.OfType<TaxiDriver>()
+                 let dist = Math.Sqrt((Double)((td.position_lon - lon) * (td.position_lon - lon)) + (Double)((td.position_lat - lat) * (td.position_lat - lat)))
+                 where td.driver_status_id == status && td.Taxi.Car_model.seats>=seats
+                 orderby dist 
+                 select td).Take(5);
+            
+            return x.ToList();
+        }
+
         
         /// <summary>Pobierz listę taksówkarzy o podanym statusie
         /// </summary>
