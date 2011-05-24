@@ -11,7 +11,10 @@ public partial class addNewEmployee : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         PageLoading.CheckAuthorization();
-        this.prepareDropList();
+        if (!IsPostBack)
+        {
+            this.prepareDropList();
+        }
     }
 
     private void prepareDropList()

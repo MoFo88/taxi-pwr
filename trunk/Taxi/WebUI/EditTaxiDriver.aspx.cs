@@ -13,9 +13,12 @@ public partial class EditTaxiDriver : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        prepareDropList();
-        idDriver = int.Parse(Session["idEmployeeToEdit"].ToString());            
-        loadDriverData();
+        idDriver = int.Parse(Session["idEmployeeToEdit"].ToString());
+        if (!IsPostBack)
+        {
+            prepareDropList();
+            loadDriverData();
+        }
     }
 
     private void loadDriverData()
