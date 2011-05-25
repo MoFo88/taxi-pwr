@@ -14,16 +14,16 @@ public partial class _Default : System.Web.UI.Page
     {
         
     }
+    /*
     protected void Button1_Click(object sender, EventArgs e)
     {
         GridView1.DataSource = Repository.GetAllEmployees();
         GridView1.DataBind();
 
         WebService x = new WebService();
-        //List<TaxiDriver> a = x.GetAllTaxiDrivers(); // brak takiej metody
-
-
+        //List<TaxiDriver> a = x.GetAllTaxiDrivers(); // brak takiej 
     }
+     */
 
     protected void LoginControl_Authenticate(object sender, AuthenticateEventArgs e)
     {

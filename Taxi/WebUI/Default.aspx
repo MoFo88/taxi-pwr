@@ -11,19 +11,8 @@
     <div class="content2">
         <br class="clear noheight" />
 
-        <asp:Button ID="Button1" runat="server" Text="Get All Employee Types:" 
-        onclick="Button1_Click" /><br />
-    
         <h2>
-            Musisz się zalogować, aby uzyskać dostęp do tej strony.
-        </h2>
-
-        <h2 style="color: #F00">
-            Kliknąć przycisk "Log In", zamiast entera!
-        </h2>
-
-        <div id="loginform">
-                <asp:LoginView ID="lv_Login" runat="server">
+            &nbsp;<asp:LoginView ID="lv_Login" runat="server">
                     <AnonymousTemplate>
                         <asp:Login ID="Login1" runat="server" 
                             onauthenticate="LoginControl_Authenticate">
@@ -35,14 +24,14 @@
                                             <table cellpadding="0">
                                                 <tr>
                                                     <td align="center" colspan="2">
-                                                        Log In</td>
+                                                        Musisz się zalogować, aby uzyskać dostęp do tej strony.</td>
                                                 </tr>
                                                 <tr>
                                                     <td align="right">
-                                                        <asp:Label ID="UserNameLabel" runat="server" AssociatedControlID="UserName">User Name:</asp:Label>
+                                                        <asp:Label ID="UserNameLabel" runat="server" AssociatedControlID="UserName">Login:</asp:Label>
                                                     </td>
                                                     <td>
-                                                        <asp:TextBox ID="UserName" runat="server"></asp:TextBox>
+                                                        <asp:TextBox ID="UserName" runat="server" Width="250px"></asp:TextBox>
                                                         <asp:RequiredFieldValidator ID="UserNameRequired" runat="server" 
                                                             ControlToValidate="UserName" ErrorMessage="User Name is required." 
                                                             ToolTip="User Name is required." ValidationGroup="ctl00$ctl16$Login1">*</asp:RequiredFieldValidator>
@@ -50,10 +39,10 @@
                                                 </tr>
                                                 <tr>
                                                     <td align="right">
-                                                        <asp:Label ID="PasswordLabel" runat="server" AssociatedControlID="Password">Password:</asp:Label>
+                                                        <asp:Label ID="PasswordLabel" runat="server" AssociatedControlID="Password">Hasło:</asp:Label>
                                                     </td>
                                                     <td>
-                                                        <asp:TextBox ID="Password" runat="server" TextMode="Password"></asp:TextBox>
+                                                        <asp:TextBox ID="Password" runat="server" TextMode="Password" Width="250px"></asp:TextBox>
                                                         <asp:RequiredFieldValidator ID="PasswordRequired" runat="server" 
                                                             ControlToValidate="Password" ErrorMessage="Password is required." 
                                                             ToolTip="Password is required." ValidationGroup="ctl00$ctl16$Login1">*</asp:RequiredFieldValidator>
@@ -70,8 +59,8 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td align="right" colspan="2">
-                                                        <asp:Button ID="LoginButton" runat="server" CommandName="Login" Text="Log In" 
+                                                    <td align="center" colspan="2">
+                                                        <asp:Button ID="LoginButton" runat="server" CommandName="Login" Text="Zaloguj" 
                                                             ValidationGroup="ctl00$ctl16$Login1" />
                                                     </td>
                                                 </tr>
@@ -93,15 +82,10 @@
                             CssClass="linkb_logout">wyloguj się</asp:LinkButton>
                     </LoggedInTemplate>
                 </asp:LoginView>
-            </div>
-
-        <h2>
-            Employee Types:
         </h2>
-        <asp:GridView ID="GridView1" runat="server">
-        </asp:GridView>
-        <asp:LinqDataSource ID="LinqDataSource1" runat="server" EntityTypeName="">
-        </asp:LinqDataSource>
+
+        <div id="loginform">
+            </div>
 
     </div>
     </div>
