@@ -100,6 +100,8 @@ div.map_popup_groupDiv_parent
 {
     padding: 0;
     background: transparent !important;
+    height: auto !important;
+    overflow: visible !important;
 }
 
 div.map_popup_groupDiv 
@@ -360,9 +362,17 @@ div#dialog_change_orders.add .submitbutton button.add
     display: inline-block;
 }
 
-div#dialog_change_orders.edit .submitbutton button.edit
+div#dialog_change_orders.edit .submitbutton button.edit, 
+div#dialog_change_orders.edit .submitbutton button.del
 {
     display: inline-block;
+}
+
+div#dialog_change_orders.edit .submitbutton button.del 
+{
+    background: #F88;
+    border-color: #B11;
+    color: #B11;
 }
 
 /* RIGHT MENU 
@@ -495,6 +505,7 @@ div.menu ul li
     border-right: 1px solid #654f7d;
     margin:0 6px 0 0;
     text-align: center;
+    cursor: pointer;
 }
 
 div.menu ul li:hover

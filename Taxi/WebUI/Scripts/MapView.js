@@ -17,8 +17,8 @@ function selectOrder(container, element) {
     container.find('li').removeClass('selected');
     element.addClass('selected');
     setTimeout(function () { //TODO wprowadzamy opóźnienie w pobieraniu taksówek, bo inaczej jeśli zamówienie znika w momencie kliknięcia, to nie pojawia się popup - to jest jeszcze do przetestowania
-        GetOrderList();
-    }, 500);
+        //GetOrderList();
+    }, 2000);
 }
 
 function showPointByAddress(address) {
@@ -87,7 +87,7 @@ $(document).ready(function () {
     // Interval wyświetlający zgłoszenia w menu po prawej
     setInterval(function () {
         GetOrderList();
-    }, 5000);
+    }, 10000);
 
     // Przycisk dodawania nowego zgłoszenia
     $('div.rightmenu .new button').button().click(function () {
@@ -122,8 +122,7 @@ $(document).ready(function () {
     });
 
     // Reakcja na zatwierdzenie formularza zmiany/dodawania zgłoszenia
-    $('div#dialog_change_orders button').button().click(function () {
-        $('div#dialog_change_orders').slideDown(300);
+    $('div#dialog_change_orders button.add, div#dialog_change_orders button.edit').button().click(function () {
         div_dco=$('div#dialog_change_orders');
         $.post(
             "ChangeOrders.aspx",
@@ -141,10 +140,31 @@ $(document).ready(function () {
                 GetOrderList();
             })
             //.success(function () { alert("second success"); })
-            .error(function () { alert('Błąd połączenia przy dodawaniu zgłoszenia'); })
+            .error(function () { alert('Błąd połączenia przy dodawaniu/modyfikowaniu zgłoszenia'); })
             .complete(function () { }
         );
-        GetOrderList();
+        //GetOrderList();
+        return false;
+    });
+
+    // Reakcja na przycisk usuwania zgłoszenia
+    $('div#dialog_change_orders button.del').button().click(function () {
+        div_dco=$('div#dialog_change_orders');
+        $.post(
+            "DeleteOrder.aspx",
+            {
+                id_order: div_dco.find('#tb_id_order').val(),
+            },
+            function (data) {
+                alert(data);
+                $('div#dialog_change_orders').slideUp(300);
+                GetOrderList();
+            })
+            //.success(function () { alert("second success"); })
+            .error(function () { alert('Błąd połączenia przy usuwaniu zgłoszenia'); })
+            .complete(function () { }
+        );
+        //GetOrderList();
         return false;
     });
 
@@ -168,7 +188,7 @@ function GetOrderList() {
     orders = $.getScript('Lists/GetOrderList.txt', function () {
         FillOrderList(orders);
         MapShowMarkersOrder(orders);
-        MapShowMarkersOrder(orders);
+        //MapShowMarkersOrder(orders);
     });
     drivers = $.getScript('Lists/GetDriverList.txt?id_order=' + visibleOrdersSelected, function () {
         MapShowMarkersDriver(drivers);

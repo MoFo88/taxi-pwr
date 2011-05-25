@@ -4,7 +4,8 @@
     <script src="Scripts/jquery-ui-timepicker-addon.js" type="text/javascript"></script>
     <script src="Scripts/MapView.js" type="text/javascript"></script>
     <script src="Scripts/MapHandler.js" type="text/javascript"></script>
-    <script src="http://www.openlayers.org/api/OpenLayers.js" type="text/javascript"></script> <!--TODO wczytywać mapkę z dysku, tylko trzeba ikonki pościągać i powprowadzać odpowiednie ścieżki do obrazków-->
+    <!--<script src="http://www.openlayers.org/api/OpenLayers.js" type="text/javascript"></script> <!--TODO wczytywać mapkę z dysku, tylko trzeba ikonki pościągać i powprowadzać odpowiednie ścieżki do obrazków-->
+    <script src="Scripts/OpenLayers.js" type="text/javascript"></script>
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     
@@ -37,6 +38,7 @@
     <div class="submitbutton">
         <button class="add">Dodaj zgłoszenie</button>
         <button class="edit">Zmień zgłoszenie</button>
+        <button class="del">Usuń</button>
     </div>
 </div>
 
