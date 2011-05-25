@@ -14,6 +14,9 @@
     </asp:ContentPlaceHolder>
 </head>
 <body>
+        <asp:ContentPlaceHolder ID="ContentBeforeForm" runat="server">
+
+        </asp:ContentPlaceHolder>
     <form runat="server">
     <div class="layout">
         <div class="page">

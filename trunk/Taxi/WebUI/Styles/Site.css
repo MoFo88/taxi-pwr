@@ -1,5 +1,5 @@
 ﻿div.hiddenFieldSet {display:none}
-label {display:inline-block; width:120px}
+label {display:inline-block}
 input {margin:2px 0}
 h2 {margin:25px 0 15px 0}
 
@@ -8,6 +8,13 @@ h2 {margin:25px 0 15px 0}
 #loginform {color:#FFD}
 #loginform label {width:auto}
 #loginform .linkb_logout {float:right; color:#000; font:700 12px arial; background:#DDD; padding:2px 4px; margin:4px}
+
+/* FORMS */
+
+#MainContent_p_AddForm label 
+{
+    min-width: 120px;
+}
 
 /* TIMEPICKER */
 
@@ -487,6 +494,7 @@ div.menu ul li
     border-left: 1px solid #654f7d;
     border-right: 1px solid #654f7d;
     margin:0 6px 0 0;
+    text-align: center;
 }
 
 div.menu ul li:hover
