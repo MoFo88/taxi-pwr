@@ -9,7 +9,13 @@
           <siteMapNode url="DispatchersList.aspx" title="Dyspozytorzy"/>          
         </siteMapNode>
       </siteMapNode>
-      <siteMapNode url="Orders.aspx" title="Zgłoszenia" description="" />
+      <siteMapNode title="Zgłoszenia" description="">
+        <siteMapNode url="OrdersWaiting.aspx" title="Oczekujące" description="" />
+        <siteMapNode url="OrdersAccepted.aspx" title="Przyjęte" description="" />
+        <siteMapNode url="OrdersInProgres.aspx" title="W trakcie" description="" />
+        <siteMapNode url="OrdersDone.aspx" title="Zrealizowane" description="" />
+        <siteMapNode url="OrdersCanceled.aspx" title="Anulowane" description="" />
+      </siteMapNode>
       <siteMapNode url="MapView.aspx" title="Widok mapy" description="" />
       <siteMapNode url="Logout.aspx" title="Wyloguj" description="" />
     </siteMapNode>

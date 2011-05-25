@@ -1020,7 +1020,8 @@ namespace BLL
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
             var x = from c in ctx.Courses
-                    where c.course_status_id == id
+                    where c.course_status_id == id 
+                    orderby c.course_date ascending
                     select c;
             return x.ToList();
         }
@@ -1102,6 +1103,32 @@ namespace BLL
             }
             return newPass;
         }
+
+        public static List<Course> getWaitingOrders()
+        {
+            return getCoursesByStatusId(1);
+        }
+
+        public static List<Course> getAcceptedOrders()
+        {
+            return getCoursesByStatusId(2);
+        }
+
+        public static List<Course> getInProgressOrders()
+        {
+            return getCoursesByStatusId(3);
+        }
+
+        public static List<Course> getDoneOrders()
+        {
+            return getCoursesByStatusId(4);
+        }
+
+        public static List<Course> getCanceledOrders()
+        {
+            return getCoursesByStatusId(5);
+        }
+
 
         #region Suma SHA1
         #endregion
