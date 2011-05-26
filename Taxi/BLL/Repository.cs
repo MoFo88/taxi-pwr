@@ -573,6 +573,54 @@ namespace BLL
         }
         /* COURS */
 
+        /// <summary>
+        /// Funkcja bobiera liste taksowkarzy (podana ich liczbę)
+        /// któzy sąw odleglości najblizszej do podanego kursu i dodatkowo mająokreslony typ samochodu
+        /// </summary>
+        /// <param name="course"></param>
+        /// <param name="carTypeId"></param>
+        /// <param name="seats"></param>
+        /// <param name="maxResultCount"></param>
+        /// <returns></returns>
+        public List<TaxiDriver> GetTaxiDriversByCourseAndTaxiType( Course course, int carTypeId, int seats, int maxResultCount )
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+
+            var x = from td in ctx.Employees.OfType<TaxiDriver>() 
+                    where 
+                    td.Taxi.Car_model.seats == seats 
+                    && td.Taxi.Car_type.id == carTypeId
+                    select td;
+
+
+            List<TaxiDriver> tdList = x.ToList();
+
+            tdList = tdList.OrderBy(t => t, new DistanceComparer(course)).Take(maxResultCount).ToList();
+
+            return tdList;
+
+        }
+
+        public class DistanceComparer : IComparer<TaxiDriver>
+        {
+            Course c;
+
+            public DistanceComparer(Course c)
+            {
+                this.c = c;
+            }
+
+            public int Compare(TaxiDriver x, TaxiDriver y)
+            {
+                double odl1 = Math.Sqrt((double)((x.position_lon - c.startpoint_lon) * (x.position_lon - c.startpoint_lon) + (x.position_lat - c.startpoint_lat) * (x.position_lat - c.startpoint_lat)));
+                double odl2 = Math.Sqrt((double)((y.position_lon - c.startpoint_lon) * (y.position_lon - c.startpoint_lon) + (y.position_lat - c.startpoint_lat) * (y.position_lat - c.startpoint_lat)));
+
+                if (odl1 == odl2) return 0;
+                if (odl1 > odl2) return 1;
+                else return -1;
+            }
+        }
+
         /// <summary>Dodaj nowy kurs
         /// </summary>
         /// <param name="taxidriver_id"></param>
@@ -789,7 +837,6 @@ namespace BLL
         /// <param name="carTypeId"></param>
         /// <exception cref="TaxiNotExistException"></exception>
         /// JG
-        /// todo: test
         public static void EditTaxiData(int taxiId, String taxiNumber, String registrationNumber, int carModelId, int carTypeId)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -938,6 +985,7 @@ namespace BLL
         /// Funkcja dla ŁebSerwisu. Zwraca skrocona informacje dla taksowkarza o aktualnych kursach przypisanych do niego
         /// </summary>
         /// <returns></returns>
+        /// MS
         public static CourseData GetCourseData(int idDriver)
         {
             CourseData coursedata = new CourseData();
@@ -973,6 +1021,7 @@ namespace BLL
         /// </summary>
         /// <param name="idDriver"></param>
         /// <returns></returns>
+        /// WS
         public static bool isCourseAvailable(int idDriver)
         {
             CourseData coursedata = new CourseData();
@@ -1078,32 +1127,6 @@ namespace BLL
             return x.ToList();
         }
 
-        /* PRIVATE MEMBER */
-
-        #region Losowy ciąg znaków o zadanej długości
-        #endregion
-        private static string CreateRandomString(int length)
-        {
-
-            Random random = new Random();
-           
-            MD5 md5 = new MD5CryptoServiceProvider();
-            byte[] hash = md5.ComputeHash(Encoding.ASCII.GetBytes(random.Next().ToString()));
-            string password = Convert.ToBase64String(hash).Substring(0, length);
-            string newPass = "";
-            
-            // Uppercase at random 
-            random = new Random();
-            for (int i = 0; i < password.Length; i++)
-            {
-                if (random.Next(0, 2) == 1)
-                    newPass += password.Substring(i, 1).ToUpper();
-                else
-                    newPass += password.Substring(i, 1);
-            }
-            return newPass;
-        }
-
         public static List<Course> getWaitingOrders()
         {
             return getCoursesByStatusId(1);
@@ -1130,8 +1153,39 @@ namespace BLL
         }
 
 
-        #region Suma SHA1
+
+        /* PRIVATE MEMBER */
+
+        #region Losowy ciąg znaków o zadanej długości (JG)
+
         #endregion
+        private static string CreateRandomString(int length)
+        {
+
+            Random random = new Random();
+           
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] hash = md5.ComputeHash(Encoding.ASCII.GetBytes(random.Next().ToString()));
+            string password = Convert.ToBase64String(hash).Substring(0, length);
+            string newPass = "";
+            
+            // Uppercase at random 
+            random = new Random();
+            for (int i = 0; i < password.Length; i++)
+            {
+                if (random.Next(0, 2) == 1)
+                    newPass += password.Substring(i, 1).ToUpper();
+                else
+                    newPass += password.Substring(i, 1);
+            }
+            return newPass;
+        }
+
+
+
+        #region Suma SHA1 (JG)
+        #endregion
+
         private static string CalculateSHA1(string text, Encoding enc)
         {
             byte[] buffer = enc.GetBytes(text);
