@@ -58,7 +58,7 @@ namespace DAL
     #endregion
 		
 		public TaxiDataClassesDataContext() : 
-				base(global::DAL.Properties.Settings.Default.yasio1_taxiDbConnectionString, mappingSource)
+				base(global::DAL.Properties.Settings.Default.yasio1_taxiDbConnectionString1, mappingSource)
 		{
 			OnCreated();
 		}
@@ -148,6 +148,46 @@ namespace DAL
 			get
 			{
 				return this.GetTable<Course>();
+			}
+		}
+		
+		public System.Data.Linq.Table<CourseAccepedView> CourseAccepedViews
+		{
+			get
+			{
+				return this.GetTable<CourseAccepedView>();
+			}
+		}
+		
+		public System.Data.Linq.Table<CourseInProgressView> CourseInProgressViews
+		{
+			get
+			{
+				return this.GetTable<CourseInProgressView>();
+			}
+		}
+		
+		public System.Data.Linq.Table<CourseView> CourseViews
+		{
+			get
+			{
+				return this.GetTable<CourseView>();
+			}
+		}
+		
+		public System.Data.Linq.Table<EmployeeView> EmployeeViews
+		{
+			get
+			{
+				return this.GetTable<EmployeeView>();
+			}
+		}
+		
+		public System.Data.Linq.Table<TaxiDriverView> TaxiDriverViews
+		{
+			get
+			{
+				return this.GetTable<TaxiDriverView>();
 			}
 		}
 	}
@@ -2627,6 +2667,1063 @@ namespace DAL
 		public void OnDeserializing(StreamingContext context)
 		{
 			this.Initialize();
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="yasio1_databaseUser.CourseAccepedView")]
+	[global::System.Runtime.Serialization.DataContractAttribute()]
+	public partial class CourseAccepedView
+	{
+		
+		private System.Nullable<System.DateTime> _course_date;
+		
+		private string _client_name;
+		
+		private string _startpoint_name;
+		
+		private string _client_phone;
+		
+		private System.Nullable<int> _course_status_id;
+		
+		private string _dispatcher;
+		
+		private int _id;
+		
+		private int _dipatcher_id;
+		
+		public CourseAccepedView()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_course_date", DbType="DateTime")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+		public System.Nullable<System.DateTime> course_date
+		{
+			get
+			{
+				return this._course_date;
+			}
+			set
+			{
+				if ((this._course_date != value))
+				{
+					this._course_date = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_client_name", DbType="VarChar(150)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+		public string client_name
+		{
+			get
+			{
+				return this._client_name;
+			}
+			set
+			{
+				if ((this._client_name != value))
+				{
+					this._client_name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_startpoint_name", DbType="VarChar(250) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+		public string startpoint_name
+		{
+			get
+			{
+				return this._startpoint_name;
+			}
+			set
+			{
+				if ((this._startpoint_name != value))
+				{
+					this._startpoint_name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_client_phone", DbType="VarChar(15)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+		public string client_phone
+		{
+			get
+			{
+				return this._client_phone;
+			}
+			set
+			{
+				if ((this._client_phone != value))
+				{
+					this._client_phone = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_course_status_id", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
+		public System.Nullable<int> course_status_id
+		{
+			get
+			{
+				return this._course_status_id;
+			}
+			set
+			{
+				if ((this._course_status_id != value))
+				{
+					this._course_status_id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dispatcher", DbType="VarChar(151) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
+		public string dispatcher
+		{
+			get
+			{
+				return this._dispatcher;
+			}
+			set
+			{
+				if ((this._dispatcher != value))
+				{
+					this._dispatcher = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this._id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dipatcher_id", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8)]
+		public int dipatcher_id
+		{
+			get
+			{
+				return this._dipatcher_id;
+			}
+			set
+			{
+				if ((this._dipatcher_id != value))
+				{
+					this._dipatcher_id = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="yasio1_databaseUser.CourseInProgressView")]
+	[global::System.Runtime.Serialization.DataContractAttribute()]
+	public partial class CourseInProgressView
+	{
+		
+		private System.Nullable<System.DateTime> _course_date;
+		
+		private string _client_name;
+		
+		private string _startpoint_name;
+		
+		private string _client_phone;
+		
+		private System.Nullable<int> _course_status_id;
+		
+		private string _dispatcher;
+		
+		private string _driver;
+		
+		private int _id;
+		
+		private int _dispatcher_id;
+		
+		private int _driver_id;
+		
+		public CourseInProgressView()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_course_date", DbType="DateTime")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+		public System.Nullable<System.DateTime> course_date
+		{
+			get
+			{
+				return this._course_date;
+			}
+			set
+			{
+				if ((this._course_date != value))
+				{
+					this._course_date = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_client_name", DbType="VarChar(150)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+		public string client_name
+		{
+			get
+			{
+				return this._client_name;
+			}
+			set
+			{
+				if ((this._client_name != value))
+				{
+					this._client_name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_startpoint_name", DbType="VarChar(250) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+		public string startpoint_name
+		{
+			get
+			{
+				return this._startpoint_name;
+			}
+			set
+			{
+				if ((this._startpoint_name != value))
+				{
+					this._startpoint_name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_client_phone", DbType="VarChar(15)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+		public string client_phone
+		{
+			get
+			{
+				return this._client_phone;
+			}
+			set
+			{
+				if ((this._client_phone != value))
+				{
+					this._client_phone = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_course_status_id", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
+		public System.Nullable<int> course_status_id
+		{
+			get
+			{
+				return this._course_status_id;
+			}
+			set
+			{
+				if ((this._course_status_id != value))
+				{
+					this._course_status_id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dispatcher", DbType="VarChar(151) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
+		public string dispatcher
+		{
+			get
+			{
+				return this._dispatcher;
+			}
+			set
+			{
+				if ((this._dispatcher != value))
+				{
+					this._dispatcher = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_driver", DbType="VarChar(151) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7)]
+		public string driver
+		{
+			get
+			{
+				return this._driver;
+			}
+			set
+			{
+				if ((this._driver != value))
+				{
+					this._driver = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this._id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dispatcher_id", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=9)]
+		public int dispatcher_id
+		{
+			get
+			{
+				return this._dispatcher_id;
+			}
+			set
+			{
+				if ((this._dispatcher_id != value))
+				{
+					this._dispatcher_id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_driver_id", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=10)]
+		public int driver_id
+		{
+			get
+			{
+				return this._driver_id;
+			}
+			set
+			{
+				if ((this._driver_id != value))
+				{
+					this._driver_id = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="yasio1_databaseUser.CourseView")]
+	[global::System.Runtime.Serialization.DataContractAttribute()]
+	public partial class CourseView
+	{
+		
+		private System.Nullable<System.DateTime> _course_date;
+		
+		private string _client_name;
+		
+		private string _startpoint_name;
+		
+		private string _client_phone;
+		
+		private System.Nullable<int> _course_status_id;
+		
+		private string _dispatcher;
+		
+		private string _driver;
+		
+		private int _id;
+		
+		private int _dispatcher_id;
+		
+		private int _driver_id;
+		
+		public CourseView()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_course_date", DbType="DateTime")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+		public System.Nullable<System.DateTime> course_date
+		{
+			get
+			{
+				return this._course_date;
+			}
+			set
+			{
+				if ((this._course_date != value))
+				{
+					this._course_date = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_client_name", DbType="VarChar(150)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+		public string client_name
+		{
+			get
+			{
+				return this._client_name;
+			}
+			set
+			{
+				if ((this._client_name != value))
+				{
+					this._client_name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_startpoint_name", DbType="VarChar(250) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+		public string startpoint_name
+		{
+			get
+			{
+				return this._startpoint_name;
+			}
+			set
+			{
+				if ((this._startpoint_name != value))
+				{
+					this._startpoint_name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_client_phone", DbType="VarChar(15)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+		public string client_phone
+		{
+			get
+			{
+				return this._client_phone;
+			}
+			set
+			{
+				if ((this._client_phone != value))
+				{
+					this._client_phone = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_course_status_id", DbType="Int")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
+		public System.Nullable<int> course_status_id
+		{
+			get
+			{
+				return this._course_status_id;
+			}
+			set
+			{
+				if ((this._course_status_id != value))
+				{
+					this._course_status_id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dispatcher", DbType="VarChar(151) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
+		public string dispatcher
+		{
+			get
+			{
+				return this._dispatcher;
+			}
+			set
+			{
+				if ((this._dispatcher != value))
+				{
+					this._dispatcher = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_driver", DbType="VarChar(151) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7)]
+		public string driver
+		{
+			get
+			{
+				return this._driver;
+			}
+			set
+			{
+				if ((this._driver != value))
+				{
+					this._driver = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this._id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dispatcher_id", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=9)]
+		public int dispatcher_id
+		{
+			get
+			{
+				return this._dispatcher_id;
+			}
+			set
+			{
+				if ((this._dispatcher_id != value))
+				{
+					this._dispatcher_id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_driver_id", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=10)]
+		public int driver_id
+		{
+			get
+			{
+				return this._driver_id;
+			}
+			set
+			{
+				if ((this._driver_id != value))
+				{
+					this._driver_id = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="yasio1_databaseUser.EmployeeView")]
+	[global::System.Runtime.Serialization.DataContractAttribute()]
+	public partial class EmployeeView
+	{
+		
+		private string _name;
+		
+		private string _surname;
+		
+		private string _pesel;
+		
+		private string _city;
+		
+		private string _house_nr;
+		
+		private string _postal_code;
+		
+		private string _street;
+		
+		private string _e_mail;
+		
+		private string _telephone;
+		
+		private string _employee_type;
+		
+		private int _id;
+		
+		private int _employee_type_id;
+		
+		public EmployeeView()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this._name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_surname", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+		public string surname
+		{
+			get
+			{
+				return this._surname;
+			}
+			set
+			{
+				if ((this._surname != value))
+				{
+					this._surname = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pesel", DbType="Char(11)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+		public string pesel
+		{
+			get
+			{
+				return this._pesel;
+			}
+			set
+			{
+				if ((this._pesel != value))
+				{
+					this._pesel = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_city", DbType="VarChar(50)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+		public string city
+		{
+			get
+			{
+				return this._city;
+			}
+			set
+			{
+				if ((this._city != value))
+				{
+					this._city = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_house_nr", DbType="VarChar(10)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
+		public string house_nr
+		{
+			get
+			{
+				return this._house_nr;
+			}
+			set
+			{
+				if ((this._house_nr != value))
+				{
+					this._house_nr = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_postal_code", DbType="VarChar(10)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
+		public string postal_code
+		{
+			get
+			{
+				return this._postal_code;
+			}
+			set
+			{
+				if ((this._postal_code != value))
+				{
+					this._postal_code = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_street", DbType="VarChar(50)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7)]
+		public string street
+		{
+			get
+			{
+				return this._street;
+			}
+			set
+			{
+				if ((this._street != value))
+				{
+					this._street = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_e_mail", DbType="VarChar(150)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8)]
+		public string e_mail
+		{
+			get
+			{
+				return this._e_mail;
+			}
+			set
+			{
+				if ((this._e_mail != value))
+				{
+					this._e_mail = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_telephone", DbType="VarChar(20)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=9)]
+		public string telephone
+		{
+			get
+			{
+				return this._telephone;
+			}
+			set
+			{
+				if ((this._telephone != value))
+				{
+					this._telephone = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_employee_type", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=10)]
+		public string employee_type
+		{
+			get
+			{
+				return this._employee_type;
+			}
+			set
+			{
+				if ((this._employee_type != value))
+				{
+					this._employee_type = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=11)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this._id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_employee_type_id", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=12)]
+		public int employee_type_id
+		{
+			get
+			{
+				return this._employee_type_id;
+			}
+			set
+			{
+				if ((this._employee_type_id != value))
+				{
+					this._employee_type_id = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="yasio1_databaseUser.TaxiDriverView")]
+	[global::System.Runtime.Serialization.DataContractAttribute()]
+	public partial class TaxiDriverView
+	{
+		
+		private string _name;
+		
+		private string _surname;
+		
+		private string _telephone;
+		
+		private string _position_name;
+		
+		private string _taxi_number;
+		
+		private string _producer;
+		
+		private string _model;
+		
+		private string _car_type;
+		
+		private int _id;
+		
+		private int _taxi_id;
+		
+		private int _car_model_id;
+		
+		private int _car_type_id;
+		
+		private string _driver_status;
+		
+		public TaxiDriverView()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this._name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_surname", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=2)]
+		public string surname
+		{
+			get
+			{
+				return this._surname;
+			}
+			set
+			{
+				if ((this._surname != value))
+				{
+					this._surname = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_telephone", DbType="VarChar(20)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+		public string telephone
+		{
+			get
+			{
+				return this._telephone;
+			}
+			set
+			{
+				if ((this._telephone != value))
+				{
+					this._telephone = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_position_name", DbType="VarChar(150)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=4)]
+		public string position_name
+		{
+			get
+			{
+				return this._position_name;
+			}
+			set
+			{
+				if ((this._position_name != value))
+				{
+					this._position_name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_taxi_number", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=5)]
+		public string taxi_number
+		{
+			get
+			{
+				return this._taxi_number;
+			}
+			set
+			{
+				if ((this._taxi_number != value))
+				{
+					this._taxi_number = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_producer", DbType="VarChar(150)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=6)]
+		public string producer
+		{
+			get
+			{
+				return this._producer;
+			}
+			set
+			{
+				if ((this._producer != value))
+				{
+					this._producer = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_model", DbType="VarChar(150)")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=7)]
+		public string model
+		{
+			get
+			{
+				return this._model;
+			}
+			set
+			{
+				if ((this._model != value))
+				{
+					this._model = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_car_type", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=8)]
+		public string car_type
+		{
+			get
+			{
+				return this._car_type;
+			}
+			set
+			{
+				if ((this._car_type != value))
+				{
+					this._car_type = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=9)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this._id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_taxi_id", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=10)]
+		public int taxi_id
+		{
+			get
+			{
+				return this._taxi_id;
+			}
+			set
+			{
+				if ((this._taxi_id != value))
+				{
+					this._taxi_id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_car_model_id", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=11)]
+		public int car_model_id
+		{
+			get
+			{
+				return this._car_model_id;
+			}
+			set
+			{
+				if ((this._car_model_id != value))
+				{
+					this._car_model_id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_car_type_id", DbType="Int NOT NULL")]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=12)]
+		public int car_type_id
+		{
+			get
+			{
+				return this._car_type_id;
+			}
+			set
+			{
+				if ((this._car_type_id != value))
+				{
+					this._car_type_id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_driver_status", DbType="VarChar(150) NOT NULL", CanBeNull=false)]
+		[global::System.Runtime.Serialization.DataMemberAttribute(Order=13)]
+		public string driver_status
+		{
+			get
+			{
+				return this._driver_status;
+			}
+			set
+			{
+				if ((this._driver_status != value))
+				{
+					this._driver_status = value;
+				}
+			}
 		}
 	}
 }

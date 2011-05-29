@@ -28,7 +28,7 @@
                     <asp:BoundField DataField="name" HeaderText="name" SortExpression="Imie" />
                     <asp:BoundField DataField="surname" HeaderText="Nazwisko" 
                         SortExpression="surname" />
-                    <asp:BoundField DataField="employee_type_id" HeaderText="Typ" 
+                    <asp:BoundField DataField="employee_type" HeaderText="Typ" 
                         SortExpression="employee_type_id" />
                     <asp:BoundField DataField="street" HeaderText="Ulica" 
                         SortExpression="street" />
@@ -69,7 +69,7 @@
     
 
             <asp:ObjectDataSource ID="ds_Employees" runat="server" 
-                SelectMethod="GetAllEmployees" TypeName="BLL.Repository">
+                SelectMethod="getEmployeeView" TypeName="BLL.Repository">
             </asp:ObjectDataSource>
     
         </asp:Panel>

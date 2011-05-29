@@ -18,13 +18,16 @@
         <asp:Panel ID="p_Orders" runat="server">
             <asp:GridView ID="gv_Orders" runat="server" AutoGenerateColumns="False" 
                 CellPadding="4" DataSourceID="ds_Orders" ForeColor="#333333" 
-                GridLines="None" AllowSorting="True" DataKeyNames="id">
+                GridLines="None" AllowSorting="True" DataKeyNames="id"
+                onselectedindexchanged="gv_Orders_SelectedIndexChanged" >
                 <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                 <Columns>
                     <asp:BoundField DataField="course_date" HeaderText="Data" SortExpression="course_date" />
                     <asp:BoundField DataField="startpoint_name" HeaderText="Miejsce" SortExpression="startpoint_name" />
                     <asp:BoundField DataField="client_name" HeaderText="Klient" SortExpression="client_name" />
-                    <asp:BoundField DataField="client_phone" HeaderText="Telefon" SortExpression="client_phone" />
+                    <asp:BoundField DataField="client_phone" HeaderText="Telefon" SortExpression="client_phone" />                    
+                    <asp:BoundField DataField="dispatcher" HeaderText="Przyjął" SortExpression="dispatcher" />
+                    <asp:CommandField HeaderText="Edytuj" ShowSelectButton="True" SelectText="Wybierz"/>
                 </Columns>
                 <EditRowStyle BackColor="#999999" />
                 <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
@@ -48,7 +51,7 @@
     
 
             <asp:ObjectDataSource ID="ds_Orders" runat="server" 
-                SelectMethod="getWaitingOrders" TypeName="BLL.Repository">
+                SelectMethod="getWaitingOrdersView" TypeName="BLL.Repository">
             </asp:ObjectDataSource>
     
         </asp:Panel>
