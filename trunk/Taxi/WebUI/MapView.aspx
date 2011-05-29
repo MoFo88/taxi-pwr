@@ -10,6 +10,9 @@
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     
 <div id="itemlist" class="rightmenu orders">
+    <div class="new">
+        <button>Nowe zgłoszenie</button>
+    </div>
     <div class="list">
         <div class="title"></div>
         <div class="content">
@@ -19,9 +22,6 @@
             </div>
         </div>
         <div class="bottom"></div>
-    </div>
-    <div class="new">
-        <button>Nowe zgłoszenie</button>
     </div>
 </div>
 

@@ -74,10 +74,6 @@ function dialog_change_orders_fill(div_dco, order) {
     }
 }
 
-$(document).dblclick(function () {
-    //MapShowMarkersDriver(tmpTaxi);
-});
-
 $(document).ready(function () {
 
     // Inicjalizacja mapy i wyświetlenie pozyci w menu po prawej
@@ -88,6 +84,13 @@ $(document).ready(function () {
     setInterval(function () {
         GetOrderList();
     }, 10000);
+
+    // ESC (zrobiłem tyldę, bo ESC nie działa w Chrome) przy dodawaniu/edytowaniu zgłoszenia -> zamknięcie okienka zgłoszenia
+    $('div#dialog_change_orders').keyup(function (e) {
+        if (e.keyCode==27) {
+            $('div#dialog_change_orders').slideUp(300);
+        }
+    });
 
     // Przycisk dodawania nowego zgłoszenia
     $('div.rightmenu .new button').button().click(function () {
@@ -124,26 +127,36 @@ $(document).ready(function () {
     // Reakcja na zatwierdzenie formularza zmiany/dodawania zgłoszenia
     $('div#dialog_change_orders button.add, div#dialog_change_orders button.edit').button().click(function () {
         div_dco=$('div#dialog_change_orders');
-        $.post(
-            "ChangeOrders.aspx",
-            {
-                id_order: div_dco.find('#tb_id_order').val(),
-                course_date: div_dco.find('#tb_order_course_date').val(),
-                startpoint_name: div_dco.find('#tb_order_startpoint_name').val(),
-                client_name: div_dco.find('#tb_order_client_name').val(),
-                client_phone: div_dco.find('#tb_order_client_phone').val(),
-                lon: div_dco.find('#tb_order_lon').val(),
-                lat: div_dco.find('#tb_order_lat').val(),
-            },
-            function (data) {
-                alert(data);
-                GetOrderList();
-            })
-            //.success(function () { alert("second success"); })
-            .error(function () { alert('Błąd połączenia przy dodawaniu/modyfikowaniu zgłoszenia'); })
-            .complete(function () { }
-        );
-        //GetOrderList();
+        if (div_dco.find('#tb_order_lon').val()=='' || div_dco.find('#tb_order_lat').val()=='') {
+            showQuickMessage('Brak współrzędnych');
+        }
+        else {
+            $.post(
+                "ChangeOrders.aspx",
+                {
+                    id_order: div_dco.find('#tb_id_order').val(),
+                    course_date: div_dco.find('#tb_order_course_date').val(),
+                    startpoint_name: div_dco.find('#tb_order_startpoint_name').val(),
+                    client_name: div_dco.find('#tb_order_client_name').val(),
+                    client_phone: div_dco.find('#tb_order_client_phone').val(),
+                    lon: div_dco.find('#tb_order_lon').val(),
+                    lat: div_dco.find('#tb_order_lat').val(),
+                },
+                function (data) {
+                    if (data.length<50) showQuickMessage(data);
+                    else showQuickMessage('Zmieniono/dodano zgłoszenie');
+                    //alert(data);
+                    GetOrderList();
+                    //TODO może fajnie by było automatycznie wybrać ten kurs żeby mu przydzielić taksówkę?
+                })
+                //.success(function () { alert("second success"); })
+                .error(function () {
+                    showQuickMessage('Błąd przy dodawaniu/modyfikowaniu zgłoszenia');
+                })
+                .complete(function () { }
+            );
+            //GetOrderList(); //TODO - to chyba można by włączyć
+        }
         return false;
     });
 
@@ -156,12 +169,15 @@ $(document).ready(function () {
                 id_order: div_dco.find('#tb_id_order').val(),
             },
             function (data) {
-                alert(data);
+                if (data.length<50) showQuickMessage(data);
+                else showQuickMessage('Usunięto zgłoszenie');
                 $('div#dialog_change_orders').slideUp(300);
                 GetOrderList();
             })
             //.success(function () { alert("second success"); })
-            .error(function () { alert('Błąd połączenia przy usuwaniu zgłoszenia'); })
+            .error(function () {
+                showQuickMessage('Błąd przy usuwaniu zgłoszenia');
+            })
             .complete(function () { }
         );
         //GetOrderList();
@@ -185,22 +201,41 @@ $(document).ready(function () {
 });
 
 function GetOrderList() {
+    showQuickMessage('Pobieram listę zgłoszeń i taksówek...', 2000);
     orders = $.getScript('Lists/GetOrderList.txt', function () {
         FillOrderList(orders);
         MapShowMarkersOrder(orders);
         //MapShowMarkersOrder(orders);
     });
-    drivers = $.getScript('Lists/GetDriverList.txt?id_order=' + visibleOrdersSelected, function () {
+    drivers = $.getScript('Lists/GetDriverList.txt?id_order=' + visibleOrdersSelected, function () { //TODO - nie jest potrzebne id_order, przynajmniej na razie, DC obsłuży przypisanego taksówkrza
         MapShowMarkersDriver(drivers);
     });
 }
 
+orders_current_page=0;
 function FillOrderList(orders) {
+    var orders_per_page=7;
     var container = $('div#itemlist div.content ul');
     container.find('li').remove();
-    for (var i in orders) {
+
+    var linkIsActive;
+    // Link - pokaż wcześniejsze wpisy
+    linkIsActive=orders_current_page>0;
+    var item_html='<li class="more'+(linkIsActive?'':' locked')+'">'+
+                '&uarr;&uarr; pokaż wcześniejsze &uarr;&uarr;'+
+                '</li>';
+    var item_obj=$(item_html);
+    if (linkIsActive) item_obj.click(function () { // pokaż wcześniejsze elementy na liście
+        orders_current_page--;
+        FillOrderList(orders);
+    });
+    container.append(item_obj);
+
+    for (i=orders_current_page*orders_per_page; i<orders.length && i<orders_per_page*(orders_current_page+1); i++) {
+
+        // Pokaż wpisy
         var order = orders[i];
-        item_html = '<li id="order' + order.id_order + '">' +
+        var item_html = '<li id="order' + order.id_order + '">' +
                     '<div class="id_driver">' + order.id_driver + '</div>' +
                     '<div class="id_order">' + order.id_order + '</div>' +
                     '<div class="edit">edit</div>' +
@@ -224,9 +259,52 @@ function FillOrderList(orders) {
             else dialog_change_orders_fill(div_dco, order);
             div_dco.removeClass('add').addClass('edit');
             div_dco.slideDown(300);
+            div_dco.find('#tb_order_startpoint_name').focus();
             selectOrder($(this).parent());
             //showPointByAddress($('#tb_order_startpoint_name').val());
             return false;
         });
     }
+
+    // Link - pokaż późniejsze wpisy
+    linkIsActive=orders.length>orders_per_page*(orders_current_page+1);
+    var item_html='<li class="more'+(linkIsActive?'':' locked')+'">'+
+                '&darr;&darr; pokaż późniejsze &darr;&darr;'+
+                '</li>';
+    var item_obj=$(item_html);
+    if (linkIsActive) item_obj.click(function () { // pokaż następne elementy na liście
+        orders_current_page++;
+        FillOrderList(orders);
+    });
+    container.append(item_obj);
+
+}
+
+showQuickMessage_lastZIndex=0;
+showQuickMessage_visibleCount=0;
+showQuickMessage_visiblePos=0;
+function showQuickMessage(message, hide_after) {
+    if (hide_after==null) hide_after=5000;
+    var message_html='<div class="message_box">'+
+                message+
+                '</div>';
+    var message_obj=$(message_html);
+    message_obj.css('zIndex', 50000+showQuickMessage_lastZIndex);
+    message_obj.css('top', message_obj.css('top')+50*(++showQuickMessage_visiblePos)+'px');
+    showQuickMessage_lastZIndex++;
+    showQuickMessage_visibleCount++;
+    $('div.layout').append(message_obj);
+    message_obj.fadeIn(300);
+    message_obj.click(function () {
+        showQuickMessage_hide(message_obj);
+    });
+    setTimeout(function () {
+        showQuickMessage_hide(message_obj);
+    }, hide_after);
+}
+
+function showQuickMessage_hide(message_obj) {
+    message_obj.fadeOut(600, function () {$(this).remove();});
+    showQuickMessage_visibleCount--;
+    if (showQuickMessage_visibleCount==0) showQuickMessage_visiblePos=0;
 }
