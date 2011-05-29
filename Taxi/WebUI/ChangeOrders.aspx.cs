@@ -25,7 +25,6 @@ public partial class ChangeOrders : System.Web.UI.Page
             if (idCourse == "")
             {
                 addNewCourse(destination, date, client, clientPhone, lon, lat);
-                Response.Redirect("MapView.aspx:");
             }
             else
             {
@@ -37,11 +36,12 @@ public partial class ChangeOrders : System.Web.UI.Page
 
     private void addNewCourse(String destination, String date, String client, String clientPhone, Decimal lon, Decimal lat)
     {
-        Repository.addNewCourse(33, null, clientPhone, DateTime.Parse(date), null, client, destination, lon, lat, lon, lat);
+        int userId = int.Parse(Session["userId"].ToString());
+        Repository.addNewCourse(33, userId, clientPhone, DateTime.Parse(date), 1, client, destination, lon, lat, lon, lat);
     }
 
-    private void editCourse(int? idCourse, String destination, String date, String client, String clientPhone, Decimal lon, Decimal lat)
+    private void editCourse(int idCourse, String destination, String date, String client, String clientPhone, Decimal lon, Decimal lat)
     {
-       
+        Repository.editCourse(idCourse, destination, date, client, clientPhone, lon, lat);
     }
 }

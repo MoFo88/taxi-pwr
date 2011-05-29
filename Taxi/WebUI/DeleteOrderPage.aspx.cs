@@ -15,7 +15,7 @@ public partial class DeleteOrderPage : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         idCourse = int.Parse(Session["idCourseToDelete"].ToString());
-        Course course = Repository.getCourseById(idCourse);
+        course = Repository.getCourseById(idCourse);
         loadCourseData();
     }
 

@@ -1227,6 +1227,24 @@ namespace BLL
 
             ctx.SubmitChanges();
         }
+        
+        public static void editCourse(int id, String destination, String date, String client, String clientPhone, Decimal lon, Decimal lat)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from c in ctx.Courses
+                    where c.id == id
+                    select c;
+
+            Course course = x.SingleOrDefault();
+            course.client_name = client;
+            course.client_phone = clientPhone;
+            course.startpoint_name = destination;
+            course.date = DateTime.Parse(date);
+            course.startpoint_lon = lon;
+            course.startpoint_lat = lat;
+
+            ctx.SubmitChanges();
+        }
 
         public static void deleteCourse(int id)
         {
