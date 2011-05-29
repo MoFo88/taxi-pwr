@@ -100,14 +100,14 @@ function MapCreatePopupDriver(lonLat, details, showPopup) {
     div_assign = $(popup.contentDiv).find('div.assign');
     div_assign.text('przydziel');
     div_assign.click(function () {
-        if (visibleOrdersSelected == null) alert('Najpierw wybierz zgłoszenie');
+        if (visibleOrdersSelected == null) showQuickMessage('Najpierw wybierz zgłoszenie');
         else {
             $.post("AssignOrderToDriver.aspx", { id_order: visibleOrdersSelected, id_driver: details.id_driver }, function (data) {
-                alert("OK");
+                showQuickMessage("Przydzielono taksówkarza do zlecenia");
                 GetOrderList();
             })
             //.success(function () { alert("second success"); })
-            .error(function () { alert('Błąd połączenia przy przydzielaniu taksówkarza'); })
+            .error(function () { showQuickMessage('Błąd przy przydzielaniu taksówkarza'); })
             .complete(function () { });
         }
     });
@@ -122,11 +122,28 @@ function MapCreatePopupDriver(lonLat, details, showPopup) {
 }
 
 function MapMoveDriver(id_driver, newDriver) {
-    driver=visibleDrivers[id_driver];
+    driver = visibleDrivers[id_driver];
     // Niestety żadne "prostsze" metody nie działały, nie da się tak po prostu zmienić lonlata markera
     var newPx = mapView.getLayerPxFromViewPortPx(mapView.getPixelFromLonLat(new OpenLayers.LonLat(newDriver.lon, newDriver.lat).transform(mapView.displayProjection, mapView.projection)));
     driver.marker.moveTo(newPx);
     driver.popup.moveTo(newPx);
+}
+
+function MapChangeOrder(id_order, newOrder) {
+    var order = visibleOrders[id_order];
+    // Niestety żadne "prostsze" metody nie działały, nie da się tak po prostu zmienić lonlata markera
+    var newPx = mapView.getLayerPxFromViewPortPx(mapView.getPixelFromLonLat(new OpenLayers.LonLat(newOrder.lon, newOrder.lat).transform(mapView.displayProjection, mapView.projection)));
+    order.marker.moveTo(newPx);
+    order.popup.moveTo(newPx);
+    order.popup.groupDiv.innerHTML =
+        '<div class="map_popup" style="position:relative; z-index:560 !important">' +
+        '<div class="order_id">Zamówienie #' + order.details.id_order + '</div>' +
+        '<div class="course_date">' + newOrder.course_date + '</div>' +
+        '<div class="startpoint_name">' + newOrder.startpoint_name + '</div>' +
+        '<div class="notes">' + order.details.notes + '</div>' +
+        '</div>';
+    orders[id_order].lon = newOrder.lon;
+    orders[id_order].lat = newOrder.lat;
 }
 
 function MapShowMarkersOrder(markersOrders, showPopup) {
@@ -199,7 +216,7 @@ function MapCreatePopupOrder(lonLat, details, showPopup) {
                    '<div class="order_id">Zamówienie #' + details.id_order + '</div>' +
                    '<div class="course_date">' + details.course_date + '</div>' +
                    '<div class="startpoint_name">' + details.startpoint_name + '</div>' +
-                   '<div class="notes">Uwagi: ' + details.notes + '</div>' +
+                   '<div class="notes">' + details.notes + '</div>' +
                    '</div>',
                    false);
     mapView.addPopup(popup);
@@ -243,21 +260,21 @@ function MapInitIcons() {
 }
 
 function MapSelectOrder(order_obj) {
-    // Odznaczamy punkt (dodawanie/zmienianie zgłoszenia)
-    MapShowPoint();
-
     // Pobieramy nowe ID taksówkarza i zamówienia
     id_order = order_obj.find('div.id_order').text();
     id_driver = order_obj.find('div.id_driver').text();
+    // Wywołujemy funkcje przyjmującą IDs
+    MapSelectOrderById(id_order, id_driver);
+}
 
-    // Centrujemy mapę na wybranym punkcie
-    marker = visibleOrders[id_order].marker;
-    mapView.setCenter(marker.lonlat, 14); // lonLat, zoom
+function MapSelectOrderById(id_order, id_driver) {
+    // Odznaczamy punkt (dodawanie/zmienianie zgłoszenia)
+    MapShowPoint_hide();
 
     // Usuwamy stare zaznaczenie
-    selectedOrder=visibleOrders[visibleOrdersSelected];
+    selectedOrder = visibleOrders[visibleOrdersSelected];
     MapRemoveMarkerOrder(selectedOrder, visibleOrdersSelected);
-    selectedDriver=visibleDrivers[visibleDriversSelected];
+    selectedDriver = visibleDrivers[visibleDriversSelected];
     MapRemoveMarkerDriver(selectedDriver, visibleDriversSelected);
 
     // Usuwamy nowozaznaczony marker, aby zaznaczył się na nowy kolor
@@ -271,6 +288,13 @@ function MapSelectOrder(order_obj) {
     // Trzeba przywrócić punkt który usunęliśmy przed chwilą
     MapShowMarkersOrder(orders, true);
     MapShowMarkersDriver(drivers, true);
+
+    // Centrujemy mapę na wybranym punkcie
+    setTimeout(function () {
+        marker = visibleOrders[id_order].marker;
+        mapView.setCenter(marker.lonlat); // lonLat, zoom
+    }, 200);
+
 }
 
 function MapShowPoint(lon, lat, zoom) { // zoom => centerMap
@@ -288,16 +312,10 @@ function MapShowPoint(lon, lat, zoom) { // zoom => centerMap
     MapShowMarkersDriver(drivers, false);
 
     // Usuń poprzedni znacznik
-    if (visibleSelectedPoint != null) {
-        //mapView.removePopup(visibleSelectedPoint.popup); // ten znacznik nie ma popupa
-        mapMarkers.removeMarker(visibleSelectedPoint.marker);
-        //visibleSelectedPoint.popup.destroy(); // ten znacznik nie ma popupa
-        visibleSelectedPoint.marker.destroy();
-        visibleSelectedPoint = null;
-    }
+    MapShowPoint_hide();
 
     // Dodaj nowy znacznik
-    if (lon!=null && lat!=null) {
+    if (lon != null && lat != null) {
         lonLat = MapCreateLonLat(lon, lat);
         var id = 0;
         icon = markerIconOrderTargetSelected.clone();
@@ -313,6 +331,16 @@ function MapShowPoint(lon, lat, zoom) { // zoom => centerMap
             }
         };
     };
+}
+
+function MapShowPoint_hide() {
+    if (visibleSelectedPoint != null) {
+        //mapView.removePopup(visibleSelectedPoint.popup); // ten znacznik nie ma popupa
+        mapMarkers.removeMarker(visibleSelectedPoint.marker);
+        //visibleSelectedPoint.popup.destroy(); // ten znacznik nie ma popupa
+        visibleSelectedPoint.marker.destroy();
+        visibleSelectedPoint = null;
+    }
 }
 
 showPopupAtTop_lastZIndex=1;

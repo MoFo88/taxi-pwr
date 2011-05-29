@@ -35,6 +35,8 @@
     <label for="tb_order_startpoint_name">Adres: </label><input type="text" id="tb_order_startpoint_name" />
     <label for="tb_order_client_name">Imię i nazwisko: </label><input type="text" id="tb_order_client_name" />
     <label for="tb_order_client_phone">Telefon: </label><input type="text" id="tb_order_client_phone" />
+    <label for="tb_order_seats">Osób: </label><input type="text" id="tb_order_seats" />
+    <label for="tb_order_car_type">Typ samochodu: </label><select type="text" id="tb_order_car_type" /><option value="1">osobowy</option><option value="2">limuzyna</option><option value="3">van</option></select>
     <div class="submitbutton">
         <button class="add">Dodaj zgłoszenie</button>
         <button class="edit">Zmień zgłoszenie</button>
