@@ -34,6 +34,7 @@ public partial class _Default : System.Web.UI.Page
             if (userId >= 0)
             {
                 e.Authenticated = true;
+                Session["userId"] = userId;
                 Session["userName"] = log.UserName;
             }
         }

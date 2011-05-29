@@ -32,7 +32,7 @@ public class CreatingOrdersList
             sw.WriteLine("order = {");
             sw.WriteLine("lon: " + order.startpoint_lon.ToString().Replace(',','.') + ",");
             sw.WriteLine("lat: " + order.startpoint_lat.ToString().Replace(',', '.') + ",");
-            sw.WriteLine("course_date: '" + order.date.ToShortDateString() + " " + order.date.Hour + ":" +order.date.Minute + "',");
+            sw.WriteLine("course_date: '" + order.course_date.ToString() + "',");
             sw.WriteLine("startpoint_name: '" + order.startpoint_name + "',");
             sw.WriteLine("client_name: '" + order.client_name + "',");
             sw.WriteLine("notes: 'brak'" + ",");
