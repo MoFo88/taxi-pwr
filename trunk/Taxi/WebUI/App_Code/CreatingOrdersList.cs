@@ -5,25 +5,29 @@ using System.Web;
 using DAL;
 using BLL;
 using System.IO;
+using System.Threading;
 
 /// <summary>
 /// Summary description for CreatingOrdersList
 /// </summary>
-public class CreatingOrdersList
+public static class CreatingOrdersList
 {
-	List<Course> orders;
+    public static List<Course> orders = new List<Course>();
+    public static HttpServerUtility server;
 
-    public CreatingOrdersList()
-	{
-        orders = new List<Course>();
-	}
-
-    private void refreshData()
+    private static void refreshData()
     {
-        orders = Repository.getAllCourses();
+        orders = Repository.getWaitingOrders();
     }
 
-    private void generateFile(HttpServerUtility server)
+    public static void startThread()
+    {
+        Thread threat = new Thread(new ThreadStart(CreatingOrdersList.refreshOrdersFile));
+        threat.IsBackground = true;
+        threat.Start();
+    }
+
+    private static void generateFile()
     {
         StreamWriter sw = new StreamWriter(server.MapPath("Lists\\GetOrderList.txt"), false);
         sw.WriteLine("orders = new Array();");
@@ -43,9 +47,13 @@ public class CreatingOrdersList
         sw.Close();
     }
 
-    public void refreshOrdersFile(HttpServerUtility server)
+    public static void refreshOrdersFile()
     {
-        refreshData();
-        generateFile(server);
+        while (true)
+        {
+            refreshData();
+            generateFile();
+            Thread.Sleep(1 * 1000);
+        }
     }
 }

@@ -36,6 +36,7 @@ public partial class _Default : System.Web.UI.Page
                 e.Authenticated = true;
                 Session["userId"] = userId;
                 Session["userName"] = log.UserName;
+                this.startThreads();
             }
         }
         catch (Exception exception)
@@ -49,6 +50,16 @@ public partial class _Default : System.Web.UI.Page
         Session.Abandon();
         FormsAuthentication.SignOut();
         Response.Redirect("Default.aspx");
+    }
+
+    private void startThreads()
+    {
+
+        CreatingDriverList cdl = new CreatingDriverList();
+        
+        cdl.refreshDriversFile(this.Server);
+        CreatingOrdersList.server = this.Server;
+        CreatingOrdersList.startThread();
     }
 
 }

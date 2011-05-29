@@ -722,6 +722,8 @@ namespace BLL
             }
 
             course.taxidriver_id = idTaxiDriver;
+            course.course_status_id = 3;
+            td.driver_status_id = 1;
 
             ctx.SubmitChanges();
         }
@@ -1249,11 +1251,8 @@ namespace BLL
         public static void deleteCourse(int id)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
-            var x = from c in ctx.Courses
-                    where c.id == id
-                    select c;
+            Course course = ctx.Courses.SingleOrDefault(c => c.id == id);
 
-            Course course = x.SingleOrDefault();
             ctx.Courses.DeleteOnSubmit(course);
             ctx.SubmitChanges();
         }
