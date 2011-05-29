@@ -74,6 +74,7 @@ function MapCreateMarkerDriver(details, showPopup) {
         details: details
     };
     marker.events.register('mousedown', marker, function (evt) {
+        showPopupAtTop(popup.groupDiv);
         popup.visible() ? popup.hide() : popup.show();
         // !? inaczej niż JavaScriptem chyba nie da rady, bo openstreetmap dodaje biały background dopiero przy wyświetlaniu popupa
         OpenLayers.Event.stop(evt);
@@ -112,6 +113,9 @@ function MapCreatePopupDriver(lonLat, details, showPopup) {
     });
     $(popup.groupDiv.parentNode).addClass('map_popup_groupDiv_parent');
     $(popup.groupDiv).addClass('map_popup_groupDiv').addClass('driver');
+    $(popup.groupDiv).click(function () {
+        showPopupAtTop(this);
+    });
     if (showPopup == true) popup.show();
     else popup.hide();
     return popup;
@@ -181,6 +185,7 @@ function MapCreateMarkerOrder(details, showPopup) {
     };
 
     marker.events.register('mousedown', marker, function (evt) {
+        showPopupAtTop(popup.groupDiv);
         popup.visible() ? popup.hide() : popup.show();
         OpenLayers.Event.stop(evt);
     });
@@ -190,7 +195,7 @@ function MapCreatePopupOrder(lonLat, details, showPopup) {
     var popup = new OpenLayers.Popup(details.id_order, // auto generate id
                    lonLat,
                    new OpenLayers.Size(220, 110),
-                   '<div class="map_popup" style="position:relative; z-index:560">'+
+                   '<div class="map_popup" style="position:relative; z-index:560 !important">' +
                    '<div class="order_id">Zamówienie #' + details.id_order + '</div>' +
                    '<div class="course_date">' + details.course_date + '</div>' +
                    '<div class="startpoint_name">' + details.startpoint_name + '</div>' +
@@ -202,6 +207,9 @@ function MapCreatePopupOrder(lonLat, details, showPopup) {
     popup.setOpacity(0.9);
     $(popup.groupDiv.parentNode).addClass('map_popup_groupDiv_parent');
     $(popup.groupDiv).addClass('map_popup_groupDiv').addClass('order');
+    $(popup.groupDiv).click(function () {
+        showPopupAtTop(this);
+    });
     if (showPopup == true) popup.show();
     else popup.hide();
     return popup;
@@ -305,4 +313,11 @@ function MapShowPoint(lon, lat, zoom) { // zoom => centerMap
             }
         };
     };
+}
+
+showPopupAtTop_lastZIndex=1;
+function showPopupAtTop(obj) {
+    //popups = $('div.map_popup').parent().parent().parent().css('zIndex', 1000);
+    $(obj).parent().css('zIndex', 1000 + showPopupAtTop_lastZIndex);
+    showPopupAtTop_lastZIndex++;
 }

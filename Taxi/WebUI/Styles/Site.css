@@ -1,4 +1,21 @@
-﻿div.hiddenFieldSet {display:none}
+﻿div.message_box 
+{
+    position: fixed;
+    left: 50px;
+    top: 50px;
+    padding: 10px 30px;
+    font: 700 12px tahoma;
+    text-shadow: 1px 1px 1px #DDD;
+    box-shadow: 3px 3px 7px #555;
+    background: #CDD;
+    border: 1px solid #333;
+    border-radius: 8px;
+    z-index: 10000;
+    cursor: default;
+    display: none;
+}
+
+div.hiddenFieldSet {display:none}
 label {display:inline-block}
 input {margin:2px 0}
 h2 {margin:25px 0 15px 0}
@@ -43,6 +60,11 @@ div.map_popup
     padding:2px 10px; 
     color:#FFF; 
     line-height: 15px;
+}
+
+div.map_popup_groupDiv 
+{
+    box-shadow: 1px 1px 3px #555;
 }
 
 div.map_popup .order_id, div.map_popup .driver_id
@@ -301,21 +323,25 @@ div#dialog_change_orders
     height: 200px;
     margin: 0;
     z-index: 1000000;
+    box-shadow: 3px 3px 4px #777;
 }
 
 div#dialog_change_orders .title 
 {
-    background: #E5D5FA;
-    font: 700 11px tahoma;
-    padding: 2px 8px;
+    background: #B595CA;
+    font: 700 14px tahoma;
+    color: #FFF;
     cursor: move;
     margin: 0 0 15px 0;
+    text-shadow: 1px 1px 1px #555;
+    text-align: center;
 }
 
 div#dialog_change_orders .title, div#dialog_change_orders .close 
 {
-    border: 1px solid #777;
-    border-radius: 5px;
+    padding: 6px 8px;
+    border: 1px solid #344;
+    border-radius: 7px;
 }
 
 div#dialog_change_orders label
@@ -329,7 +355,6 @@ div#dialog_change_orders .close
     float: right;
     background: #D22;
     font: 700 11px tahoma;
-    padding: 2px 4px;
     cursor: pointer;
     color: #FFF;
     width: 14px;
@@ -396,7 +421,7 @@ div#dialog_change_orders.edit .submitbutton button.del
 
 .rightmenu .new
 {
-    margin: 15px auto 0 auto;
+    margin: 0px auto 15px auto;
     text-align: center;
 }
 
@@ -428,7 +453,7 @@ div#dialog_change_orders.edit .submitbutton button.del
     color: #faf8fb;
 }
 
-.rightmenu li 
+.rightmenu li, .rightmenu li.locked:hover 
 {
     background: #b293bf;
     padding: 5px 2px 5px 8px;
@@ -437,6 +462,19 @@ div#dialog_change_orders.edit .submitbutton button.del
     margin: 0 2px 3px 2px;
     cursor: pointer;
     position: relative;
+}
+
+.rightmenu li.locked 
+{
+    cursor: default !important;
+    opacity: 0.4;
+}
+
+.rightmenu li.more
+{
+    text-align: center;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 
 .rightmenu li:hover
@@ -483,6 +521,11 @@ div.topmenu
     padding: 15px 0 20px 0;
     background: url(../Images/Layout/menu_bg.png) no-repeat 0 15px;
     width: 100%;
+}
+
+div.topmenu, div.topmenu *
+{
+    z-index: 40000 !important;
 }
 
 div.menu
