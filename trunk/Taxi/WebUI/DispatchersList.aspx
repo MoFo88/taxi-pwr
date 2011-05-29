@@ -25,8 +25,6 @@
                     <asp:BoundField DataField="name" HeaderText="name" SortExpression="Imie" />
                     <asp:BoundField DataField="surname" HeaderText="Nazwisko" 
                         SortExpression="surname" />
-                    <asp:BoundField DataField="employee_type_id" HeaderText="Typ" 
-                        SortExpression="employee_type_id" />
                     <asp:BoundField DataField="street" HeaderText="Ulica" 
                         SortExpression="street" />
                     <asp:BoundField DataField="house_nr" HeaderText="Nr domu" 

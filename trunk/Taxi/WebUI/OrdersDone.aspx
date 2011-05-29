@@ -24,7 +24,9 @@
                     <asp:BoundField DataField="course_date" HeaderText="Data" SortExpression="course_date" />
                     <asp:BoundField DataField="startpoint_name" HeaderText="Miejsce" SortExpression="startpoint_name" />
                     <asp:BoundField DataField="client_name" HeaderText="Klient" SortExpression="client_name" />
-                    <asp:BoundField DataField="client_phone" HeaderText="Telefon" SortExpression="client_phone" />
+                    <asp:BoundField DataField="client_phone" HeaderText="Telefon" SortExpression="client_phone" />                  
+                    <asp:BoundField DataField="dispatcher" HeaderText="Przyjął" SortExpression="dispatcher" />                   
+                    <asp:BoundField DataField="driver" HeaderText="Taksówkarz" SortExpression="driver" />
                 </Columns>
                 <EditRowStyle BackColor="#999999" />
                 <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
@@ -48,7 +50,7 @@
     
 
             <asp:ObjectDataSource ID="ds_Orders" runat="server" 
-                SelectMethod="getDoneOrders" TypeName="BLL.Repository">
+                SelectMethod="getDoneOrdersView" TypeName="BLL.Repository">
             </asp:ObjectDataSource>
     
         </asp:Panel>

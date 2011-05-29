@@ -24,7 +24,7 @@
             <br />
             <asp:Label ID="lb_Surname" runat="server" Text="Nazwisko" 
                 AssociatedControlID="tb_Surname"></asp:Label>
-            <asp:TextBox ID="tb_Surname" runat="server" AutoPostBack=true></asp:TextBox>
+            <asp:TextBox ID="tb_Surname" runat="server" ></asp:TextBox>
             <asp:RequiredFieldValidator ID="RequiredFieldValidator_tbSurname" 
                 runat="server" ControlToValidate="tb_Surname" ErrorMessage="Wymagane pole" 
                 Font-Bold="True" ForeColor="Red"></asp:RequiredFieldValidator>

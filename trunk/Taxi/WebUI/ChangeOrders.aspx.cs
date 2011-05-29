@@ -25,6 +25,7 @@ public partial class ChangeOrders : System.Web.UI.Page
             if (idCourse == "")
             {
                 addNewCourse(destination, date, client, clientPhone, lon, lat);
+                Response.Redirect("MapView.aspx:");
             }
             else
             {

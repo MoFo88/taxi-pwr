@@ -573,54 +573,6 @@ namespace BLL
         }
         /* COURS */
 
-        /// <summary>
-        /// Funkcja bobiera liste taksowkarzy (podana ich liczbę)
-        /// któzy sąw odleglości najblizszej do podanego kursu i dodatkowo mająokreslony typ samochodu
-        /// </summary>
-        /// <param name="course"></param>
-        /// <param name="carTypeId"></param>
-        /// <param name="seats"></param>
-        /// <param name="maxResultCount"></param>
-        /// <returns></returns>
-        public List<TaxiDriver> GetTaxiDriversByCourseAndTaxiType( Course course, int carTypeId, int seats, int maxResultCount )
-        {
-            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
-
-            var x = from td in ctx.Employees.OfType<TaxiDriver>() 
-                    where 
-                    td.Taxi.Car_model.seats == seats 
-                    && td.Taxi.Car_type.id == carTypeId
-                    select td;
-
-
-            List<TaxiDriver> tdList = x.ToList();
-
-            tdList = tdList.OrderBy(t => t, new DistanceComparer(course)).Take(maxResultCount).ToList();
-
-            return tdList;
-
-        }
-
-        public class DistanceComparer : IComparer<TaxiDriver>
-        {
-            Course c;
-
-            public DistanceComparer(Course c)
-            {
-                this.c = c;
-            }
-
-            public int Compare(TaxiDriver x, TaxiDriver y)
-            {
-                double odl1 = Math.Sqrt((double)((x.position_lon - c.startpoint_lon) * (x.position_lon - c.startpoint_lon) + (x.position_lat - c.startpoint_lat) * (x.position_lat - c.startpoint_lat)));
-                double odl2 = Math.Sqrt((double)((y.position_lon - c.startpoint_lon) * (y.position_lon - c.startpoint_lon) + (y.position_lat - c.startpoint_lat) * (y.position_lat - c.startpoint_lat)));
-
-                if (odl1 == odl2) return 0;
-                if (odl1 > odl2) return 1;
-                else return -1;
-            }
-        }
-
         /// <summary>Dodaj nowy kurs
         /// </summary>
         /// <param name="taxidriver_id"></param>
@@ -837,6 +789,7 @@ namespace BLL
         /// <param name="carTypeId"></param>
         /// <exception cref="TaxiNotExistException"></exception>
         /// JG
+        /// todo: test
         public static void EditTaxiData(int taxiId, String taxiNumber, String registrationNumber, int carModelId, int carTypeId)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -985,7 +938,6 @@ namespace BLL
         /// Funkcja dla ŁebSerwisu. Zwraca skrocona informacje dla taksowkarza o aktualnych kursach przypisanych do niego
         /// </summary>
         /// <returns></returns>
-        /// MS
         public static CourseData GetCourseData(int idDriver)
         {
             CourseData coursedata = new CourseData();
@@ -1021,7 +973,6 @@ namespace BLL
         /// </summary>
         /// <param name="idDriver"></param>
         /// <returns></returns>
-        /// WS
         public static bool isCourseAvailable(int idDriver)
         {
             CourseData coursedata = new CourseData();
@@ -1127,6 +1078,32 @@ namespace BLL
             return x.ToList();
         }
 
+        /* PRIVATE MEMBER */
+
+        #region Losowy ciąg znaków o zadanej długości
+        #endregion
+        private static string CreateRandomString(int length)
+        {
+
+            Random random = new Random();
+           
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] hash = md5.ComputeHash(Encoding.ASCII.GetBytes(random.Next().ToString()));
+            string password = Convert.ToBase64String(hash).Substring(0, length);
+            string newPass = "";
+            
+            // Uppercase at random 
+            random = new Random();
+            for (int i = 0; i < password.Length; i++)
+            {
+                if (random.Next(0, 2) == 1)
+                    newPass += password.Substring(i, 1).ToUpper();
+                else
+                    newPass += password.Substring(i, 1);
+            }
+            return newPass;
+        }
+
         public static List<Course> getWaitingOrders()
         {
             return getCoursesByStatusId(1);
@@ -1152,40 +1129,120 @@ namespace BLL
             return getCoursesByStatusId(5);
         }
 
-
-
-        /* PRIVATE MEMBER */
-
-        #region Losowy ciąg znaków o zadanej długości (JG)
-
-        #endregion
-        private static string CreateRandomString(int length)
+        public static List<CourseAccepedView> getWaitingOrdersView()
         {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from c in ctx.CourseAccepedViews
+                    orderby c.course_date ascending
+                    select c;
 
-            Random random = new Random();
-           
-            MD5 md5 = new MD5CryptoServiceProvider();
-            byte[] hash = md5.ComputeHash(Encoding.ASCII.GetBytes(random.Next().ToString()));
-            string password = Convert.ToBase64String(hash).Substring(0, length);
-            string newPass = "";
-            
-            // Uppercase at random 
-            random = new Random();
-            for (int i = 0; i < password.Length; i++)
-            {
-                if (random.Next(0, 2) == 1)
-                    newPass += password.Substring(i, 1).ToUpper();
-                else
-                    newPass += password.Substring(i, 1);
-            }
-            return newPass;
+            return x.ToList();
+        }
+
+        public static List<CourseInProgressView> getAcceptedOrdersView()
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from c in ctx.CourseInProgressViews
+                    where c.course_status_id==2
+                    orderby c.course_date ascending
+                    select c;
+
+            return x.ToList();
+        }
+
+        public static List<CourseInProgressView> getInProgressOrdersView()
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from c in ctx.CourseInProgressViews
+                    where c.course_status_id == 3
+                    orderby c.course_date ascending
+                    select c;
+
+            return x.ToList();
+        }
+
+        public static List<CourseInProgressView> getDoneOrdersView()
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from c in ctx.CourseInProgressViews
+                    where c.course_status_id == 4
+                    orderby c.course_date ascending
+                    select c;
+
+            return x.ToList();
+        }
+
+        public static List<CourseInProgressView> getCanceledOrdersView()
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from c in ctx.CourseInProgressViews
+                    where c.course_status_id == 5
+                    orderby c.course_date ascending
+                    select c;
+
+            return x.ToList();
+        }
+
+        public static List<EmployeeView> getEmployeeView()
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from c in ctx.EmployeeViews
+                    select c;
+
+            return x.ToList();
+        }
+
+        public static List<TaxiDriverView> getTaxiDriversView()
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from c in ctx.TaxiDriverViews
+                    select c;
+
+            return x.ToList();
+        }
+
+        public static Course getCourseById(int id)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from c in ctx.Courses
+                    where c.id == id
+                    select c;
+                    
+
+            return x.SingleOrDefault();
+        }
+
+        public static void editCourse(int id, string client, string phone, string startpoint, string date)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from c in ctx.Courses
+                    where c.id == id
+                    select c;
+
+            Course course = x.SingleOrDefault();
+            course.client_name = client;
+            course.client_phone = phone;
+            course.startpoint_name = startpoint;
+            course.date = DateTime.Parse(date);
+
+            ctx.SubmitChanges();
+        }
+
+        public static void deleteCourse(int id)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from c in ctx.Courses
+                    where c.id == id
+                    select c;
+
+            Course course = x.SingleOrDefault();
+            ctx.Courses.DeleteOnSubmit(course);
+            ctx.SubmitChanges();
         }
 
 
-
-        #region Suma SHA1 (JG)
+        #region Suma SHA1
         #endregion
-
         private static string CalculateSHA1(string text, Encoding enc)
         {
             byte[] buffer = enc.GetBytes(text);

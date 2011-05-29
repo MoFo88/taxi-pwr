@@ -26,22 +26,18 @@
                     <asp:BoundField DataField="name" HeaderText="name" SortExpression="Imie" />
                     <asp:BoundField DataField="surname" HeaderText="Nazwisko" 
                         SortExpression="surname" />
-                    <asp:BoundField DataField="employee_type_id" HeaderText="Typ" 
-                        SortExpression="employee_type_id" />
-                    <asp:BoundField DataField="street" HeaderText="Ulica" 
-                        SortExpression="street" />
-                    <asp:BoundField DataField="house_nr" HeaderText="Nr domu" 
-                        SortExpression="house_nr" />
-                    <asp:BoundField DataField="postal_code" HeaderText="Kod pocztowy" 
-                        SortExpression="postal_code" />
-                    <asp:BoundField DataField="city" HeaderText="Miasto" 
-                        SortExpression="city" />
-                    <asp:BoundField DataField="e_mail" HeaderText="E-mail" 
-                        SortExpression="e_mail" />
                     <asp:BoundField DataField="telephone" HeaderText="Telefon" 
-                        SortExpression="telephone" />
-                    <asp:BoundField DataField="pesel" HeaderText="PESEL" 
-                        SortExpression="pesel" />
+                        SortExpression="street" />
+                    <asp:BoundField DataField="taxi_number" HeaderText="Nr taksówki" 
+                        SortExpression="house_nr" />
+                    <asp:BoundField DataField="producer" HeaderText="Samochód" 
+                        SortExpression="postal_code" />
+                    <asp:BoundField DataField="model" HeaderText="Model" 
+                        SortExpression="city" />
+                    <asp:BoundField DataField="car_type" HeaderText="Typ samochodu" 
+                        SortExpression="e_mail" />
+                    <asp:BoundField DataField="driver_status" HeaderText="Status" 
+                        SortExpression="driver_status" />
                     <asp:CommandField HeaderText="Edytuj" ShowSelectButton="True" 
                         SelectText="Wybierz"/>
                 </Columns>
@@ -67,7 +63,7 @@
     
 
             <asp:ObjectDataSource ID="ds_Employees" runat="server" 
-                SelectMethod="GetAllTaxiDrivers" TypeName="BLL.Repository">
+                SelectMethod="getTaxiDriversView" TypeName="BLL.Repository">
             </asp:ObjectDataSource>
     
         </asp:Panel>
