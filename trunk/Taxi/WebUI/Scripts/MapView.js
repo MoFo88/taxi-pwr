@@ -183,7 +183,7 @@ $(document).ready(function () {
                 },
                 function (data) {
                     if (data.length<50) showQuickMessage(data);
-                    else showQuickMessage('Zmieniono/dodano zgłoszenie', 2000);
+                    else showQuickMessage('Zmieniono/dodano zgłoszenie', 3000);
                     $.get('MapView.aspx', function () { // wywołujemy odświeżenie list zgłoszeń i taksówkarzy
                         GetOrderList(); //TODO odblokować jak będzie działało generowanie listy
                         //order=createCurrentOrder();
@@ -214,7 +214,7 @@ $(document).ready(function () {
             },
             function (data) {
                 if (data.length<50) showQuickMessage(data);
-                else showQuickMessage('Usunięto zgłoszenie', 2000);
+                else showQuickMessage('Usunięto zgłoszenie', 3000);
                 $('div#dialog_change_orders').slideUp(300);
                 GetOrderList();
             })
@@ -245,7 +245,7 @@ $(document).ready(function () {
 });
 
 function GetOrderList() {
-    showQuickMessage('Pobieram listę zgłoszeń i taksówek...', 2000);
+    showQuickMessage('Pobieram listę zgłoszeń i taksówek...', 3000);
     orders = $.getScript('Lists/GetOrderList.txt', function () {
         FillOrderList(orders);
         MapShowMarkersOrder(orders);

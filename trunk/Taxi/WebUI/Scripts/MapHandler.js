@@ -23,7 +23,19 @@
 
 }
 
+function MapFilterDrivers(markersDrivers) {
+    newDrivers = new Array();
+    for (i in markersDrivers) {
+        driver = markersDrivers[i];
+        if (driver.status != 1) newDrivers[newDrivers.length] = driver;
+    }
+    return newDrivers;
+}
+
 function MapShowMarkersDriver(markersDrivers, showPopup) {
+    // Przefiltruj kierowców
+    markersDrivers = MapFilterDrivers(markersDrivers);
+
     // Najpierw usuń stare (usunięte) znaczniki i popupy
     var newDriversId = new Array();
     for (var i in markersDrivers) {
