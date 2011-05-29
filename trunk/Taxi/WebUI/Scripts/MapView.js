@@ -1,4 +1,20 @@
-﻿function getCurrentDateTime() {
+﻿function createCurrentOrder() {
+    var div_dco=$('div#dialog_change_orders');
+    obj={
+        id_order: div_dco.find('#tb_id_order').val(),
+        course_date: div_dco.find('#tb_order_course_date').val(),
+        startpoint_name: div_dco.find('#tb_order_startpoint_name').val(),
+        client_name: div_dco.find('#tb_order_client_name').val(),
+        client_phone: div_dco.find('#tb_order_client_phone').val(),
+        seats: div_dco.find('#tb_order_seats').val(),
+        car_type: div_dco.find('#tb_order_car_type').val(),
+        lon: div_dco.find('#tb_order_lon').val(),
+        lat: div_dco.find('#tb_order_lat').val()
+    };
+    return obj;
+}
+
+function getCurrentDateTime() {
     var curtime = new Date();
     var curhour = curtime.getHours();
     var curmin = curtime.getMinutes();
@@ -12,13 +28,20 @@
     return date+' '+time;
 }
 
+selectOrder_timeout=null;
 function selectOrder(container, element) {
+    div_dco=$('div#dialog_change_orders');
+    //TODO wprowadzamy opóźnienie w pobieraniu taksówek, bo inaczej jeśli zamówienie znika w momencie kliknięcia, to nie pojawia się popup - to jest jeszcze do przetestowania
+    if (selectOrder_timeout!=null) clearTimeout(selectOrder_timeout);
+    selectOrder_timeout=setTimeout(function () {
+        if (element.find('div.id_order').text()!=div_dco.find('#tb_id_order').val()) {
+            $('div#dialog_change_orders').slideUp(300);
+        }
+        //GetOrderList();
+    }, 200);
     MapSelectOrder(element);
     container.find('li').removeClass('selected');
     element.addClass('selected');
-    setTimeout(function () { //TODO wprowadzamy opóźnienie w pobieraniu taksówek, bo inaczej jeśli zamówienie znika w momencie kliknięcia, to nie pojawia się popup - to jest jeszcze do przetestowania
-        //GetOrderList();
-    }, 2000);
 }
 
 function showPointByAddress(address) {
@@ -58,6 +81,10 @@ function dialog_change_orders_fill(div_dco, order) {
             startpoint_name: '',
             client_name: '',
             client_phone: '',
+            seats: 1,
+            car_type: 1,
+            lon: '',
+            lat: '',
         };
     }
     div_dco.find('#tb_id_order').val(order.id_order);
@@ -68,7 +95,11 @@ function dialog_change_orders_fill(div_dco, order) {
     div_dco.find('#tb_order_startpoint_name').val(order.startpoint_name);
     div_dco.find('#tb_order_client_name').val(order.client_name);
     div_dco.find('#tb_order_client_phone').val(order.client_phone);
-    if ($.cookie('dialog_change_orders_x')!=null) {
+    div_dco.find('#tb_order_seats').val(order.seats);
+    div_dco.find('#tb_order_car_type').val(order.car_type);
+    div_dco.find('#tb_order_lon').val(order.lon);
+    div_dco.find('#tb_order_lat').val(order.lat);
+    if ($.cookie('dialog_change_orders_x')!=null) { // ustaw okienko w odpowiedniej (zapamiętanej pozycji)
         div_dco.get(0).style.left=$.cookie('dialog_change_orders_x')+'px';
         div_dco.get(0).style.top=$.cookie('dialog_change_orders_y')+'px';
     }
@@ -85,10 +116,11 @@ $(document).ready(function () {
         GetOrderList();
     }, 10000);
 
-    // ESC (zrobiłem tyldę, bo ESC nie działa w Chrome) przy dodawaniu/edytowaniu zgłoszenia -> zamknięcie okienka zgłoszenia
+    // ESC przy dodawaniu/edytowaniu zgłoszenia -> zamknięcie okienka zgłoszenia
     $('div#dialog_change_orders').keyup(function (e) {
         if (e.keyCode==27) {
             $('div#dialog_change_orders').slideUp(300);
+            MapShowPoint();
         }
     });
 
@@ -126,6 +158,11 @@ $(document).ready(function () {
 
     // Reakcja na zatwierdzenie formularza zmiany/dodawania zgłoszenia
     $('div#dialog_change_orders button.add, div#dialog_change_orders button.edit').button().click(function () {
+        changeOrder();
+        return false;
+    });
+
+    function changeOrder() {
         div_dco=$('div#dialog_change_orders');
         if (div_dco.find('#tb_order_lon').val()=='' || div_dco.find('#tb_order_lat').val()=='') {
             showQuickMessage('Brak współrzędnych');
@@ -139,15 +176,23 @@ $(document).ready(function () {
                     startpoint_name: div_dco.find('#tb_order_startpoint_name').val(),
                     client_name: div_dco.find('#tb_order_client_name').val(),
                     client_phone: div_dco.find('#tb_order_client_phone').val(),
+                    seats: div_dco.find('#tb_order_seats').val(),
+                    car_type: div_dco.find('#tb_order_car_type').val(),
                     lon: div_dco.find('#tb_order_lon').val(),
-                    lat: div_dco.find('#tb_order_lat').val(),
+                    lat: div_dco.find('#tb_order_lat').val()
                 },
                 function (data) {
                     if (data.length<50) showQuickMessage(data);
-                    else showQuickMessage('Zmieniono/dodano zgłoszenie');
-                    //alert(data);
-                    GetOrderList();
-                    //TODO może fajnie by było automatycznie wybrać ten kurs żeby mu przydzielić taksówkę?
+                    else showQuickMessage('Zmieniono/dodano zgłoszenie', 2000);
+                    $.get('MapView.aspx', function () { // wywołujemy odświeżenie list zgłoszeń i taksówkarzy
+                        GetOrderList(); //TODO odblokować jak będzie działało generowanie listy
+                        //order=createCurrentOrder();
+                        //MapChangeOrder(div_dco.find('#tb_id_order').val(), order);
+                        setTimeout(function () {
+                            MapSelectOrderById(div_dco.find('#tb_id_order').val()); // automatycznie wywołuje MapShowPoint() - czyli wyszukany na podstawie adresu punkt na mapie znika
+                        }, 500);
+                        //alert(data);
+                    });
                 })
                 //.success(function () { alert("second success"); })
                 .error(function () {
@@ -155,10 +200,9 @@ $(document).ready(function () {
                 })
                 .complete(function () { }
             );
-            //GetOrderList(); //TODO - to chyba można by włączyć
         }
         return false;
-    });
+    };
 
     // Reakcja na przycisk usuwania zgłoszenia
     $('div#dialog_change_orders button.del').button().click(function () {
@@ -170,7 +214,7 @@ $(document).ready(function () {
             },
             function (data) {
                 if (data.length<50) showQuickMessage(data);
-                else showQuickMessage('Usunięto zgłoszenie');
+                else showQuickMessage('Usunięto zgłoszenie', 2000);
                 $('div#dialog_change_orders').slideUp(300);
                 GetOrderList();
             })
@@ -180,7 +224,7 @@ $(document).ready(function () {
             })
             .complete(function () { }
         );
-        //GetOrderList();
+        GetOrderList();
         return false;
     });
 
@@ -210,6 +254,7 @@ function GetOrderList() {
     drivers = $.getScript('Lists/GetDriverList.txt?id_order=' + visibleOrdersSelected, function () { //TODO - nie jest potrzebne id_order, przynajmniej na razie, DC obsłuży przypisanego taksówkrza
         MapShowMarkersDriver(drivers);
     });
+    return orders;
 }
 
 orders_current_page=0;
@@ -241,7 +286,7 @@ function FillOrderList(orders) {
                     '<div class="edit">edit</div>' +
                     '<div class="course_date">'+order.course_date+'</div>' +
                     '<div class="startpoint_name">'+order.startpoint_name+'</div>' +
-                    '<div class="notes">'+(order.notes==''?'&nbsp;':'Uwagi: '+order.notes)+'</div>' +
+                    '<div class="notes">'+(order.notes==''||order.notes=='brak'?'&nbsp;':order.notes)+'</div>' +
                     '</li>';
         var item_obj = $(item_html);
         if (order.id_order == visibleOrdersSelected) item_obj.addClass('selected');
@@ -260,9 +305,9 @@ function FillOrderList(orders) {
             div_dco.removeClass('add').addClass('edit');
             div_dco.slideDown(300);
             div_dco.find('#tb_order_startpoint_name').focus();
-            selectOrder($(this).parent());
+            //selectOrder($(this).parent());
             //showPointByAddress($('#tb_order_startpoint_name').val());
-            return false;
+            //return false;
         });
     }
 
