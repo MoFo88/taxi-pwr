@@ -574,6 +574,55 @@ namespace BLL
         }
         /* COURS */
 
+
+        /// <summary>
+        /// Funkcja bobiera liste taksowkarzy (podana ich liczbę)
+        /// któzy sąw odleglości najblizszej do podanego kursu i dodatkowo mająokreslony typ samochodu
+        /// </summary>
+        /// <param name="course"></param>
+        /// <param name="carTypeId"></param>
+        /// <param name="seats"></param>
+        /// <param name="maxResultCount"></param>
+        /// <returns></returns>
+        public static List<TaxiDriver> GetTaxiDriversByCourseAndTaxiType( Course course, int carTypeId, int seats, int maxResultCount )
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+
+            var x = from td in ctx.Employees.OfType<TaxiDriver>() 
+                    where 
+                    td.Taxi.Car_model.seats == seats 
+                    && td.Taxi.Car_type.id == carTypeId
+                    select td;
+
+
+            List<TaxiDriver> tdList = x.ToList();
+
+            tdList = tdList.OrderBy(t => t, new DistanceComparer(course)).Take(maxResultCount).ToList();
+
+            return tdList;
+
+        }
+
+        public class DistanceComparer : IComparer<TaxiDriver>
+        {
+            Course c;
+
+            public DistanceComparer(Course c)
+            {
+                this.c = c;
+            }
+
+            public int Compare(TaxiDriver x, TaxiDriver y)
+            {
+                double odl1 = Math.Sqrt((double)((x.position_lon - c.startpoint_lon) * (x.position_lon - c.startpoint_lon) + (x.position_lat - c.startpoint_lat) * (x.position_lat - c.startpoint_lat)));
+                double odl2 = Math.Sqrt((double)((y.position_lon - c.startpoint_lon) * (y.position_lon - c.startpoint_lon) + (y.position_lat - c.startpoint_lat) * (y.position_lat - c.startpoint_lat)));
+
+                if (odl1 == odl2) return 0;
+                if (odl1 < odl2) return 1;
+                else return -1;
+            }
+        }
+
         /// <summary>Dodaj nowy kurs
         /// </summary>
         /// <param name="taxidriver_id"></param>
@@ -599,7 +648,8 @@ namespace BLL
             Decimal startpoint_lon, 
             Decimal startpoint_lat, 
             Decimal endpoint_lon, 
-            Decimal endpoint_lat)
+            Decimal endpoint_lat
+            )
         {
             /*
              * paramatry zostały zmienione na nullowalne
@@ -633,6 +683,7 @@ namespace BLL
             course.endpoint_lon = endpoint_lon;
             course.startpoint_name = startpoint_name;
 
+            course.id = 2;
 
             ctx.Courses.InsertOnSubmit(course);
             ctx.SubmitChanges();
@@ -703,7 +754,7 @@ namespace BLL
         /// <exception cref="UserNotExistException"></exception>
         /// <exception cref="CourseNotExistException"></exception>
         /// JG
-        /// ToDo: test
+
         public static void BindCoursToTaxiDriver(int idTaxiDriver, int idCours)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
