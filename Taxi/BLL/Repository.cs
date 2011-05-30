@@ -1278,6 +1278,7 @@ namespace BLL
             course.client_phone = phone;
             course.startpoint_name = startpoint;
             course.date = DateTime.Parse(date);
+         
 
             ctx.SubmitChanges();
         }
