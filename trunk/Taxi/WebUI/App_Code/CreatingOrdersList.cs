@@ -38,10 +38,12 @@ public static class CreatingOrdersList
                 sw.WriteLine("order = {");
                 sw.WriteLine("lon: " + order.startpoint_lon.ToString().Replace(',', '.') + ",");
                 sw.WriteLine("lat: " + order.startpoint_lat.ToString().Replace(',', '.') + ",");
-                sw.WriteLine("course_date: '" + order.course_date.ToString() + "',");
+                sw.WriteLine("course_date: '" + order.course_date.ToString().Substring(0,16) + "',");
                 sw.WriteLine("startpoint_name: '" + order.startpoint_name + "',");
                 sw.WriteLine("client_name: '" + order.client_name + "',");
                 sw.WriteLine("notes: 'brak'" + ",");
+                sw.WriteLine("car_type: " + order.car_type_id + ",");
+                sw.WriteLine("seats: " + order.seats + ",");
                 sw.WriteLine("id_order: " + order.id + ",");
                 sw.WriteLine("id_driver: " + order.taxidriver_id + "};");
                 sw.WriteLine("orders[orders.length] = order;");

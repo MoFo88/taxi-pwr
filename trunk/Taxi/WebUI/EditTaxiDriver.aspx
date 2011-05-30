@@ -142,7 +142,7 @@
                     Text="Liczba miejsc"></asp:Label>
                 <asp:TextBox ID="tb_SeatPlaces" runat="server"></asp:TextBox>
                 <asp:RangeValidator ID="RangeValidatorSeatPlaces" runat="server" 
-                    ControlToValidate="tb_ProductionYear" ErrorMessage="Zakres od 1 do 25" 
+                    ControlToValidate="tb_SeatPlaces" ErrorMessage="Zakres od 1 do 25" 
                     Font-Bold="True" ForeColor="Red" MaximumValue="25" MinimumValue="1"></asp:RangeValidator>
     
             </asp:Panel>

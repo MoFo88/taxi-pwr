@@ -22,26 +22,30 @@ public partial class ChangeOrders : System.Web.UI.Page
             Decimal lon = Decimal.Parse(lonString.Replace(".", ","));
             String latString = this.Page.Request.Form["lat"];
             Decimal lat = Decimal.Parse(latString.Replace(".", ","));
+            String seatsString = this.Page.Request.Form["seats"];
+            int seats = int.Parse(seatsString);
+            String carTypeString = this.Page.Request.Form["car_type"];
+            int car_type_id = int.Parse(carTypeString);
             if (idCourse == "")
             {
-                addNewCourse(destination, date, client, clientPhone, lon, lat);
+                addNewCourse(destination, date, client, clientPhone, lon, lat, seats, car_type_id);
             }
             else
             {
                 int id = int.Parse(idCourse);
-                editCourse(id,destination, date, client, clientPhone, lon, lat);
+                editCourse(id,destination, date, client, clientPhone, lon, lat,seats, car_type_id);
             }
         }
     }
 
-    private void addNewCourse(String destination, String date, String client, String clientPhone, Decimal lon, Decimal lat)
+    private void addNewCourse(String destination, String date, String client, String clientPhone, Decimal lon, Decimal lat, int car_type_id, int seats)
     {
         int userId = int.Parse(Session["userId"].ToString());
-        Repository.addNewCourse(33, userId, clientPhone, DateTime.Parse(date), 1, client, destination, lon, lat, lon, lat);
+        Repository.addNewCourse(null, userId, clientPhone, DateTime.Parse(date), 1, client, destination, lon, lat, lon, lat, car_type_id, seats);
     }
 
-    private void editCourse(int idCourse, String destination, String date, String client, String clientPhone, Decimal lon, Decimal lat)
+    private void editCourse(int idCourse, String destination, String date, String client, String clientPhone, Decimal lon, Decimal lat, int car_type_id, int seats)
     {
-        Repository.editCourse(idCourse, destination, date, client, clientPhone, lon, lat);
+        Repository.editCourse(idCourse, destination, date, client, clientPhone, lon, lat, car_type_id, seats);
     }
 }

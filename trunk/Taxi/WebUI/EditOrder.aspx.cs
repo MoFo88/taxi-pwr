@@ -20,8 +20,17 @@ public partial class EditOrder : System.Web.UI.Page
         course = (Course)Repository.getCourseById(idCourse);
         if (!IsPostBack)
         {
+            prepareDropList();
             loadCourseData();
         }
+    }
+
+    private void prepareDropList()
+    {
+        this.ddl_Car_model.DataSource = Repository.getAllCarTypes();
+        this.ddl_Car_model.DataTextField = "name";
+        this.ddl_Car_model.DataValueField = "id";
+        this.DataBind();
     }
 
     private void loadCourseData()
@@ -30,11 +39,14 @@ public partial class EditOrder : System.Web.UI.Page
         tb_Phone.Text = course.client_phone;
         tb_Destination.Text = course.startpoint_name;
         tb_Date.Text = course.date.ToString();
+        tb_Seats.Text = course.seats.ToString();
+        ddl_Car_model.SelectedValue = course.car_type_id.ToString();
     }
     
     protected void b_Submit_Click(object sender, EventArgs e)
     {
-        Repository.editCourse(idCourse, tb_clientNameAndSurname.Text, tb_Phone.Text, tb_Destination.Text, tb_Date.Text);
+        int car_type_id = ddl_Car_model.SelectedIndex;
+        Repository.editCourse(idCourse, tb_clientNameAndSurname.Text, tb_Phone.Text, tb_Destination.Text, tb_Date.Text, car_type_id, int.Parse(tb_Seats.Text));
         switch (course.course_status_id)
         {
             case 1: Response.Redirect("OrdersWaiting.aspx");

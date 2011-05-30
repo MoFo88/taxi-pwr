@@ -11,7 +11,6 @@
       </siteMapNode>
       <siteMapNode title="Zgłoszenia" description="">
         <siteMapNode url="OrdersWaiting.aspx" title="Oczekujące" description="" />
-        <siteMapNode url="OrdersAccepted.aspx" title="Przyjęte" description="" />
         <siteMapNode url="OrdersInProgres.aspx" title="W trakcie" description="" />
         <siteMapNode url="OrdersDone.aspx" title="Zrealizowane" description="" />
         <siteMapNode url="OrdersCanceled.aspx" title="Anulowane" description="" />

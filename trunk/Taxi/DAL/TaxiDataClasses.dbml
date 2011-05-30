@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="yasio1_taxiDb" Class="TaxiDataClassesDataContext" Serialization="Unidirectional" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=mssql3.webio.pl,2401;Initial Catalog=yasio1_taxiDb;Persist Security Info=True;User ID=yasio1_superuser" SettingsObjectName="DAL.Properties.Settings" SettingsPropertyName="yasio1_taxiDbConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=mssql3.webio.pl,2401;Initial Catalog=yasio1_taxiDb;User ID=yasio1_databaseUser" SettingsObjectName="DAL.Properties.Settings" SettingsPropertyName="yasio1_taxiDbConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Car_model" Member="Car_models">
     <Type Name="Car_model">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -84,44 +84,27 @@
       <Association Name="Car_type_Taxi" Member="Car_type" ThisKey="id_car_type" OtherKey="id" Type="Car_type" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="yasio1_databaseUser.CourseAccepedView" Member="CourseAccepedViews">
-    <Type Name="CourseAccepedView">
+  <Table Name="dbo.Course" Member="Courses">
+    <Type Name="Course">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="client_phone" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="rep_id" Member="depositor_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="taxi_id" Member="taxidriver_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="startpoint_name" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="startpoint_lat" Type="System.Decimal" DbType="Decimal(11,7) NOT NULL" CanBeNull="false" />
+      <Column Name="startpoint_lon" Type="System.Decimal" DbType="Decimal(11,7) NOT NULL" CanBeNull="false" />
+      <Column Name="endpoint_lat" Type="System.Decimal" DbType="Decimal(11,7) NOT NULL" CanBeNull="false" />
+      <Column Name="endpoint_lon" Type="System.Decimal" DbType="Decimal(11,7) NOT NULL" CanBeNull="false" />
+      <Column Name="course_status_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="course_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="client_name" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
-      <Column Name="startpoint_name" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
-      <Column Name="client_phone" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
-      <Column Name="course_status_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="dispatcher" Type="System.String" DbType="VarChar(151) NOT NULL" CanBeNull="false" />
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="dipatcher_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
-  <Table Name="yasio1_databaseUser.CourseInProgressView" Member="CourseInProgressViews">
-    <Type Name="CourseInProgressView">
-      <Column Name="course_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="client_name" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
-      <Column Name="startpoint_name" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
-      <Column Name="client_phone" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
-      <Column Name="course_status_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="dispatcher" Type="System.String" DbType="VarChar(151) NOT NULL" CanBeNull="false" />
-      <Column Name="driver" Type="System.String" DbType="VarChar(151) NOT NULL" CanBeNull="false" />
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="dispatcher_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="driver_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
-  <Table Name="yasio1_databaseUser.CourseView" Member="CourseViews">
-    <Type Name="CourseView">
-      <Column Name="course_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="client_name" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
-      <Column Name="startpoint_name" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
-      <Column Name="client_phone" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
-      <Column Name="course_status_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="dispatcher" Type="System.String" DbType="VarChar(151) NOT NULL" CanBeNull="false" />
-      <Column Name="driver" Type="System.String" DbType="VarChar(151) NOT NULL" CanBeNull="false" />
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="dispatcher_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="driver_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="seats" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="car_type_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Employee_Course" Member="Employee" ThisKey="depositor_id" OtherKey="id" Type="Employee" IsForeignKey="true" />
+      <Association Name="Employee_Course1" Member="Employee1" ThisKey="taxidriver_id" OtherKey="id" Type="Employee" IsForeignKey="true" />
+      <Association Name="Course_status_Course" Member="Course_status" ThisKey="course_status_id" OtherKey="id" Type="Course_status" IsForeignKey="true" />
+      <Association Name="Car_type_Course" Member="Car_type" ThisKey="car_type_id" OtherKey="id" Type="Car_type" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="yasio1_databaseUser.EmployeeView" Member="EmployeeViews">
@@ -157,27 +140,48 @@
       <Column Name="driver_status" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
-  <Table Name="dbo.Course" Member="Courses">
-    <Type Name="Course">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="client_phone" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
-      <Column Name="rep_id" Member="depositor_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="taxi_id" Member="taxidriver_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="startpoint_name" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
-      <Column Name="startpoint_lat" Type="System.Decimal" DbType="Decimal(11,7) NOT NULL" CanBeNull="false" />
-      <Column Name="startpoint_lon" Type="System.Decimal" DbType="Decimal(11,7) NOT NULL" CanBeNull="false" />
-      <Column Name="endpoint_lat" Type="System.Decimal" DbType="Decimal(11,7) NOT NULL" CanBeNull="false" />
-      <Column Name="endpoint_lon" Type="System.Decimal" DbType="Decimal(11,7) NOT NULL" CanBeNull="false" />
-      <Column Name="course_status_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+  <Table Name="yasio1_databaseUser.CourseAccepedView" Member="CourseAccepedViews">
+    <Type Name="CourseAccepedView">
       <Column Name="course_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="client_name" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="startpoint_name" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="client_phone" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="course_status_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="dispatcher" Type="System.String" DbType="VarChar(151) NOT NULL" CanBeNull="false" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="dipatcher_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="seats" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="car_type_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Car_type_Course" Member="Car_type" ThisKey="car_type_id" OtherKey="id" Type="Car_type" IsForeignKey="true" />
-      <Association Name="Employee_Course" Member="Employee" ThisKey="depositor_id" OtherKey="id" Type="Employee" IsForeignKey="true" />
-      <Association Name="Employee_Course1" Member="Employee1" ThisKey="taxidriver_id" OtherKey="id" Type="Employee" IsForeignKey="true" />
-      <Association Name="Course_status_Course" Member="Course_status" ThisKey="course_status_id" OtherKey="id" Type="Course_status" IsForeignKey="true" />
+      <Column Name="car_type" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="yasio1_databaseUser.CourseInProgressView" Member="CourseInProgressViews">
+    <Type Name="CourseInProgressView">
+      <Column Name="course_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="client_name" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="startpoint_name" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="client_phone" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="course_status_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="dispatcher" Type="System.String" DbType="VarChar(151) NOT NULL" CanBeNull="false" />
+      <Column Name="driver" Type="System.String" DbType="VarChar(151) NOT NULL" CanBeNull="false" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="dispatcher_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="driver_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="seats" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="car_type" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="yasio1_databaseUser.CourseView" Member="CourseViews">
+    <Type Name="CourseView">
+      <Column Name="course_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="client_name" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="startpoint_name" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="client_phone" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="course_status_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="dispatcher" Type="System.String" DbType="VarChar(151) NOT NULL" CanBeNull="false" />
+      <Column Name="driver" Type="System.String" DbType="VarChar(151) NOT NULL" CanBeNull="false" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="dispatcher_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="driver_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
 </Database>

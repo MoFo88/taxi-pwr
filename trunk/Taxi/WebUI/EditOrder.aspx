@@ -34,11 +34,9 @@
             <asp:Label ID="Label6" runat="server" AssociatedControlID="tb_Destination" 
                 Text="Miejsce"></asp:Label>
             <asp:TextBox ID="tb_Destination" runat="server"></asp:TextBox>
-            <br />
             <asp:RequiredFieldValidator ID="RequiredFieldValidator_tbDestination" 
                 runat="server" ControlToValidate="tb_Destination" ErrorMessage="Wymagane pole" 
-                Font-Bold="True" ForeColor="Red"></asp:RequiredFieldValidator>
-            <br />
+                Font-Bold="True" ForeColor="Red"></asp:RequiredFieldValidator><br />
             <asp:Label ID="lb_Phone" runat="server" Text="Telefon" 
                 AssociatedControlID="tb_Phone"></asp:Label>
             <asp:TextBox ID="tb_Phone" runat="server"></asp:TextBox>
@@ -50,6 +48,18 @@
                 ErrorMessage="Niepoprawny format danych" Font-Bold="True" ForeColor="Red" 
                 ValidationExpression="(\d{9})|(\d{7})"></asp:RegularExpressionValidator>
             <br />
+            <asp:Label ID="lb_Car_model" runat="server" AssociatedControlID="ddl_Car_model" 
+                Text="Typ samochodu"></asp:Label>
+            <asp:DropDownList ID="ddl_Car_model" runat="server">
+            </asp:DropDownList>
+            <br />
+            <asp:Label ID="Label4" runat="server" AssociatedControlID="tb_Seats" 
+                    Text="Miejsc"></asp:Label>
+                <asp:TextBox ID="tb_Seats" runat="server"></asp:TextBox>
+                <asp:RangeValidator ID="RangeValidatorSeatPlaces" runat="server" 
+                    ControlToValidate="tb_Seats" ErrorMessage="Zakres od 1 do 25" 
+                    Font-Bold="True" ForeColor="Red" MaximumValue="25" MinimumValue="1"></asp:RangeValidator>
+
         </asp:Panel>
         
         <asp:Panel ID="pl_Actions" runat="server">

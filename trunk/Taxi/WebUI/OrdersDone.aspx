@@ -24,7 +24,9 @@
                     <asp:BoundField DataField="course_date" HeaderText="Data" SortExpression="course_date" />
                     <asp:BoundField DataField="startpoint_name" HeaderText="Miejsce" SortExpression="startpoint_name" />
                     <asp:BoundField DataField="client_name" HeaderText="Klient" SortExpression="client_name" />
-                    <asp:BoundField DataField="client_phone" HeaderText="Telefon" SortExpression="client_phone" />                  
+                    <asp:BoundField DataField="client_phone" HeaderText="Telefon" SortExpression="client_phone" />
+                    <asp:BoundField DataField="car_type" HeaderText="Typ taksówki" SortExpression="car_type" />                                     
+                    <asp:BoundField DataField="seats" HeaderText="Liczba miejsc" SortExpression="seats" />                 
                     <asp:BoundField DataField="dispatcher" HeaderText="Przyjął" SortExpression="dispatcher" />                   
                     <asp:BoundField DataField="driver" HeaderText="Taksówkarz" SortExpression="driver" />
                 </Columns>
