@@ -35,6 +35,7 @@ public partial class _Default : System.Web.UI.Page
             {
                 e.Authenticated = true;
                 Session["userId"] = userId;
+                Session["userType"] = Repository.getEmployeeById(userId).employee_type_id;
                 Session["userName"] = log.UserName;
                 this.startThreads();
             }

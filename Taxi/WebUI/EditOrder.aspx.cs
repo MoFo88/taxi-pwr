@@ -13,6 +13,9 @@ public partial class EditOrder : System.Web.UI.Page
     Course course;
     protected void Page_Load(object sender, EventArgs e)
     {
+        PageLoading.CheckAuthorization();
+        if (!Session["userType"].ToString().Equals("2"))
+            Response.Redirect("NoAccessRights.aspx");
         idCourse = int.Parse(Session["idCourseToEdit"].ToString());
         course = (Course)Repository.getCourseById(idCourse);
         if (!IsPostBack)

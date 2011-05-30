@@ -14,6 +14,9 @@ public partial class EditAdminOrDispatcher : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        PageLoading.CheckAuthorization();
+        if (!Session["userType"].ToString().Equals("3"))
+            Response.Redirect("NoAccessRights.aspx");
         idEmployee = int.Parse(Session["idEmployeeToEdit"].ToString());
         this.employee = Repository.getEmployeeById(idEmployee);
         if (!IsPostBack)

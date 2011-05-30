@@ -29,20 +29,25 @@ public static class CreatingDriverList
 
     private static void generateFile()
     {
-        StreamWriter sw = new StreamWriter(server.MapPath("Lists\\GetDriverList.txt"), false);
-        sw.WriteLine("drivers = new Array();");
-        foreach (TaxiDriver driver in drivers)
+        try
         {
-            sw.WriteLine("driver = {");
-            sw.WriteLine("lon: " + driver.position_lon.ToString().Replace(',', '.') + "0,");
-            sw.WriteLine("lat: " + driver.position_lat.ToString().Replace(',', '.') + "0,");
-            sw.WriteLine("id_driver: " + driver.id + ",");
-            sw.WriteLine("status: " + driver.driver_status_id + ",");
-            sw.WriteLine("registration_number: 'ASD 1234'" + ",");
-            sw.WriteLine("license_number: '" + driver.licence_number + "'};");
-            sw.WriteLine("drivers[drivers.length] = driver;");
+            StreamWriter sw = new StreamWriter(server.MapPath("Lists\\GetDriverList.txt"), false);
+            sw.WriteLine("drivers = new Array();");
+            foreach (TaxiDriver driver in drivers)
+            {
+                sw.WriteLine("driver = {");
+                sw.WriteLine("lon: " + driver.position_lon.ToString().Replace(',', '.') + "0,");
+                sw.WriteLine("lat: " + driver.position_lat.ToString().Replace(',', '.') + "0,");
+                sw.WriteLine("id_driver: " + driver.id + ",");
+                sw.WriteLine("status: " + driver.driver_status_id + ",");
+                sw.WriteLine("registration_number: 'ASD 1234'" + ",");
+                sw.WriteLine("license_number: '" + driver.licence_number + "'};");
+                sw.WriteLine("drivers[drivers.length] = driver;");
+            }
+            sw.Close();
         }
-        sw.Close();
+        catch (Exception e)
+        { };
     }
 
     public static void refreshDriversFile()

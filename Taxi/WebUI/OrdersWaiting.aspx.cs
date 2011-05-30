@@ -12,6 +12,8 @@ public partial class OrdersWaiting : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         PageLoading.CheckAuthorization();
+        if (!Session["userType"].ToString().Equals("2"))
+            Response.Redirect("NoAccessRights.aspx");
     }
 
     protected void gv_Orders_SelectedIndexChanged(object sender, EventArgs e)
