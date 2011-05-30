@@ -53,7 +53,15 @@ namespace TestProject
                 "Audi", "A4","2005","5","LZ 12345", "PDT23412", 1);
         }
 
+        [TestMethod]
+        public void TestMethodGetTaxiDriversByCourseAndTaxiType()
+        {
+            Course c = new Course();
+         
 
+            List<TaxiDriver> tdList = Repository.GetTaxiDriversByCourseAndTaxiType(Repository.getAllCourses()[0], 1, 5, 1);
+        
+        }
 
     }
 }
