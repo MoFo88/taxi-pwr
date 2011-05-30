@@ -5,25 +5,29 @@ using System.Web;
 using BLL;
 using DAL;
 using System.IO;
+using System.Threading;
 
 /// <summary>
 /// Summary description for CreatingDriverList
 /// </summary>
-public class CreatingDriverList
+public static class CreatingDriverList
 {
-    List<TaxiDriver> drivers;
-
-	public CreatingDriverList()
-	{
-        drivers = new List<TaxiDriver>();
-	}
-
-    private void refreshData()
+    public static List<TaxiDriver> drivers = new List<TaxiDriver>();
+    public static HttpServerUtility server;
+    
+    public static void startThread()
     {
-        drivers = Repository.GetAllTaxiDrivers();
+        Thread threat = new Thread(new ThreadStart(CreatingDriverList.refreshDriversFile));
+        threat.IsBackground = true;
+        threat.Start();
     }
 
-    private void generateFile(HttpServerUtility server)
+    private static void refreshData()
+    {
+        CreatingDriverList.drivers = Repository.GetAllTaxiDrivers();
+    }
+
+    private static void generateFile()
     {
         StreamWriter sw = new StreamWriter(server.MapPath("Lists\\GetDriverList.txt"), false);
         sw.WriteLine("drivers = new Array();");
@@ -33,7 +37,7 @@ public class CreatingDriverList
             sw.WriteLine("lon: " + driver.position_lon.ToString().Replace(',', '.') + "0,");
             sw.WriteLine("lat: " + driver.position_lat.ToString().Replace(',', '.') + "0,");
             sw.WriteLine("id_driver: " + driver.id + ",");
-            sw.WriteLine("status: 1" + driver.driver_status_id + ",");
+            sw.WriteLine("status: " + driver.driver_status_id + ",");
             sw.WriteLine("registration_number: 'ASD 1234'" + ",");
             sw.WriteLine("license_number: '" + driver.licence_number + "'};");
             sw.WriteLine("drivers[drivers.length] = driver;");
@@ -41,9 +45,13 @@ public class CreatingDriverList
         sw.Close();
     }
 
-    public void refreshDriversFile(HttpServerUtility server)
+    public static void refreshDriversFile()
     {
-        refreshData();
-        generateFile(server);
+        while (true)
+        {
+            refreshData();
+            generateFile();
+            Thread.Sleep(1 * 1000);
+        }
     }
 }

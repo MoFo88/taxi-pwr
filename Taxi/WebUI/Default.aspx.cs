@@ -55,9 +55,8 @@ public partial class _Default : System.Web.UI.Page
     private void startThreads()
     {
 
-        CreatingDriverList cdl = new CreatingDriverList();
-        
-        cdl.refreshDriversFile(this.Server);
+        CreatingDriverList.server = this.Server;
+        CreatingDriverList.startThread();
         CreatingOrdersList.server = this.Server;
         CreatingOrdersList.startThread();
     }
