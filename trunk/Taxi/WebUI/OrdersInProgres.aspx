@@ -18,7 +18,8 @@
         <asp:Panel ID="p_Orders" runat="server">
             <asp:GridView ID="gv_Orders" runat="server" AutoGenerateColumns="False" 
                 CellPadding="4" DataSourceID="ds_Orders" ForeColor="#333333" 
-                GridLines="None" AllowSorting="True" DataKeyNames="id">
+                GridLines="None" AllowSorting="True" DataKeyNames="id"
+                OnSelectedIndexChanged="gv_Orders_SelectedIndexChanged">
                 <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                 <Columns>
                     <asp:BoundField DataField="course_date" HeaderText="Data" SortExpression="course_date" />
@@ -26,7 +27,8 @@
                     <asp:BoundField DataField="client_name" HeaderText="Klient" SortExpression="client_name" />
                     <asp:BoundField DataField="client_phone" HeaderText="Telefon" SortExpression="client_phone" />                  
                     <asp:BoundField DataField="dispatcher" HeaderText="Przyjął" SortExpression="dispatcher" />                   
-                    <asp:BoundField DataField="driver" HeaderText="Taksówkarz" SortExpression="driver" />
+                    <asp:BoundField DataField="driver" HeaderText="Taksówkarz" SortExpression="driver" />                    
+                    <asp:CommandField HeaderText="Anulowanie" ShowSelectButton="True" SelectText="Anuluj"/>
                 </Columns>
                 <EditRowStyle BackColor="#999999" />
                 <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />

@@ -1258,6 +1258,15 @@ namespace BLL
             ctx.SubmitChanges();
         }
 
+        public static void cancelCourse(int id)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            Course course = ctx.Courses.SingleOrDefault(c => c.id == id);
+            TaxiDriver driver = ctx.Employees.OfType<TaxiDriver>().SingleOrDefault(t => t.id == course.taxidriver_id);
+            driver.driver_status_id = 0;
+            course.course_status_id = 5;            
+            ctx.SubmitChanges();
+        }
 
         #region Suma SHA1
         #endregion
