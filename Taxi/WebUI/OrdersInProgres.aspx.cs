@@ -11,4 +11,12 @@ public partial class OrdersInProgres : System.Web.UI.Page
     {
 
     }
+
+    protected void gv_Orders_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        String value = gv_Orders.SelectedValue.ToString();
+        int idCourse = int.Parse(value);
+        Session["idCourseToCancel"] = value;
+        Response.Redirect("CancelationConfirm.aspx");
+    }
 }
