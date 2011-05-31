@@ -51,6 +51,10 @@
 
         <div id="map_view"></div>
 
+        <div id="options">
+        <label><input type="checkbox" onclick="optinoShowAssignedOrders=this.checked; FillOrderList(orders)" /> Pokaż także już obsługiwane kursy</label>
+        </div>
+
     </div>
     </div>
     <div class="mainbottom"></div>

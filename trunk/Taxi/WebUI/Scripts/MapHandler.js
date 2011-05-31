@@ -27,7 +27,9 @@ function MapFilterDrivers(markersDrivers) {
     newDrivers = new Array();
     for (i in markersDrivers) {
         driver = markersDrivers[i];
-        if (driver.status != 1) newDrivers[newDrivers.length] = driver;
+        if (1 || driver.status != 1) {
+            newDrivers[newDrivers.length] = driver; //TODO zmienić warunek
+        }
     }
     return newDrivers;
 }
@@ -71,7 +73,14 @@ function MapRemoveMarkerDriver(visibleDriver, i) {
 function MapCreateMarkerDriver(details, showPopup) {
     lonLat = MapCreateLonLat(details.lon, details.lat);
     var id = details.id_driver;
+    var order=null;
+    //if (visibleOrdersSelected != null) order = visibleOrders[visibleOrdersSelected];
+    //if (order != null) alert(order.seats+' '+details.id_driver);
     if (id == visibleDriversSelected) icon = markerIconDriverSelected.clone();
+    else if (order!=null && details.seats) {
+        icon = markerIconDriverMatching.clone();
+        showPopup = false;
+    }
     else {
         icon = markerIconDriver.clone();
         showPopup = false;
@@ -139,6 +148,18 @@ function MapMoveDriver(id_driver, newDriver) {
     var newPx = mapView.getLayerPxFromViewPortPx(mapView.getPixelFromLonLat(new OpenLayers.LonLat(newDriver.lon, newDriver.lat).transform(mapView.displayProjection, mapView.projection)));
     driver.marker.moveTo(newPx);
     driver.popup.moveTo(newPx);
+    if (visibleOrdersSelected != null) order = visibleOrders[visibleOrdersSelected];
+    //if (order != null) alert(order.details.seats+' '+driver.details.id_driver);
+    if (visibleOrdersSelected) {
+        driver.marker.icon.destroy();
+        driver.marker.icon = markerIconDriverMatching.clone();
+    }
+    else {
+        driver.marker.icon.destroy();
+        driver.marker.icon = markerIconDriver.clone();
+    }
+    mapMarkers.removeMarker(driver.marker);
+    mapMarkers.addMarker(driver.marker);
 }
 
 function MapChangeOrder(id_order, newOrder) {
@@ -261,6 +282,10 @@ function MapInitIcons() {
     var size = new OpenLayers.Size(14, 19);
     var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
     markerIconDriverSelected = new OpenLayers.Icon('Images/MarkerIcons/driver_selected.png', size, offset);
+
+    var size = new OpenLayers.Size(14, 19);
+    var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
+    markerIconDriverMatching = new OpenLayers.Icon('Images/MarkerIcons/driver_selected.png', size, offset);
 
     var size = new OpenLayers.Size(21, 34);
     var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
