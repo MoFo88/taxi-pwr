@@ -11,7 +11,7 @@ public partial class Default2 : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         PageLoading.CheckAuthorization();
-        if (!Session["userType"].ToString().Equals("2"))
-            Response.Redirect("NoAccessRights.aspx");
+        //if (!Session["userType"].ToString().Equals("2"))
+        //    Response.Redirect("NoAccessRights.aspx");
     }
 }

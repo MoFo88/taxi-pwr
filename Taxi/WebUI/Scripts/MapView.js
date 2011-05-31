@@ -114,7 +114,7 @@ $(document).ready(function () {
     // Interval wyświetlający zgłoszenia w menu po prawej
     setInterval(function () {
         GetOrderList();
-    }, 10000);
+    }, 3000);
 
     // ESC przy dodawaniu/edytowaniu zgłoszenia -> zamknięcie okienka zgłoszenia
     $('div#dialog_change_orders').keyup(function (e) {
@@ -252,12 +252,14 @@ function GetOrderList() {
         //MapShowMarkersOrder(orders);
     });
     drivers = $.getScript('Lists/GetDriverList.txt?id_order=' + visibleOrdersSelected, function () { //TODO - nie jest potrzebne id_order, przynajmniej na razie, DC obsłuży przypisanego taksówkrza
+        // 
         MapShowMarkersDriver(drivers);
     });
     return orders;
 }
 
 orders_current_page=0;
+optinoShowAssignedOrders=false;
 function FillOrderList(orders) {
     var orders_per_page=7;
     var container = $('div#itemlist div.content ul');
@@ -280,6 +282,7 @@ function FillOrderList(orders) {
 
         // Pokaż wpisy
         var order = orders[i];
+        if (optinoShowAssignedOrders==false && (order.id_driver!=null && order.id_driver>0)) continue;
         var item_html = '<li id="order' + order.id_order + '">' +
                     '<div class="id_driver">' + order.id_driver + '</div>' +
                     '<div class="id_order">' + order.id_order + '</div>' +

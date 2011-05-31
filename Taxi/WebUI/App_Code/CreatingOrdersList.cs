@@ -45,7 +45,7 @@ public static class CreatingOrdersList
                 sw.WriteLine("car_type: " + order.car_type_id + ",");
                 sw.WriteLine("seats: " + order.seats + ",");
                 sw.WriteLine("id_order: " + order.id + ",");
-                sw.WriteLine("id_driver: " + order.taxidriver_id + "};");
+                sw.WriteLine("id_driver: " + (order.taxidriver_id!=null?order.taxidriver_id:-1) + "};");
                 sw.WriteLine("orders[orders.length] = order;");
             }
             sw.Close();
