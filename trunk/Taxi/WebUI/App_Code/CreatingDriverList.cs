@@ -40,10 +40,10 @@ public static class CreatingDriverList
                 sw.WriteLine("lat: " + driver.position_lat.ToString().Replace(',', '.') + "0,");
                 sw.WriteLine("id_driver: " + driver.id + ",");
                 sw.WriteLine("status: " + driver.driver_status_id + ",");
-                sw.WriteLine("registration_number: 'ASD 1234'" + ",");
-                sw.WriteLine("license_number: '" + driver.licence_number + "'};");
-                sw.WriteLine("taxi_type: '" + driver.Taxi.id_car_type + "'};");
-                sw.WriteLine("seats: '" + driver.Taxi.Car_model.seats + "'};");
+                sw.WriteLine("registration_number: '" + driver.Taxi.registration_number + "',");
+                sw.WriteLine("license_number: '" + driver.licence_number + "';");
+                sw.WriteLine("taxi_type: " + driver.Taxi.id_car_type + "';");
+                sw.WriteLine("seats: " + driver.Taxi.Car_model.seats + "'};");
                 sw.WriteLine("drivers[drivers.length] = driver;");
             }
             sw.Close();
