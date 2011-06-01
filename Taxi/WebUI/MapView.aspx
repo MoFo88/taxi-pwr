@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="MapView.aspx.cs" Inherits="Default2" %>
+﻿<%@ Page Title="Taxi" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="MapView.aspx.cs" Inherits="Default2" %>
 
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
     <script src="Scripts/jquery-ui-timepicker-addon.js" type="text/javascript"></script>
@@ -27,7 +27,7 @@
 
 <div id="dialog_change_orders">
     <div class="close">X</div>
-    <div class="title">Zgłoszenia</div>
+    <div class="title">Zgłoszenie</div>
     <input type="hidden" id="tb_id_order" />
     <input type="hidden" id="tb_order_lon" />
     <input type="hidden" id="tb_order_lat" />
@@ -52,7 +52,7 @@
         <div id="map_view"></div>
 
         <div id="options">
-        <label><input type="checkbox" onclick="optinoShowAssignedOrders=this.checked; FillOrderList(orders)" /> Pokaż także już obsługiwane kursy</label>
+        <label><input type="checkbox" onclick="optinoShowAssignedOrders=this.checked; FillOrderList(orders); MapShowMarkersOrder(orders)" /> Pokaż także już obsługiwane kursy</label>
         </div>
 
     </div>

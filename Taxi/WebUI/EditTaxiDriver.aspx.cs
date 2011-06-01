@@ -14,7 +14,7 @@ public partial class EditTaxiDriver : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         PageLoading.CheckAuthorization();
-        if (!Session["userType"].ToString().Equals("2"))
+        if (!Session["userType"].ToString().Equals("2") && !Session["userType"].ToString().Equals("3")) // zmieniłem, bo nic się tutaj zrobić nie działo nawet adminem!
             Response.Redirect("NoAccessRights.aspx");
         idDriver = int.Parse(Session["idEmployeeToEdit"].ToString());
         if (!IsPostBack)
