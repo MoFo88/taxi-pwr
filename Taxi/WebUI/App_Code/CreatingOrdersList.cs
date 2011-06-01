@@ -18,6 +18,8 @@ public static class CreatingOrdersList
     private static void refreshData()
     {
         orders = Repository.getWaitingOrders();
+        List<Course> inProgress = Repository.getInProgressOrders();
+        orders = orders.Union(inProgress).ToList();
     }
 
     public static void startThread()
