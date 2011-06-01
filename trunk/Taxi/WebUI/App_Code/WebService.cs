@@ -116,4 +116,15 @@ public class WebService : System.Web.Services.WebService {
         return Repository.FinishCourse(idDriver);
     }
 
+    [WebMethod(EnableSession = true)]
+    public String GetLoginInfo()
+    {
+        int idDriver;
+        if (Session["idDriver"] == null)
+            return null;
+        else
+            idDriver = (int)Session["idDriver"];
+        return Repository.getLoginInfo(idDriver);
+    }
+
 }
