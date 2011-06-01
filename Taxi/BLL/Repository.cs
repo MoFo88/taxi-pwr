@@ -404,6 +404,19 @@ namespace BLL
         }
 
         /// <summary>
+        /// Info do logowania for Pope88 :*
+        /// </summary>
+        /// <param name="idDriver"></param>
+        /// <returns></returns>
+        public static String getLoginInfo(int idDriver)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from i in ctx.Employees.OfType<TaxiDriver>() where i.id == idDriver select i;
+            TaxiDriver td = x.SingleOrDefault();
+            return td.login;
+        }
+
+        /// <summary>
         /// Pobierz 5 najblizszych taksowek o podanym statusie i okreslonej minimalnej liczbie miejsc
         /// </summary>
         /// <param name="statusId"></param>
