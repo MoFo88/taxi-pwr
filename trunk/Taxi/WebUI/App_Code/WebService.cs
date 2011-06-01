@@ -79,13 +79,19 @@ public class WebService : System.Web.Services.WebService {
     }
 
     [WebMethod(EnableSession = true)]
-    public CourseData GetCourseData() {
+    public String[] GetCourseData() {
         int idDriver;
         if (Session["idDriver"] == null)
             return null;
         else
             idDriver = (int)Session["idDriver"];
-        return Repository.GetCourseData(idDriver);
+        String[] data = new String[4];
+        CourseData temp = Repository.GetCourseData(idDriver);
+        data[0] = temp.IdCourse.ToString();
+        data[1] = temp.LocationName;
+        data[2] = temp.ClientName;
+        data[3] = temp.ClientPhone;
+        return data;
     }
 
     [WebMethod(EnableSession = true)]
@@ -97,6 +103,17 @@ public class WebService : System.Web.Services.WebService {
         else
             idDriver = (int)Session["idDriver"];
         return Repository.DeclineCourse(idDriver);
+    }
+
+    [WebMethod(EnableSession = true)]
+    public bool FinishCourse()
+    {
+        int idDriver;
+        if (Session["idDriver"] == null)
+            return false;
+        else
+            idDriver = (int)Session["idDriver"];
+        return Repository.FinishCourse(idDriver);
     }
 
 }

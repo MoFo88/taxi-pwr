@@ -387,6 +387,23 @@ namespace BLL
         }
 
         /// <summary>
+        /// Konczy kurs.
+        /// </summary>
+        /// <param name="idDriver"></param>
+        /// <returns></returns>
+        public static Boolean FinishCourse( int idDriver ) {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            Course course = ctx.Courses.SingleOrDefault(c => c.taxidriver_id==idDriver);
+            course.course_status_id = 4;
+            course.taxidriver_id = null;
+            var x = from i in ctx.Employees.OfType<TaxiDriver>() where i.id == idDriver select i;
+            TaxiDriver td = x.SingleOrDefault();
+            td.Courses = null;
+            td.Courses1 = null;
+            return true;
+        }
+
+        /// <summary>
         /// Pobierz 5 najblizszych taksowek o podanym statusie i okreslonej minimalnej liczbie miejsc
         /// </summary>
         /// <param name="statusId"></param>
@@ -976,6 +993,8 @@ namespace BLL
             TaxiDriver td = x.SingleOrDefault();
             td.Courses = null;
             td.Courses1 = null;
+            Course course = ctx.Courses.SingleOrDefault(c => c.taxidriver_id == idDriver);
+            course.taxidriver_id = null;
             return true;
         }
 
