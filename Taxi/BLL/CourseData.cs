@@ -9,6 +9,8 @@ namespace BLL
     {
         String locationName;
         int idCourse;
+        String clientName;
+        String clientPhone;
 
         public int IdCourse
         {
@@ -31,14 +33,14 @@ namespace BLL
             get { return locationName; }
             set { locationName = value; }
         }
-        String clientName;
+        
 
         public String ClientName
         {
             get { return clientName; }
             set { clientName = value; }
         }
-        String clientPhone;
+        
 
         public String ClientPhone
         {
