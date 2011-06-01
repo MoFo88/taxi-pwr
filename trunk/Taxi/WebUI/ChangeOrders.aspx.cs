@@ -33,7 +33,7 @@ public partial class ChangeOrders : System.Web.UI.Page
             else
             {
                 int id = int.Parse(idCourse);
-                editCourse(id,destination, date, client, clientPhone, lon, lat,seats, car_type_id);
+                editCourse(id, destination, date, client, clientPhone, lon, lat, car_type_id, seats);
             }
         }
     }

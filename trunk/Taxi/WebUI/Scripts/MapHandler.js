@@ -25,10 +25,12 @@
 
 function MapFilterDrivers(markersDrivers) {
     newDrivers = new Array();
+    var order=null;
+    if (visibleOrdersSelected != null) order = visibleOrders[visibleOrdersSelected];
     for (i in markersDrivers) {
         driver = markersDrivers[i];
-        if (1 || driver.status != 1) {
-            newDrivers[newDrivers.length] = driver; //TODO zmienić warunek
+        if (visibleOrdersSelected == null || (driver.status == 0 && driver.taxi_type == order.details.car_type && driver.seats >= order.details.seats)) {
+            newDrivers[newDrivers.length] = driver;
         }
     }
     return newDrivers;
@@ -77,8 +79,8 @@ function MapCreateMarkerDriver(details, showPopup) {
     //if (visibleOrdersSelected != null) order = visibleOrders[visibleOrdersSelected];
     //if (order != null) alert(order.seats+' '+details.id_driver);
     if (id == visibleDriversSelected) icon = markerIconDriverSelected.clone();
-    else if (order!=null && details.seats) {
-        icon = markerIconDriverMatching.clone();
+    else if (details.status!=0) {
+        icon = markerIconDriverBusy.clone();
         showPopup = false;
     }
     else {
@@ -103,14 +105,15 @@ function MapCreateMarkerDriver(details, showPopup) {
 }
 
 function MapCreatePopupDriver(lonLat, details, showPopup) {
+    var driverStatus = ['wolny', 'zajety', 'zajety', 'zajety'];
     var popup = new OpenLayers.Popup(details.id_order, // auto generate id
                    lonLat,
                    new OpenLayers.Size(220, 120),
                    '<div class="map_popup" style="position:relative; z-index:500">' +
                    '<div class="driver_id">Taksówkarz #' + details.id_driver + '</div>' +
-                   '<div class="status"">Stan: ' + details.status + '</div>' +
+                   '<div class="status"">Stan: ' + driverStatus[details.status] + '</div>' +
                    '<div class="registration">Rejestracja: ' + details.registration_number + '</div>' +
-                   '<div class="licence">Nr licencji: ' + details.licence_number + '</div>' +
+                   '<div class="licence">Nr licencji: ' + details.license_number + '</div>' +
                    '<div class="assign"></div>' +
                    '</div>',
                    false
@@ -149,13 +152,15 @@ function MapMoveDriver(id_driver, newDriver) {
     driver.marker.moveTo(newPx);
     driver.popup.moveTo(newPx);
     if (visibleOrdersSelected != null) order = visibleOrders[visibleOrdersSelected];
+    return;
+    // Poniższe nie działa, coś nie można dojść do ładu z ikonkami i popupami
     //if (order != null) alert(order.details.seats+' '+driver.details.id_driver);
     if (visibleOrdersSelected) {
-        driver.marker.icon.destroy();
+        //driver.marker.icon.destroy();
         driver.marker.icon = markerIconDriverMatching.clone();
     }
     else {
-        driver.marker.icon.destroy();
+        //driver.marker.icon.destroy();
         driver.marker.icon = markerIconDriver.clone();
     }
     mapMarkers.removeMarker(driver.marker);
@@ -180,6 +185,9 @@ function MapChangeOrder(id_order, newOrder) {
 }
 
 function MapShowMarkersOrder(markersOrders, showPopup) {
+    // Przefiltruj
+    markersOrders = FillOrderList_Filter(markersOrders);
+
     // Najpierw usuń stare (usunięte) znaczniki i popupy
     var newOrdersId = new Array();
     for (var i in markersOrders) {
@@ -286,6 +294,10 @@ function MapInitIcons() {
     var size = new OpenLayers.Size(14, 19);
     var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
     markerIconDriverMatching = new OpenLayers.Icon('Images/MarkerIcons/driver_selected.png', size, offset);
+
+    var size = new OpenLayers.Size(14, 19);
+    var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
+    markerIconDriverBusy = new OpenLayers.Icon('Images/MarkerIcons/driver_selected.png', size, offset);
 
     var size = new OpenLayers.Size(21, 34);
     var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);

@@ -114,7 +114,7 @@ $(document).ready(function () {
     // Interval wyświetlający zgłoszenia w menu po prawej
     setInterval(function () {
         GetOrderList();
-    }, 3000);
+    }, 6000);
 
     // ESC przy dodawaniu/edytowaniu zgłoszenia -> zamknięcie okienka zgłoszenia
     $('div#dialog_change_orders').keyup(function (e) {
@@ -184,15 +184,17 @@ $(document).ready(function () {
                 function (data) {
                     if (data.length<50) showQuickMessage(data);
                     else showQuickMessage('Zmieniono/dodano zgłoszenie', 3000);
-                    $.get('MapView.aspx', function () { // wywołujemy odświeżenie list zgłoszeń i taksówkarzy
+                    setTimeout(function () { // wywołujemy odświeżenie list zgłoszeń i taksówkarzy
                         GetOrderList(); //TODO odblokować jak będzie działało generowanie listy
                         //order=createCurrentOrder();
                         //MapChangeOrder(div_dco.find('#tb_id_order').val(), order);
+                        $('div#dialog_change_orders').slideUp(300);
+                        GetOrderList();
                         setTimeout(function () {
                             MapSelectOrderById(div_dco.find('#tb_id_order').val()); // automatycznie wywołuje MapShowPoint() - czyli wyszukany na podstawie adresu punkt na mapie znika
-                        }, 500);
+                        }, 1000);
                         //alert(data);
-                    });
+                    }, 2000);
                 })
                 //.success(function () { alert("second success"); })
                 .error(function () {
@@ -249,7 +251,6 @@ function GetOrderList() {
     orders = $.getScript('Lists/GetOrderList.txt', function () {
         FillOrderList(orders);
         MapShowMarkersOrder(orders);
-        //MapShowMarkersOrder(orders);
     });
     drivers = $.getScript('Lists/GetDriverList.txt?id_order=' + visibleOrdersSelected, function () { //TODO - nie jest potrzebne id_order, przynajmniej na razie, DC obsłuży przypisanego taksówkrza
         // 
@@ -258,9 +259,22 @@ function GetOrderList() {
     return orders;
 }
 
+function FillOrderList_Filter(orders) {
+    var ordersNew=new Array();
+    for (i in orders) {
+        var order=orders[i]
+        if (optinoShowAssignedOrders==false && (order.id_driver!=null && order.id_driver>0)) continue;
+        ordersNew[ordersNew.length]=order;
+    }
+    return ordersNew;
+}
+
 orders_current_page=0;
 optinoShowAssignedOrders=false;
 function FillOrderList(orders) {
+
+    orders=FillOrderList_Filter(orders);
+
     var orders_per_page=7;
     var container = $('div#itemlist div.content ul');
     container.find('li').remove();
@@ -282,14 +296,14 @@ function FillOrderList(orders) {
 
         // Pokaż wpisy
         var order = orders[i];
-        if (optinoShowAssignedOrders==false && (order.id_driver!=null && order.id_driver>0)) continue;
+        var carType=[null, 'osobowy', 'limuzyna', 'van'];
         var item_html = '<li id="order' + order.id_order + '">' +
                     '<div class="id_driver">' + order.id_driver + '</div>' +
                     '<div class="id_order">' + order.id_order + '</div>' +
                     '<div class="edit">edit</div>' +
                     '<div class="course_date">'+order.course_date+'</div>' +
                     '<div class="startpoint_name">'+order.startpoint_name+'</div>' +
-                    '<div class="notes">'+(order.notes==''||order.notes=='brak'?'&nbsp;':order.notes)+'</div>' +
+                    '<div class="notes">osób: '+(order.seats)+', typ: '+carType[order.car_type]+'</div>' +
                     '</li>';
         var item_obj = $(item_html);
         if (order.id_order == visibleOrdersSelected) item_obj.addClass('selected');
