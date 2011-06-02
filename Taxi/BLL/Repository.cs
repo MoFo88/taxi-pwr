@@ -16,8 +16,9 @@ namespace BLL
         /// </summary>
         /// <param name="login"></param>
         /// <param name="pswd"></param>
-        /// <returns></returns>
-        /// JG
+        /// <returns>Id autoryzowanego użytkownika</returns>
+        /// <exception cref="UserNotExistException">UserNotExistException</exception>
+        /// <exception cref="WrongPasswordException">WrongPasswordException</exception>
         public static int UserAuth(string login, string pswd)
         {
 
@@ -38,12 +39,12 @@ namespace BLL
             return user.id;
         }
 
-        /// <summary>Pobierz uzytkownika o podanym id
+
+        /// <summary>Funkcja pobierająca użytkownika o podanym id
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
-        /// <exception cref="UserNotExistException"></exception>
-        /// JG
+        /// <returns>Employee</returns>
+        /// <exception cref="UserNotExistException">UserNotExistException</exception>
         public static Employee GetUserById(int id)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -60,8 +61,7 @@ namespace BLL
         /// <summary>Usuń uzytkownika o podanym Id
         /// </summary>
         /// <param name="userId"></param>
-        /// <exception cref="UserNotExistException"></exception>
-        /// JG
+        /// <exception cref="UserNotExistException">UserNotExistException</exception>
         public static void DeleteUser(int userId)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -84,7 +84,6 @@ namespace BLL
         /// <param name="userId"></param>
         /// <param name="newPassword"></param>
         /// <exception cref="UserNotExistException"></exception>
-        /// JG
         public static void ChangeUserPassword(int userId, String newPassword)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -103,9 +102,9 @@ namespace BLL
             ctx.SubmitChanges();
 
         }
-        
-        //PRIVATE MEMBER
+
         /// <summary>
+        /// Funkcja dodająca użytkownika o podanych parametrach
         /// </summary>
         /// <param name="name"></param>
         /// <param name="surname"></param>
@@ -117,8 +116,8 @@ namespace BLL
         /// <param name="postalCode"></param>
         /// <param name="login"></param>
         /// <param name="password"></param>
-        /// <returns></returns>
-        /// JG
+        /// <returns>Employee - Dodany użytkownik</returns>
+        /// <exception cref="UserExistException">UserExistException</exception>
         private static Employee AddNewUser(
             String name, 
             String surname, 
@@ -175,8 +174,7 @@ namespace BLL
 
         /// <summary>Funkcja zwraca listę wszystkich pracowników
         /// </summary>
-        /// <returns></returns>
-        /// JG
+        /// <returns>List<Employee></returns>
         public static List<Employee> GetAllEmployees()
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -184,7 +182,7 @@ namespace BLL
             return x.ToList();
         }
 
-        /// <summary>zmiana danych employee
+        /// <summary>Funckja edytująca dane użytkownika
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="name"></param>
@@ -196,9 +194,8 @@ namespace BLL
         /// <param name="e_mail"></param>
         /// <param name="pesel"></param>
         /// <param name="telephone"></param>
-        /// <exception cref="UserExistException"></exception>
-        /// <exception cref="UserNotExistException"></exception>
-        /// JG
+        /// <exception cref="UserExistException">UserExistException</exception>
+        /// <exception cref="UserNotExistException">UserNotExistException</exception>
         private static Employee EditUserData(
             int userId,
             String login,
@@ -254,10 +251,9 @@ namespace BLL
         // CRUD
         /* TAXI DRIVER */
 
-        /// <summary> Funkcja zwraca listę wszystkich taksówkarz
+        /// <summary> Funkcja zwracająca listę wszystkich taksówkarzy
         /// </summary>
-        /// <returns></returns>
-        /// JG
+        /// <returns>List<TaxiDriver></returns>
         public static List<TaxiDriver> GetAllTaxiDrivers()
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -265,7 +261,7 @@ namespace BLL
             return query.ToList();
         }
 
-        /// <summary>Funkja dodająca taksówkarza
+        // <summary>Funkja dodająca nowego taksówkarza
         /// </summary>
         /// <param name="name"></param>
         /// <param name="surname"></param>
@@ -278,8 +274,7 @@ namespace BLL
         /// <param name="login"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        /// <exception cref="UserExistException"></exception>
-        /// JG
+        /// <exception cref="UserExistException">UserExistException</exception>
         public static void AddNewTaxiDriver(String name, String surname, String city, String email, 
             String houseNr, String street, String pesel, String licenceNr, String postalCode, String login, String password, String telephone,
             String carBrand, String carModel, String productionYear, String seatPlaces, String registrationNumber, String taxiNumber, int carType)
@@ -302,20 +297,8 @@ namespace BLL
 
         }
 
-        /// <summary>Doda taksówkarza
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="surname"></param>
-        /// <param name="login"></param>
-        /// <param name="password"></param>
-        /// <exception cref="UserExistException"></exception>
-        /// JG
-        public static void AddNewTaxiDriver(String name, String surname, String login, String password)
-        {
-            //AddNewTaxiDriver(name, surname, null, null, null, null, null, null, null, login, password);
-        }
-
-        /// <summary>Zmiana danych taksówkarza
+       
+        /// <summary>Funkcja zmieniająca dane taksówkarza
         /// </summary>
         /// <param name="taxiDriveId"></param>
         /// <param name="name"></param>
@@ -328,7 +311,7 @@ namespace BLL
         /// <param name="postalCode"></param>
         /// <exception cref="UserNotExistException"></exception>
         /// <exception cref="UserExistException"></exception>
-        /// JG
+
         public static void EditTaxiDriver(int idDriver, String name, String surname, String city, String email, 
             String houseNr, String street, String pesel, String licenceNr, String postalCode, String telephone, String login,
             String carBrand, String carModel, String productionYear, String seatPlaces, String registrationNumber, String taxiNumber, int carType)
@@ -352,11 +335,58 @@ namespace BLL
             ctx.SubmitChanges();
         }
 
-        /// <summary>Pobierz listę taksówkarzy o podanym statusie
+        /// <summary>
+        /// Funkcja pobiera liste taksowkarzy (podana ich liczbę) najbliższych podanemu miejscu.
+        /// Dodatkowo mają okreslony typ samochodu o określonej liczbi miejsc
+        /// </summary>
+        /// <param name="course"></param>
+        /// <param name="carTypeId"></param>
+        /// <param name="seats"></param>
+        /// <param name="maxResultCount"></param>
+        /// <returns></returns>
+        public static List<TaxiDriver> GetTaxiDriversByCourseAndTaxiType(Course course, int carTypeId, int seats, int maxResultCount)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+
+            var x = from td in ctx.Employees.OfType<TaxiDriver>()
+                    where
+                    td.Taxi.Car_model.seats == seats
+                    && td.Taxi.Car_type.id == carTypeId
+                    select td;
+
+
+            List<TaxiDriver> tdList = x.ToList();
+
+            tdList = tdList.OrderBy(t => t, new DistanceComparer(course)).Take(maxResultCount).ToList();
+
+            return tdList;
+
+        }
+
+        public class DistanceComparer : IComparer<TaxiDriver>
+        {
+            Course c;
+
+            public DistanceComparer(Course c)
+            {
+                this.c = c;
+            }
+
+            public int Compare(TaxiDriver x, TaxiDriver y)
+            {
+                double odl1 = Math.Sqrt((double)((x.position_lon - c.startpoint_lon) * (x.position_lon - c.startpoint_lon) + (x.position_lat - c.startpoint_lat) * (x.position_lat - c.startpoint_lat)));
+                double odl2 = Math.Sqrt((double)((y.position_lon - c.startpoint_lon) * (y.position_lon - c.startpoint_lon) + (y.position_lat - c.startpoint_lat) * (y.position_lat - c.startpoint_lat)));
+
+                if (odl1 == odl2) return 0;
+                if (odl1 < odl2) return 1;
+                else return -1;
+            }
+        }
+
+        /// <summary>Funkcja pobiera listę taksówkarzy o podanym statusie
         /// </summary>
         /// <param name="statusId"></param>
-        /// <returns></returns>
-        /// JG
+        /// <returns>List<TaxiDriver></returns>
         public static List<TaxiDriver> GetTaxiDriversByStatus(int statusId)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -369,10 +399,10 @@ namespace BLL
             return x.ToList();
         }
 
-        /// <summary>
-        /// Pobierz 5 najblizszych taksowek o podanym statusie
+        /// Funkcja pobierz 5 najblizszych taksowek o podanym statusie i okreslonej minimalnej liczbie miejsc
+        /// Konczy kurs.
         /// </summary>
-        /// <param name="statusId"></param>
+        /// <param name="idDriver"></param>
         /// <returns></returns>
         public static List<TaxiDriver> GetNearestTaxi(decimal lon, decimal lat, int status)
         {
@@ -387,7 +417,7 @@ namespace BLL
         }
 
         /// <summary>
-        /// Konczy kurs.
+        /// Funkcja koncząca kurs taksówkarza 
         /// </summary>
         /// <param name="idDriver"></param>
         /// <returns></returns>
@@ -404,7 +434,7 @@ namespace BLL
         }
 
         /// <summary>
-        /// Info do logowania for Pope88 :*
+        /// Funckcja zwaracająca informacje do loginu (WebService)
         /// </summary>
         /// <param name="idDriver"></param>
         /// <returns></returns>
@@ -417,7 +447,7 @@ namespace BLL
         }
 
         /// <summary>
-        /// Pobierz 5 najblizszych taksowek o podanym statusie i okreslonej minimalnej liczbie miejsc
+        /// Funkcja pobierz 5 najblizszych taksowek o podanym statusie i okreslonej minimalnej liczbie miejsc
         /// </summary>
         /// <param name="statusId"></param>
         /// <returns></returns>
@@ -434,22 +464,20 @@ namespace BLL
             return x.ToList();
         }
 
-        
-        /// <summary>Pobierz listę taksówkarzy o podanym statusie
+
+        /// <summary>Funkcja pobiera listę taksówkarzy o podanym statusie
         /// </summary>
         /// <param name="ds"></param>
         /// <returns></returns>
-        /// JG
         public static List<TaxiDriver> GetTaxiDriversByStatus(Driver_status ds)
         {
             return GetTaxiDriversByStatus(ds.id);
         }
 
-        /// <summary> funkcja zwraca listę taksówkarzy, do których przypisana jest taksówka określoneo typu
+        /// <summary> funkcja zwraca listę taksówkarzy, do których przypisana jest taksówka o określonym typie
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
-        /// JG
+        /// <returns>List<TaxiDriver></returns>
         public static List<TaxiDriver> GetTaxiDriverByCarType(int id)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -465,8 +493,7 @@ namespace BLL
         /// <summary>Pobiera taksówkarza o podanym typie samochodu
         /// </summary>
         /// <param name="ct"></param>
-        /// <returns></returns>
-        /// JG
+        /// <returns>List<TaxiDriver></returns>
         public static List<TaxiDriver> GetTaxiDriverByCarType(Car_type ct)
         {
             return GetTaxiDriverByCarType(ct.id);
@@ -476,8 +503,7 @@ namespace BLL
         /// </summary>
         /// <param name="driverStatusId"></param>
         /// <param name="carTypeId"></param>
-        /// <returns></returns>
-        /// JG
+        /// <returns>List<TaxiDriver></returns>
         public static List<TaxiDriver> GetTaxiDriverByStatusAndCarType(int driverStatusId, int carTypeId)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -496,7 +522,7 @@ namespace BLL
 
         /* ADMIN */
 
-        /// <summary>Dodaj administratora
+        /// <summary>Funkcja dodająca administratora
         /// </summary>
         /// <param name="name"></param>
         /// <param name="surname"></param>
@@ -508,8 +534,7 @@ namespace BLL
         /// <param name="postalCode"></param>
         /// <param name="login"></param>
         /// <param name="password"></param>
-        /// <exception cref="UserExistException"></exception>
-        /// JG
+        /// <exception cref="UserExistException">UserExistException</exception>
         public static void AddNewAdmin(String name, String surname, String city, String email, String houseNr, String street, String pesel,  String postalCode, String login, String password, String telephone)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -521,7 +546,7 @@ namespace BLL
 
         }
 
-        /// <summary>Zmiana danych administratora
+        /// <summary>Funkcja edytująca dane administratora
         /// </summary>
         /// <param name="adminId"></param>
         /// <param name="login"></param>
@@ -534,9 +559,8 @@ namespace BLL
         /// <param name="pesel"></param>
         /// <param name="postalCode"></param>
         /// <param name="phone"></param>
-        /// <exception cref="UserNotExistException"></exception>
-        /// <exception cref="UserExistException"></exception>
-        /// JG
+        /// <exception cref="UserNotExistException">UserNotExistException</exception>
+        /// <exception cref="UserExistException">UserExistException</exception>
         public static void EditAdminData(int adminId, String login, String name, String surname, String city, String street, String email, String houseNr, String pesel, String postalCode, String phone)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -551,7 +575,7 @@ namespace BLL
 
         /* DISPATCHER */
 
-        /// <summary>Dodaj dyspozytora
+        /// <summary>Funkcja dodająca dyspozytora
         /// </summary>
         /// <param name="name"></param>
         /// <param name="surname"></param>
@@ -563,8 +587,7 @@ namespace BLL
         /// <param name="postalCode"></param>
         /// <param name="login"></param>
         /// <param name="password"></param>
-        /// <exception cref="UserExistException"></exception>
-        /// JG
+        /// <exception cref="UserExistException">UserExistException</exception>
         public static void AddNewDispatcher(String name, String surname, String city, String email, String houseNr, String street, String pesel, String postalCode, String login, String password, String telephone)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -576,7 +599,7 @@ namespace BLL
 
         }
 
-        /// <summary>edytuj dane dyspozytora
+        /// <summary>Funkcja edytująca dane dyspozytora
         /// </summary>
         /// <param name="disId"></param>
         /// <param name="login"></param>
@@ -589,9 +612,8 @@ namespace BLL
         /// <param name="pesel"></param>
         /// <param name="postalCode"></param>
         /// <param name="phone"></param>
-        /// <exception cref="UserNotExistException"></exception>
-        /// <exception cref="UserExistException"></exception>
-        /// JG
+        /// <exception cref="UserNotExistException">UserNotExistException</exception>
+        /// <exception cref="UserExistException">UserExistException</exception>
         public static void EditDispatcheDatar(int disId, String login, String name, String surname, String city, String street, String email, String houseNr, String pesel, String postalCode, String phone)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -604,7 +626,7 @@ namespace BLL
         }
         /* COURS */
 
-        /// <summary>Dodaj nowy kurs
+        /// <summary>Funkcja dodająca nowy kurs
         /// </summary>
         /// <param name="taxidriver_id"></param>
         /// <param name="depositor_id"></param>
@@ -617,7 +639,6 @@ namespace BLL
         /// <param name="startpoint_lat"></param>
         /// <param name="endpoint_lon"></param>
         /// <param name="endpoint_lat"></param>
-        /// MS, JG
         public static void addNewCourse(
             int? taxidriver_id, 
             int? depositor_id, 
@@ -674,7 +695,7 @@ namespace BLL
         }
 
 
-        /// <summary>Edytuj dane kuru
+        /// <summary>Funkcja edytująca dane kursu
         /// </summary>
         /// <param name="courseId"></param>
         /// <param name="taxidriver_id"></param>
@@ -688,7 +709,6 @@ namespace BLL
         /// <param name="startpoint_lat"></param>
         /// <param name="endpoint_lon"></param>
         /// <param name="endpoint_lat"></param>
-        /// JG
         public static void EditCourse(
             int courseId, 
             int taxidriver_id, 
@@ -733,15 +753,13 @@ namespace BLL
 
             ctx.SubmitChanges();
         }
-        
-        /// <summary> Wiązanie kursu z taksówkarzem
+
+        /// <summary>Funkcja wiążąca kurs z taksówkarzem
         /// </summary>
         /// <param name="idTaxiDriver"></param>
         /// <param name="idCours"></param>
         /// <exception cref="UserNotExistException"></exception>
         /// <exception cref="CourseNotExistException"></exception>
-        /// JG
-        /// ToDo: test
         public static void BindCoursToTaxiDriver(int idTaxiDriver, int idCours)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -769,10 +787,9 @@ namespace BLL
 
         /* TAXI */
 
-        /// <summary>Pobierz listę taksówek
+        /// <summary>Funkcja pobierająca listętaksówek
         /// </summary>
-        /// <returns></returns>
-        /// JG
+        /// <returns>List<Taxi></returns>
         public static List<Taxi> GetTaxiList()
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -781,7 +798,7 @@ namespace BLL
         }
 
         /// <summary>
-        /// 
+        /// Funkcja dodająca nową taksówkę
         /// </summary>
         /// <param name="taxiNumber"></param>
         /// <param name="registrationNumber"></param>
@@ -790,8 +807,6 @@ namespace BLL
         /// <exception cref="TaxiExistException"></exception>
         /// <exception cref="CarModelNotExistException"></exception>
         /// <exception cref="CarTypeNotExistException"></exception>
-        /// JG
-        /// todo: test
         public static int AddNewTaxi(String taxiNumber, String registrationNumber, int carModelId, int carTypeId)
         {
 
@@ -821,7 +836,7 @@ namespace BLL
             return taxi.id;
         }
 
-        /// <summary> Edytuj dane taksówki
+        /// <summary> Funkcja edytująca dane taksówki
         /// </summary>
         /// <param name="taxiId"></param>
         /// <param name="taxiNumber"></param>
@@ -829,8 +844,6 @@ namespace BLL
         /// <param name="carModelId"></param>
         /// <param name="carTypeId"></param>
         /// <exception cref="TaxiNotExistException"></exception>
-        /// JG
-        /// todo: test
         public static void EditTaxiData(int taxiId, String taxiNumber, String registrationNumber, int carModelId, int carTypeId)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -847,13 +860,12 @@ namespace BLL
             ctx.SubmitChanges();
         }
 
-        /// <summary>funkcja łącząca (odłączająca) taksówkarza z taksówką
+        /// <summary>Funkcja wiążąca taksówkarza z taksówką
         /// </summary>
         /// <param name="idTaxiDriver"></param>
         /// <param name="idTaxi"></param>
-        /// <exception cref="TaxiNotExistException"></exception>
-        /// <exception cref="UserNotExistException"></exception>
-        /// JG
+        /// <exception cref="TaxiNotExistException">TaxiNotExistException</exception>
+        /// <exception cref="UserNotExistException">UserNotExistException</exception>
         public static void BindTaxiToTaxiDriver(int idTaxiDriver, int? idTaxi)
         {
             /*
@@ -877,10 +889,9 @@ namespace BLL
             ctx.SubmitChanges();
         }
 
-        /// <summary>Funkcja zwraa listę typów samochodów
+        /// <summary>Funkcja zwrająca listę typów samochodów
         /// </summary>
-        /// <returns></returns>
-        /// JG
+        /// <returns>List<Car_type> </returns>
         public static List<Car_type> GetCarModelsList()
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -890,10 +901,9 @@ namespace BLL
 
         /*  */
 
-        /// <summary> funkcja dodaje typ samochodu o podanej nazwie
+        /// <summary> Funkcja dodająca typ samochodu o podanej nazwie
         /// </summary>
         /// <param name="name"></param>
-        /// JG
         public static void AddNewCarType(String name)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -905,10 +915,9 @@ namespace BLL
             ctx.SubmitChanges();
         }
 
-        /// <summary>funkcja usuwająca typ taksówki o podanym id
+        /// <summary>Funkcja usuwająca typ taksówki o podanym id
         /// </summary>
         /// <param name="id"></param>
-        /// JG
         public static void DeleteCarType(int id)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -920,8 +929,7 @@ namespace BLL
 
         /// <summary>Funkcja zwraca Listę Typów użytkownika
         /// </summary>
-        /// <returns>List of Employee_type</returns>
-        /// JG
+        /// <returns>List<Employee_type> </returns>
         public static List<Employee_type> GetAllEmployeeTypes()
         {
             //get data context
@@ -934,17 +942,9 @@ namespace BLL
             return x.ToList();
         }
 
-        /// <summary>Aktualizuje polozenie taksowkarza
+        /// <summary>Funkcja aktualizująca położenie taksówkarza
         /// </summary>
-        /// <returns>nothing</returns>
-        /// MS
-
-        /*
-         * Metody w C# z wielkiej litery piszemy, 
-         * nie wiem czy jak to poprawie to papiemu sie nic nie spirdoli wiec na razie zostawiam
-         * Mam nadzieje, ze papiemu sie to wszystko zjebie!
-         */
-
+        /// <returns></returns>
         public static bool setTaxiPosition(Decimal lon, Decimal lat,int idTaxi)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -957,12 +957,11 @@ namespace BLL
             return true;
         }
 
-        /// <summar> Ustaw status taksówkarza
+        /// <summar> Funkcja zmieniająca status taksówkarza
         /// </summary>
         /// <param name="state"></param>
         /// <param name="idTaxi"></param>
         /// <returns></returns>
-        /// MS
         public static bool setTaxiState(int state, int idTaxi)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -976,7 +975,7 @@ namespace BLL
         }
 
         /// <summary>
-        /// Funkcja dla ŁebSerwisu. Zwraca skrocona informacje dla taksowkarza o aktualnych kursach przypisanych do niego
+        /// Funkcja zwraca skróconą informację dla taksowkarza o aktualnych kursach przypisanych do niego (WebService)
         /// </summary>
         /// <returns></returns>
         public static CourseData GetCourseData(int idDriver)
@@ -995,7 +994,7 @@ namespace BLL
         }
 
         /// <summary>
-        /// Metoda usuwajaca przypisanie kursu do taksowkarza (WebService)
+        /// Metoda usuwająca przypisanie kursu do taksowkarza (WebService)
         /// </summary>
         /// <param name="idDriver"></param>
         /// <returns></returns>
@@ -1012,7 +1011,7 @@ namespace BLL
         }
 
         /// <summary>
-        /// Funkcja dla WS. Sprawdza czy dla danego taksowkarza przypisane zostaly kursy.
+        /// Funkcja prawdza, czy dla danego taksowkarza przypisane zostaly kursy (WebService)
         /// </summary>
         /// <param name="idDriver"></param>
         /// <returns></returns>
@@ -1033,7 +1032,12 @@ namespace BLL
         }
 
         /* Marcina */
+        /* Marcina */
 
+        /// <summary>
+        /// Funkcja pobiera kursy, któe nie sąprzypisane do żadnego taksówkarza
+        /// </summary>
+        /// <returns>List<Course></returns>
         public static List<Course> getAllUnsignedCourses()
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -1042,7 +1046,11 @@ namespace BLL
                     select c;
             return x.ToList();
         }
-        
+
+        /// <summary>
+        /// Funkcja pobiera wszystkie kursy
+        /// </summary>
+        /// <returns>List<Course></returns>
         public static List<Course> getAllCourses()
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -1051,6 +1059,10 @@ namespace BLL
             return x.ToList();
         }
 
+        /// <summary>
+        /// Funkcja pobiera listę możliwych statusów kursów 
+        /// </summary>
+        /// <returns>List<Course_status></returns>
         public static List<Course_status> getCoursesStatus()
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -1059,16 +1071,25 @@ namespace BLL
             return x.ToList();
         }
 
+        /// <summary>
+        /// Funkcja pobiera listę kursów o określonym statusie
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>List<Course></returns>
         public static List<Course> getCoursesByStatusId(int id)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
             var x = from c in ctx.Courses
-                    where c.course_status_id == id 
+                    where c.course_status_id == id
                     orderby c.course_date ascending
                     select c;
             return x.ToList();
         }
 
+        /// <summary>
+        /// Funkcja pobiera listędostępnych typów samochodów
+        /// </summary>
+        /// <returns>List<Car_type></returns>
         public static List<Car_type> getAllCarTypes()
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -1077,15 +1098,15 @@ namespace BLL
             return x.ToList();
         }
 
-        public static Employee getEmployeeById(int id)
-        {
-            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
-            var x = from c in ctx.Employees
-                    where c.id == id
-                    select c;
-            return x.SingleOrDefault();
-        }
 
+        /// <summary>
+        /// Funkcja dodająca nowy model samochodu
+        /// </summary>
+        /// <param name="brand"></param>
+        /// <param name="model"></param>
+        /// <param name="productionYear"></param>
+        /// <param name="seatPlaces"></param>
+        /// <returns>Identyfikator modelu samochodu</returns>
         public static int addNewCarModel(String brand, String model, String productionYear, String seatPlaces)
         {
             Car_model car_model = new Car_model();
@@ -1101,6 +1122,10 @@ namespace BLL
             return car_model.id;
         }
 
+        /// <summary>
+        /// Funkcja pobierająca wszystkich administratorów systemu
+        /// </summary>
+        /// <returns>List<Employee> - lista administratorów</returns>
         public static List<Employee> getAllAdmins()
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -1111,6 +1136,10 @@ namespace BLL
             return x.ToList();
         }
 
+        /// <summary>
+        /// Funkcja pobierająca wszystkich dyspozytorów
+        /// </summary>
+        /// <returns>List<Employee> - lista dyspozytorów</returns>
         public static List<Employee> getAllDispatchers()
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
@@ -1121,55 +1150,145 @@ namespace BLL
             return x.ToList();
         }
 
-        /* PRIVATE MEMBER */
-
-        #region Losowy ciąg znaków o zadanej długości
-        #endregion
-        private static string CreateRandomString(int length)
-        {
-
-            Random random = new Random();
-           
-            MD5 md5 = new MD5CryptoServiceProvider();
-            byte[] hash = md5.ComputeHash(Encoding.ASCII.GetBytes(random.Next().ToString()));
-            string password = Convert.ToBase64String(hash).Substring(0, length);
-            string newPass = "";
-            
-            // Uppercase at random 
-            random = new Random();
-            for (int i = 0; i < password.Length; i++)
-            {
-                if (random.Next(0, 2) == 1)
-                    newPass += password.Substring(i, 1).ToUpper();
-                else
-                    newPass += password.Substring(i, 1);
-            }
-            return newPass;
-        }
-
+        /// <summary>
+        /// Funkcja pobiera listękursów o statusie "oczekujący"
+        /// </summary>
+        /// <returns> List<Course></returns>
         public static List<Course> getWaitingOrders()
         {
             return getCoursesByStatusId(1);
         }
 
+        /// <summary>
+        /// Funkcja pobiera listę zaakceptowanych kursów
+        /// </summary>
+        /// <returns>List<Course></returns>
         public static List<Course> getAcceptedOrders()
         {
             return getCoursesByStatusId(2);
         }
 
+        /// <summary>
+        /// Funkcja pobiera kursy o statusie "w trakcie wykonywania"
+        /// </summary>
+        /// <returns>List<Course></returns>
         public static List<Course> getInProgressOrders()
         {
             return getCoursesByStatusId(3);
         }
 
+        /// <summary>
+        /// Funkcja pobiera kursy o statusie "zakończony"
+        /// </summary>
+        /// <returns>List<Course></returns>
         public static List<Course> getDoneOrders()
         {
             return getCoursesByStatusId(4);
         }
 
+        /// <summary>
+        /// Funkcja pobiera kursy o statusie "Anulowany"
+        /// </summary>
+        /// <returns>List<Course></returns>
         public static List<Course> getCanceledOrders()
         {
             return getCoursesByStatusId(5);
+        }
+
+        /// <summary>
+        /// Funkcja pobierająca kurs o określonym id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static Course getCourseById(int id)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from c in ctx.Courses
+                    where c.id == id
+                    select c;
+
+
+            return x.SingleOrDefault();
+        }
+
+        /// <summary>
+        /// Funkcja edytująca dane kursu
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="client"></param>
+        /// <param name="phone"></param>
+        /// <param name="startpoint"></param>
+        /// <param name="date"></param>
+        public static void editCourse(int id, string client, string phone, string startpoint, string date)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from c in ctx.Courses
+                    where c.id == id
+                    select c;
+
+            Course course = x.SingleOrDefault();
+            course.client_name = client;
+            course.client_phone = phone;
+            course.startpoint_name = startpoint;
+            course.date = DateTime.Parse(date);
+
+
+            ctx.SubmitChanges();
+        }
+
+        /// <summary>
+        /// Funkcja edytująca dane kursu
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="destination"></param>
+        /// <param name="date"></param>
+        /// <param name="client"></param>
+        /// <param name="clientPhone"></param>
+        /// <param name="lon"></param>
+        /// <param name="lat"></param>
+        public static void editCourse(int id, String destination, String date, String client, String clientPhone, Decimal lon, Decimal lat)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            var x = from c in ctx.Courses
+                    where c.id == id
+                    select c;
+
+            Course course = x.SingleOrDefault();
+            course.client_name = client;
+            course.client_phone = clientPhone;
+            course.startpoint_name = destination;
+            course.date = DateTime.Parse(date);
+            course.startpoint_lon = lon;
+            course.startpoint_lat = lat;
+
+            ctx.SubmitChanges();
+        }
+
+        /// <summary>
+        /// Funkcja usuwająca kurs o podanym id
+        /// </summary>
+        /// <param name="id"></param>
+        public static void deleteCourse(int id)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            Course course = ctx.Courses.SingleOrDefault(c => c.id == id);
+
+            ctx.Courses.DeleteOnSubmit(course);
+            ctx.SubmitChanges();
+        }
+
+        /// <summary>
+        /// Funkcja anulująca dany kurs
+        /// </summary>
+        /// <param name="id"></param>
+        public static void cancelCourse(int id)
+        {
+            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
+            Course course = ctx.Courses.SingleOrDefault(c => c.id == id);
+            TaxiDriver driver = ctx.Employees.OfType<TaxiDriver>().SingleOrDefault(t => t.id == course.taxidriver_id);
+            driver.driver_status_id = 0;
+            course.course_status_id = 5;
+            ctx.SubmitChanges();
         }
 
         public static List<CourseAccepedView> getWaitingOrdersView()
@@ -1186,7 +1305,7 @@ namespace BLL
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
             var x = from c in ctx.CourseInProgressViews
-                    where c.course_status_id==2
+                    where c.course_status_id == 2
                     orderby c.course_date ascending
                     select c;
 
@@ -1244,38 +1363,19 @@ namespace BLL
             return x.ToList();
         }
 
-        public static Course getCourseById(int id)
+
+
+        public static Employee getEmployeeById(int id)
         {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
-            var x = from c in ctx.Courses
+            var x = from c in ctx.Employees
                     where c.id == id
                     select c;
-                    
-
             return x.SingleOrDefault();
         }
-
-        public static void editCourse(int id, string client, string phone, string startpoint, string date, int car_type_id, int seats)
-        {
-            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
-            var x = from c in ctx.Courses
-                    where c.id == id
-                    select c;
-
-            Course course = x.SingleOrDefault();
-            course.client_name = client;
-            course.client_phone = phone;
-            course.startpoint_name = startpoint;
-            course.course_date = DateTime.Parse(date);
-            course.seats = seats;
-            course.car_type_id = car_type_id;
-         
-
-            ctx.SubmitChanges();
-        }
-
         public static void editCourse(int id, String destination, String date, String client, String clientPhone, Decimal lon, Decimal lat, int car_type_id, int seats)
         {
+
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
             Course course = ctx.Courses.SingleOrDefault(c => c.id == id);
 
@@ -1288,25 +1388,34 @@ namespace BLL
             course.seats = seats;
             course.car_type_id = car_type_id;
             ctx.SubmitChanges();
+
         }
 
-        public static void deleteCourse(int id)
-        {
-            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
-            Course course = ctx.Courses.SingleOrDefault(c => c.id == id);
 
-            ctx.Courses.DeleteOnSubmit(course);
-            ctx.SubmitChanges();
-        }
+        /* PRIVATE MEMBER */
 
-        public static void cancelCourse(int id)
+        #region Losowy ciąg znaków o zadanej długości
+        #endregion
+        private static string CreateRandomString(int length)
         {
-            TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
-            Course course = ctx.Courses.SingleOrDefault(c => c.id == id);
-            TaxiDriver driver = ctx.Employees.OfType<TaxiDriver>().SingleOrDefault(t => t.id == course.taxidriver_id);
-            driver.driver_status_id = 0;
-            course.course_status_id = 5;            
-            ctx.SubmitChanges();
+
+            Random random = new Random();
+
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] hash = md5.ComputeHash(Encoding.ASCII.GetBytes(random.Next().ToString()));
+            string password = Convert.ToBase64String(hash).Substring(0, length);
+            string newPass = "";
+
+            // Uppercase at random 
+            random = new Random();
+            for (int i = 0; i < password.Length; i++)
+            {
+                if (random.Next(0, 2) == 1)
+                    newPass += password.Substring(i, 1).ToUpper();
+                else
+                    newPass += password.Substring(i, 1);
+            }
+            return newPass;
         }
 
         #region Suma SHA1
