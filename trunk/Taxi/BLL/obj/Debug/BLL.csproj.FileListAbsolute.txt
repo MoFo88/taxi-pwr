@@ -12,3 +12,10 @@ D:\Programowanie\gospodarka\taxi-pwr\trunk\Taxi\BLL\bin\Debug\DAL.pdb
 D:\Programowanie\gospodarka\taxi-pwr\trunk\Taxi\BLL\obj\Debug\ResolveAssemblyReference.cache
 D:\Programowanie\gospodarka\taxi-pwr\trunk\Taxi\BLL\obj\Debug\BLL.dll
 D:\Programowanie\gospodarka\taxi-pwr\trunk\Taxi\BLL\obj\Debug\BLL.pdb
+C:\Users\yasio\Desktop\Taxi\trunk\Taxi\BLL\bin\Debug\BLL.dll
+C:\Users\yasio\Desktop\Taxi\trunk\Taxi\BLL\bin\Debug\BLL.pdb
+C:\Users\yasio\Desktop\Taxi\trunk\Taxi\BLL\bin\Debug\DAL.dll
+C:\Users\yasio\Desktop\Taxi\trunk\Taxi\BLL\bin\Debug\DAL.pdb
+C:\Users\yasio\Desktop\Taxi\trunk\Taxi\BLL\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\yasio\Desktop\Taxi\trunk\Taxi\BLL\obj\Debug\BLL.dll
+C:\Users\yasio\Desktop\Taxi\trunk\Taxi\BLL\obj\Debug\BLL.pdb
