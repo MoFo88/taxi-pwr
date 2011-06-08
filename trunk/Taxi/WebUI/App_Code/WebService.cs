@@ -79,18 +79,15 @@ public class WebService : System.Web.Services.WebService {
     }
 
     [WebMethod(EnableSession = true)]
-    public String[] GetCourseData() {
+    public String GetCourseData() {
         int idDriver;
         if (Session["idDriver"] == null)
             return null;
         else
             idDriver = (int)Session["idDriver"];
-        String[] data = new String[4];
+        String data = "";
         CourseData temp = Repository.GetCourseData(idDriver);
-        data[0] = temp.IdCourse.ToString();
-        data[1] = temp.LocationName;
-        data[2] = temp.ClientName;
-        data[3] = temp.ClientPhone;
+        data = temp.LocationName + "&" + temp.ClientName + "&" + temp.ClientPhone;
         return data;
     }
 

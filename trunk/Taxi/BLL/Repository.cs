@@ -423,13 +423,14 @@ namespace BLL
         /// <returns></returns>
         public static Boolean FinishCourse( int idDriver ) {
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
-            Course course = ctx.Courses.SingleOrDefault(c => c.taxidriver_id==idDriver);
+            Course course = ctx.Courses.FirstOrDefault(c => c.taxidriver_id==idDriver && c.course_status_id == 3);
             course.course_status_id = 4;
             course.taxidriver_id = null;
             var x = from i in ctx.Employees.OfType<TaxiDriver>() where i.id == idDriver select i;
             TaxiDriver td = x.SingleOrDefault();
             td.Courses = null;
             td.Courses1 = null;
+            ctx.SubmitChanges();
             return true;
         }
 
@@ -443,7 +444,7 @@ namespace BLL
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
             var x = from i in ctx.Employees.OfType<TaxiDriver>() where i.id == idDriver select i;
             TaxiDriver td = x.SingleOrDefault();
-            return td.login;
+            return td.name + " " + td.surname;
         }
 
         /// <summary>
@@ -983,9 +984,9 @@ namespace BLL
             CourseData coursedata = new CourseData();
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
             var x = from i
-                    in ctx.Courses where i.taxidriver_id == idDriver
+                    in ctx.Courses where i.taxidriver_id == idDriver && i.course_status_id == 3
                     select i;
-            Course course = x.SingleOrDefault();
+            Course course = x.FirstOrDefault();
             coursedata.LocationName = course.startpoint_name;
             coursedata.ClientName = course.client_name;
             coursedata.ClientPhone = course.client_phone;
@@ -1005,8 +1006,10 @@ namespace BLL
             TaxiDriver td = x.SingleOrDefault();
             td.Courses = null;
             td.Courses1 = null;
-            Course course = ctx.Courses.SingleOrDefault(c => c.taxidriver_id == idDriver);
+            Course course = ctx.Courses.FirstOrDefault(c => c.taxidriver_id == idDriver && c.course_status_id == 3);
             course.taxidriver_id = null;
+            course.course_status_id = 5;
+            ctx.SubmitChanges();
             return true;
         }
 
@@ -1021,11 +1024,14 @@ namespace BLL
             TaxiDataClassesDataContext ctx = new TaxiDataClassesDataContext();
             var x = from i
                     in ctx.Courses
-                    where i.taxidriver_id == idDriver
+                    where i.taxidriver_id == idDriver && i.course_status_id == 1
                     select i;
             if (x.Count() > 0)
             {
-                Course course = x.SingleOrDefault();
+                Course course = x.FirstOrDefault();
+                course.taxidriver_id = idDriver;
+                course.course_status_id = 3;
+                ctx.SubmitChanges();
                 return true;
             }
             else return false;
